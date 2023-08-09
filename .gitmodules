@@ -1,3 +1,6 @@
 [submodule "blocks/completion_progress"]
 	path = blocks/completion_progress
 	url = https://github.com/jonof/moodle-block_completion_progress
+[submodule "blocks/dedication"]
+	path = blocks/dedication
+	url = https://github.com/catalyst/moodle-block_dedication
