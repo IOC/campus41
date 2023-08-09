@@ -10,3 +10,9 @@
 [submodule "blocks/xp"]
 	path = blocks/xp
 	url = https://github.com/FMCorz/moodle-block_xp
+[submodule "mod/board"]
+	path = mod/board
+	url = https://github.com/brickfield/moodle-mod_board
+[submodule "mod/geogebra"]
+	path = mod/geogebra
+	url = https://github.com/projectestac/moodle-mod_geogebra
