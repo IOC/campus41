@@ -1,0 +1,3 @@
+[submodule "mod/completion_progress"]
+	path = mod/completion_progress
+	url = https://github.com/jonof/moodle-block_completion_progress
