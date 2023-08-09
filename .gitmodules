@@ -7,3 +7,6 @@
 [submodule "blocks/filtered_course_list"]
 	path = blocks/filtered_course_list
 	url = https://github.com/CLAMP-IT/moodle-blocks_filtered_course_list
+[submodule "blocks/xp"]
+	path = blocks/xp
+	url = https://github.com/FMCorz/moodle-block_xp
