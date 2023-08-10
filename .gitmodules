@@ -37,3 +37,6 @@
 [submodule "mod/scheduler"]
 	path = mod/scheduler
 	url = https://github.com/bostelm/moodle-mod_scheduler
+[submodule "mod/videotime"]
+	path = mod/videotime
+	url = https://github.com/bdecentgmbh/moodle-mod_videotime/
