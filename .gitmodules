@@ -40,3 +40,6 @@
 [submodule "mod/videotime"]
 	path = mod/videotime
 	url = https://github.com/bdecentgmbh/moodle-mod_videotime/
+[submodule "filter/wiris"]
+	path = filter/wiris
+	url = https://github.com/wiris/moodle-filter_wiris
