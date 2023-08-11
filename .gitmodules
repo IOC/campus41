@@ -61,3 +61,6 @@
 [submodule "lib/editor/atto/plugins/htmlplus"]
 	path = lib/editor/atto/plugins/htmlplus
 	url = https://github.com/andrewnicols/moodle-atto_htmlplus
+[submodule "lib/editor/atto/plugins/snippet"]
+	path = lib/editor/atto/plugins/snippet
+	url = https://github.com/justinhunt/moodle-atto_snippet
