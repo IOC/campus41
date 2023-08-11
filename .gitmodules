@@ -52,3 +52,6 @@
 [submodule "lib/editor/atto/plugins/cloze"]
 	path = lib/editor/atto/plugins/cloze
 	url = https://github.com/dthies/moodle-atto_cloze
+[submodule "lib/editor/atto/plugins/fontsize"]
+	path = lib/editor/atto/plugins/fontsize
+	url = https://github.com/andrewnicols/moodle-atto_fontsize
