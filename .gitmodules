@@ -73,3 +73,24 @@
 [submodule "question/behaviour/adaptive_adapted_for_coderunner"]
 	path = question/behaviour/adaptive_adapted_for_coderunner
 	url = https://github.com/trampgeek/moodle-qbehaviour_adaptive_adapted_for_coderunner.git
+[submodule "question/type/essaywiris"]
+	path = question/type/essaywiris
+	url = https://github.com/wiris/moodle-qtype_essaywiris
+[submodule "question/type/matchwiris"]
+	path = question/type/matchwiris
+	url = https://github.com/wiris/moodle-qtype_matchwiris
+[submodule "question/type/multianswerwiris"]
+	path = question/type/multianswerwiris
+	url = https://github.com/wiris/moodle-qtype_multianswerwiris
+[submodule "question/type/multichoicewiris"]
+	path = question/type/multichoicewiris
+	url = https://github.com/wiris/moodle-qtype_multichoicewiris
+[submodule "question/type/shortanswerwiris"]
+	path = question/type/shortanswerwiris
+	url = https://github.com/wiris/moodle-qtype_shortanswerwiris
+[submodule "question/type/truefalsewiris"]
+	path = question/type/truefalsewiris
+	url = https://github.com/wiris/moodle-qtype_truefalsewiris
+[submodule "question/type/wq"]
+	path = question/type/wq
+	url = https://github.com/wiris/moodle-qtype_wq
