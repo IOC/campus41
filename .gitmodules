@@ -43,3 +43,9 @@
 [submodule "filter/wiris"]
 	path = filter/wiris
 	url = https://github.com/wiris/moodle-filter_wiris
+[submodule "lib/editor/atto/plugins/wiris"]
+	path = lib/editor/atto/plugins/wiris
+	url = https://github.com/wiris/moodle-atto_wiris
+[submodule "lib/editor/tinymce/plugins/tiny_mce_wiris"]
+	path = lib/editor/tinymce/plugins/tiny_mce_wiris
+	url = https://github.com/wiris/moodle-tinymce_tiny_mce_wiris.git
