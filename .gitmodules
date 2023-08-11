@@ -49,3 +49,6 @@
 [submodule "lib/editor/tinymce/plugins/tiny_mce_wiris"]
 	path = lib/editor/tinymce/plugins/tiny_mce_wiris
 	url = https://github.com/wiris/moodle-tinymce_tiny_mce_wiris.git
+[submodule "lib/editor/atto/plugins/cloze"]
+	path = lib/editor/atto/plugins/cloze
+	url = https://github.com/dthies/moodle-atto_cloze
