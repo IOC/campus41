@@ -8148,6 +8148,17 @@ class assign {
         $mform->addElement('hidden', 'action', 'submitgrade');
         $mform->setType('action', PARAM_ALPHA);
 
+        // @PATCH IOC030: Opció de revertir a esborrany els enviaments en qualificar.
+        if ($this->get_instance()->submissiondrafts) {
+            $submission = $this->get_user_submission($userid, false);
+            if ($submission and $submission->status == ASSIGN_SUBMISSION_STATUS_SUBMITTED) {
+                $mform->addElement('checkbox', 'reverttodraft', '',
+                                   get_string('reverttodraftshort', 'assign'));
+                $mform->closeHeaderBefore('reverttodraft');
+            }
+        }
+        // Fi.
+
         if (!$gradingpanel) {
 
             $buttonarray = array();
