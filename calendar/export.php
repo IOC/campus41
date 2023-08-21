@@ -166,6 +166,12 @@ if ($data = $exportform->get_data()) {
     $params['preset_what'] = $data->events['exportevents'];
     $params['preset_time'] = $data->period['timeperiod'];
 
+    // @PATCH IOC009: calendar improvement.
+    if (!empty($data->coursestoexport)) {
+        $params['coursestoexport'] = implode(',', $data->coursestoexport);
+    }
+    // Fi.
+
     $link = new moodle_url('/calendar/export_execute.php', $params);
     if (!empty($data->generateurl)) {
         $exporturlcontext = ['calendarexporturl' => $link->out(false)];

@@ -143,9 +143,17 @@ class api {
             throw new \moodle_exception("Must provide a timesort to and/or from value");
         }
 
+        // @PATCH IOC009: calendar improvement (old limit 50, new 480).
+        if ($limitnum < 1 || $limitnum > 480) {
+            throw new \moodle_exception("Limit must be between 1 and 480 (inclusive)");
+        }
+        // Original.
+        /*
         if ($limitnum < 1 || $limitnum > 50) {
             throw new \moodle_exception("Limit must be between 1 and 50 (inclusive)");
         }
+        */
+        // Fi.
 
         \core_calendar\local\event\container::set_requesting_user($user->id);
         $vault = \core_calendar\local\event\container::get_event_vault();
@@ -182,10 +190,19 @@ class api {
     ) {
         global $USER;
 
+        // @PATCH IOC009: calendar improvement.
+        if ($limitnum < 1 || $limitnum > 480) {
+            throw new limit_invalid_parameter_exception(
+                "Limit must be between 1 and 480 (inclusive)");
+        }
+        // Original.
+        /*
         if ($limitnum < 1 || $limitnum > 50) {
             throw new limit_invalid_parameter_exception(
                 "Limit must be between 1 and 50 (inclusive)");
         }
+        */
+        // Fi.
 
         $vault = \core_calendar\local\event\container::get_event_vault();
 

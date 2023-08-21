@@ -42,7 +42,15 @@ class core_calendar_export_form extends moodleform {
      * @throws coding_exception
      */
     public function definition() {
+
+        // @PATCH IOC009: calendar improvement (adding $USER).
+        global $CFG, $USER;
+        // Original.
+        /*
         global $CFG;
+        */
+        // Fi.
+
         $mform = $this->_form;
         $mform->addElement('html', '<div class="mt-3 mb-xl-6">' . get_string('exporthelp', 'calendar') . '</div>');
 
@@ -50,6 +58,9 @@ class core_calendar_export_form extends moodleform {
         $export[] = $mform->createElement('radio', 'exportevents', '', get_string('eventsall', 'calendar'), 'all');
         $export[] = $mform->createElement('radio', 'exportevents', '', get_string('eventsrelatedtocategories', 'calendar'), 'categories');
         $export[] = $mform->createElement('radio', 'exportevents', '', get_string('eventsrelatedtocourses', 'calendar'), 'courses');
+        // @PATCH IOC009: calendar improvement (select courses)
+        $export[] = $mform->createElement('radio', 'exportevents', '', get_string('eventsfromcourses', 'calendar'), 'selectedcourses');
+        // fi
         $export[] = $mform->createElement('radio', 'exportevents', '', get_string('eventsrelatedtogroups', 'calendar'), 'groups');
         $export[] = $mform->createElement('radio', 'exportevents', '', get_string('eventspersonal', 'calendar'), 'user');
 
@@ -85,6 +96,20 @@ class core_calendar_export_form extends moodleform {
         $mform->addGroupRule('period', get_string('required'), 'required');
         $mform->setDefault('period', 'recentupcoming');
 
+        // @PATCH IOC009: calendar improvement
+        $courses = enrol_get_users_courses($USER->id, true, null, 'fullname');
+        $courses = array_map(function($course) {
+            return $course->fullname;
+        }, $courses);
+
+        $options = array(
+            'multiple' => true
+        );
+        $select = $mform->createElement('autocomplete', 'coursestoexport', get_string('eventsfromcoursestoexport', 'calendar'), $courses, $options);
+        $mform->disabledIf('coursestoexport', 'events[exportevents]', 'neq', 'selectedcourses');
+        $mform->addElement($select);
+        // fi
+        
         $buttons = array();
         $buttons[] = $mform->createElement('submit', 'generateurl', get_string('generateurlbutton', 'calendar'));
         $buttons[] = $mform->createElement('submit', 'export', get_string('exportbutton', 'calendar'));
