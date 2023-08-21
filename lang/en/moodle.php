@@ -1163,6 +1163,10 @@ $string['ip_address'] = 'IP address';
 $string['jump'] = 'Jump';
 $string['jumpto'] = 'Jump to...';
 $string['keep'] = 'Keep';
+// @PATCH IOC012
+$string['keeptempdirectoriesonbackup'] = 'Keep backup temp directories';
+$string['keeptempdirectoriesonbackup_help'] = 'If $CFG->keeptempdirectoriesonbackup is not set to true, any restore happening would automatically delete the backup directory... causing the cache to return an unexisting directory.';
+// Fi.
 $string['labelvalue'] = '{$a->label}: {$a->value}';
 $string['langltr'] = 'Language direction left-to-right';
 $string['langrtl'] = 'Language direction right-to-left';

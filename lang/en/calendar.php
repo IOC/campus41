@@ -124,6 +124,10 @@ $string['eventsource'] = 'Event source';
 $string['eventsskipped'] = '{$a} events were skipped';
 $string['eventsupdated'] = '{$a} events were updated';
 $string['eventsfor'] = '{$a} events';
+// @PATCH IOC012
+$string['eventsfromcourses'] = 'All events from selected courses';
+$string['eventsfromcoursestoexport'] = 'Export all events from selected courses';
+// Fi.
 $string['eventskey'] = 'Events key';
 $string['eventspersonal'] = 'My personal events';
 $string['eventsrelatedtocategories'] = 'Events related to categories';

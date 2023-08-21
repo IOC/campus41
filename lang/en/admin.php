@@ -218,6 +218,9 @@ $string['configdefaultuserroleid'] = 'All logged in users will be given the capa
 $string['configdeleteincompleteusers'] = 'After this period, any account without the first name, last name or email field filled in is deleted.';
 $string['configdeleteunconfirmed'] = 'For certain authentication methods, such as email-based self-registration, users must confirm their account within a certain time. After this period, any old unconfirmed accounts are deleted.';
 $string['configdenyemailaddresses'] = 'To deny email addresses from particular domains list them here in the same way.  All other domains will be accepted. To deny subdomains add the domain with a preceding \'.\'. eg <strong>hotmail.com yahoo.co.uk .live.com</strong>';
+// @PATCH IOC012
+$string['configemptytrash'] = 'After this period, old files are deleted.';
+// Fi.
 $string['configenableanalytics'] = 'Analytics models, such as \'Students at risk of dropping out\' or \'Upcoming activities due\', can generate predictions, send insight notifications and offer further actions such as messaging users.';
 $string['configenableblogs'] = 'This switch provides all site users with their own blog.';
 $string['configenabledevicedetection'] = 'Enables detection of mobiles, smartphones, tablets or default devices (desktop PCs, laptops, etc) for the application of themes and other features.';
@@ -289,6 +292,9 @@ $string['configmaxbytes'] = 'This specifies a maximum size for files uploaded to
 $string['configmaxconsecutiveidentchars'] = 'Passwords must not have more than this number of consecutive identical characters. Use 0 to disable this check.';
 $string['configmaxeditingtime'] = 'This specifies the amount of time people have to re-edit forum postings, glossary comments etc.  Usually 30 minutes is a good value.';
 $string['configmaxevents'] = 'Events to Lookahead';
+// @PATCH IOC012
+$string['configmaxeventsreturned'] = 'Maximum number of events to show';
+// Fi.
 $string['configmessaging'] = 'If enabled, users can send messages to other users on the site.';
 $string['configmessagingallowemailoverride'] = 'Allow users to have email message notifications sent to an email address other than the email address in their profile';
 $string['configmessagingdefaultpressenter'] = 'Whether \'Use enter to send\' is enabled by default in users\' messaging settings.';
@@ -560,6 +566,9 @@ $string['emoticons_desc'] = 'This form defines the emoticons (or smileys) used a
 * Alternative text (optional) - String identifier and component of the alternative text of the emoticon.';
 $string['emoticonsreset'] = 'Reset emoticons setting to default values';
 $string['emptysettingvalue'] = 'Empty';
+// @PATCH IOC012
+$string['emptytrash'] = 'Empty trash';
+// Fi.
 $string['enableanalytics'] = 'Analytics';
 $string['enableblogs'] = 'Enable blogs';
 $string['enablecalendarexport'] = 'Enable calendar export';
@@ -639,6 +648,9 @@ $string['filtersettingsgeneral'] = 'General filter settings';
 $string['filteruploadedfiles'] = 'Filter uploaded files';
 $string['forceclean'] = 'Content cleaning everywhere';
 $string['forceclean_desc'] = 'Content added to the site is normally cleaned before being displayed, to remove anything which might be a security threat. However, content is not cleaned in certain places such as activity descriptions, page resources or HTML blocks to allow scripts, media, inline frames etc. to be added. If this setting is enabled, ALL content will be cleaned. This may result in existing content no longer displaying correctly.';
+// @PATCH IOC012
+$string['forcedefaultmymoodle'] = 'Force default My Moodle';
+// Fi.
 $string['forcelogin'] = 'Force users to log in';
 $string['forceloginforprofileimage'] = 'Force users to log in to view user pictures';
 $string['forceloginforprofileimage_help'] = 'If enabled, users must log in in order to view user profile pictures and the default user picture will be used in all notification emails.';
@@ -680,6 +692,9 @@ $string['helpcalendarcustomexport'] = 'Enable custom date range export option in
 $string['helpexportlookahead'] = 'How many days in the future does the calendar look for events during export for the custom export option?';
 $string['helpexportlookback'] = 'How many days in the past does the calendar look for events during export for the custom export option?';
 $string['helpforcetimezone'] = 'You can allow users to individually select their timezone, or force a timezone for everyone.';
+// @PATCH IOC012
+$string['helpmaxeventsreturned'] = 'How many (maximum) events are shown to users?';
+// Fi.
 $string['helpshowicalsource'] = 'If enabled, the subscription name and link will be shown for iCal-imported events.';
 $string['helpsitemaintenance'] = 'For upgrades and other work';
 $string['helpstartofweek'] = 'Which day starts the week in the calendar?';

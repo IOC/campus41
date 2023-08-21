@@ -72,6 +72,9 @@ $string['CM'] = 'Cameroon';
 $string['CN'] = 'China';
 $string['CO'] = 'Colombia';
 $string['CR'] = 'Costa Rica';
+// @PATCH IOC012
+$string['CT'] = 'Catalonia';
+// Fi.
 $string['CU'] = 'Cuba';
 $string['CV'] = 'Cabo Verde';
 $string['CW'] = 'Curaçao';
