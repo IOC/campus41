@@ -102,6 +102,12 @@ function forum_add_instance($forum, $mform = null) {
         $forum->assesstimefinish = 0;
     }
 
+    // @PATCH IOC023: Forced FORUM_DISALLOWSUBSCRIBE
+    if (!isset($forum->forcesubscribe)) {
+        $forum->forcesubscribe = FORUM_DISALLOWSUBSCRIBE;
+    }  
+    // Fi
+
     $forum->id = $DB->insert_record('forum', $forum);
     $modcontext = context_module::instance($forum->coursemodule);
 
