@@ -94,3 +94,6 @@
 [submodule "question/type/wq"]
 	path = question/type/wq
 	url = https://github.com/wiris/moodle-qtype_wq
+[submodule "admin/tool/siteperf"]
+	path = admin/tool/siteperf
+	url = https://github.com/IOC/moodle-admin_siteperf
