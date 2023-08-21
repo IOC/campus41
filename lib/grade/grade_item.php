@@ -2252,6 +2252,12 @@ class grade_item extends grade_object {
         foreach($useditems as $gi) {
             if (!array_key_exists('gi'.$gi, $params) || is_null($params['gi'.$gi])) {
                 $params['gi'.$gi] = 0;
+                // @PATCH IOC006: has_grade function
+                if (preg_match('/has_grade\s?\(\s*##gi'.$gi.'##\s*\)/i', $this->calculation) && ($gi != $this->id)) {
+                    $params['gi'.$gi] = -(PHP_INT_MAX - 1);
+                    $allinputsnull = false;
+                }
+                // Fi
             } else {
                 $params['gi'.$gi] = (float)$params['gi'.$gi];
                 if ($gi != $this->id) {
