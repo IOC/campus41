@@ -41,6 +41,10 @@ define('ASSIGN_FILTER_REQUIRE_GRADING', 'requiregrading');
 define('ASSIGN_FILTER_GRANTED_EXTENSION', 'grantedextension');
 define('ASSIGN_FILTER_DRAFT', 'draft');
 
+// @PATCH IOC029: Filtre d'esborranys a la llista d'enviaments.
+define('ASSIGN_FILTER_DRAFTS', 'drafts');
+// Fi.
+
 // Marker filter for grading page.
 define('ASSIGN_MARKER_FILTER_NO_MARKER', -1);
 
