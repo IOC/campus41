@@ -3511,6 +3511,10 @@ class assign {
         $params = array('overflowdiv' => true, 'context' => $this->get_context());
         $result .= format_text($finaltext, $format, $params);
 
+        // @PATCH IOC024: Fixed word count when portfolio exporting is enabled.
+        $portfoliohtml = $result;
+        // Fi.
+
         if ($CFG->enableportfolios && has_capability('mod/assign:exportownsubmission', $this->context)) {
             require_once($CFG->libdir . '/portfoliolib.php');
 
@@ -3533,9 +3537,23 @@ class assign {
             } else {
                 $button->set_formats(PORTFOLIO_FORMAT_PLAINHTML);
             }
+
+            // @PATCH IOC024: Fixed word count when portfolio exporting is enabled.
+            $portfoliohtml .= $button->to_html(PORTFOLIO_ADD_TEXT_LINK);
+            // Original.
+            /*
             $result .= $button->to_html(PORTFOLIO_ADD_TEXT_LINK);
+            */
+            // Fi.
         }
+
+        // @PATCH IOC024: Fixed word count when portfolio exporting is enabled.
+        return array($result, $portfoliohtml);
+        // Original.
+        /*
         return $result;
+        */
+        // Fi.
     }
 
     /**
