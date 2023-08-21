@@ -328,7 +328,14 @@ class file_system_filedir extends file_system {
     }
 
     protected function empty_trash() {
+        // @PATCH IOC005: secure empty trash
+        global $CFG;
+        fulldeletebydate($this->trashdir, time() - (3600 * $CFG->emptytrash));
+        // Original.
+        /*
         fulldelete($this->trashdir);
+        */
+        // Fi.
         set_config('fileslastcleanup', time());
     }
 

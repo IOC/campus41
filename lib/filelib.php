@@ -2802,6 +2802,61 @@ function fulldelete($location) {
     return true;
 }
 
+// @PATCH IOC005
+/**
+ * Recursively delete the file or folder with path $location. A file
+ * is deleted when it is older than date. If it is a folder, is deleted
+ * when empty. If $location does not exist to start, that is not
+ * considered an error.
+ *
+ * @param string $location the path to remove.
+ * @param int $date to delete files.
+ * @return bool
+ */
+function fulldeletebydate($location, $date) {
+    if (empty($location)) {
+        // extra safety against wrong param
+        return false;
+    }
+    if (!is_int($date)) {
+        return false;
+    }
+    if (is_dir($location)) {
+        if (!$currdir = opendir($location)) {
+            return false;
+        }
+        while (false !== ($file = readdir($currdir))) {
+            if ($file <> ".." && $file <> ".") {
+                $fullfile = $location."/".$file;
+                if (is_dir($fullfile)) {
+                    if (!fulldeletebydate($fullfile, $date)) {
+                        return false;
+                    }
+                } else {
+                    if (filectime($fullfile) < $date) {
+                        if (!unlink($fullfile)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        closedir($currdir);
+        if (count(glob($location . DIRECTORY_SEPARATOR . '*', GLOB_NOSORT)) === 0) {
+            if (! rmdir($location)) {
+                return false;
+            }
+        }
+
+    } else if (file_exists($location) and filectime($location) < $date) {
+        if (!unlink($location)) {
+            return false;
+        }
+    }
+    return true;
+}
+// Fi.
+
 /**
  * Send requested byterange of file.
  *
