@@ -2911,6 +2911,14 @@ class assign {
 
         if ($grade->grade && $grade->grade != -1) {
             if ($this->get_instance()->grade > 0) {
+
+                // @PATCH IOC: This doble cast fixes a weird error in comparison ($grade->grade > $this->get_instance()->grade)
+                //             The error causes the comparison to be true when $grade->grade is a float of value 10 and
+                //             $this->get_instance()->grade is string of value "10". This happens when there is a rubrick
+                //             for the grading. It seems to happen only in IOC Moodle.
+                $grade->grade = (float)(string)$grade->grade;
+                // Fi.
+
                 if (!is_numeric($grade->grade)) {
                     return false;
                 } else if ($grade->grade > $this->get_instance()->grade) {
@@ -2945,6 +2953,27 @@ class assign {
         } else {
             $submission = $this->get_user_submission($grade->userid, false);
         }
+
+        // @PATCH IOC025: Modify previous attempt grade, update assign and gradebook.
+        $gradeattempt = false;
+        if ($submission && $submission->attemptnumber != $grade->attemptnumber) {
+            $lastsqlgrade = 'SELECT g.grade, g.attemptnumber
+                                FROM {assign_grades} g
+                                LEFT JOIN {assign_grades} gg
+                                ON (g.userid = gg.userid AND g.assignment = gg.assignment
+                                    AND g.attemptnumber < gg.attemptnumber)
+                                WHERE gg.userid is NULL AND g.assignment = :assignid AND g.userid = :userid';
+            $params = array(
+                'assignid' => $submission->assignment,
+                'userid' => $submission->userid,
+            );
+
+            if ($lastgrade = $DB->get_record_sql($lastsqlgrade, $params)) {
+                $gradeattempt = ( $lastgrade->attemptnumber == $grade->attemptnumber ||
+                    (($lastgrade->attemptnumber - 1) == $grade->attemptnumber && (is_null($lastgrade->grade) || $lastgrade->grade < 0 )));
+            }
+        }
+        // Fi.
 
         // Only push to gradebook if the update is for the most recent attempt.
         if ($submission && $submission->attemptnumber != $grade->attemptnumber) {
