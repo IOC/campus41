@@ -25,7 +25,13 @@
 defined('MOODLE_INTERNAL') || die();
 
 /** @see evalmath/evalmath.class.php */
+// @PATCH IOC014: new formulari engine (original evalmath)
+require_once $CFG->dirroot.'/lib/formulalib.php';
+// Original.
+/*
 require_once $CFG->dirroot.'/lib/evalmath/evalmath.class.php';
+*/
+// Fi.
 
 /**
  * This class abstracts evaluation of spreadsheet formulas.
@@ -38,9 +44,17 @@ require_once $CFG->dirroot.'/lib/evalmath/evalmath.class.php';
 class calc_formula {
 
     // private properties
+    // @PATCH IOC014: new formulari engine. Modified
+    var $_formula = false;
+    var $_error = false;
+    var $_params = false;
+    // Original.
+    /*
     var $_em;
     var $_nfx   = false;   // postfix notation
     var $_error = false; // last error
+    */
+    // Fi.
 
     /**
      * Constructor for spreadsheet formula with optional parameters
@@ -49,6 +63,14 @@ class calc_formula {
      * @param array $params associative array of parameters used in formula. All parameter names must be lowercase!
      */
     public function __construct($formula, $params=false) {
+        // @PATCH IOC014: new formulari engine
+        try {
+            $this->_formula = new FormulaParser($formula);
+        } catch (FormulaException $e) {
+            $this->_error = $e;
+        }
+        // Original.
+        /*
         $this->_em = new EvalMath();
         $this->_em->suppress_errors = true; // no PHP errors!
         if (strpos($formula, '=') !== 0) {
@@ -62,6 +84,8 @@ class calc_formula {
             $this->_error = $this->_em->last_error;
             return;
         }
+        */
+        // Fi.
         if ($params != false) {
             $this->set_params($params);
         }
@@ -84,7 +108,13 @@ class calc_formula {
      * @param array $params associative array of parameters used in formula
      */
     function set_params($params) {
+        // @PATCH IOC014: new formulari engine
+        $this->_params = $params;
+        // Original.
+        /*
         $this->_em->v = $params;
+        */
+        // Fi.
     }
 
     /**
@@ -93,6 +123,19 @@ class calc_formula {
      * @return mixed number if ok, false if error
      */
     function evaluate() {
+        // @PATCH IOC014: new formulari engine
+        if (!$this->_formula) {
+            return false;
+        }
+        try {
+            $res = $this->_formula->evaluate($this->_params);
+        } catch (FormulaException $e) {
+            $this->_error = $e;
+            return false;
+        }
+        $this->_error = false;
+        return $res;
+        /*
         if ($this->_nfx == false) {
             return false;
         }
@@ -104,6 +147,8 @@ class calc_formula {
             $this->_error = false;
             return $res;
         }
+        */
+        // Fi.
     }
 
     /**
