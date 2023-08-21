@@ -8680,6 +8680,17 @@ class assign {
         if (!isset($formdata->sendstudentnotifications) || $formdata->sendstudentnotifications) {
             $this->notify_grade_modified($grade, true);
         }
+
+        // @PATCH IOC015: Set draft from grading
+        if (!empty($formdata->reverttodraft)) {
+            $submission = $this->get_user_submission($userid, false);
+            if ($submission) {
+                $submission->status = ASSIGN_SUBMISSION_STATUS_DRAFT;
+                $this->update_submission($submission, false, false, $this->get_instance()->teamsubmission);
+            }
+        }
+        // Fi.
+
     }
 
 
