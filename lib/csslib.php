@@ -70,7 +70,13 @@ function css_store_css(theme_config $theme, $csspath, $csscontent) {
  */
 function css_write_file($filename, $content) {
     global $CFG;
+    // @PATCH IOC008: avoid warnings
+    if ($fp = @fopen($filename.'.tmp', 'xb')) {
+    // Original.
+    /*
     if ($fp = fopen($filename.'.tmp', 'xb')) {
+    */
+    // Fi.
         fwrite($fp, $content);
         fclose($fp);
         rename($filename.'.tmp', $filename);
