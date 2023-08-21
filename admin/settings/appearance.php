@@ -167,6 +167,9 @@ reports,core_reportbuilder|/reportbuilder/index.php',
             90  => new lang_string('numdays', '', 90),
             60  => new lang_string('numdays', '', 60),
             30  => new lang_string('numdays', '', 30),
+            // @PATCH IOC001: new admin settings
+            15  => new lang_string('numdays', '', 15),
+            // --- Fi
             5  => new lang_string('numdays', '', 5));
     $temp->add(new admin_setting_configcheckbox('calendar_customexport', new lang_string('configcalendarcustomexport', 'admin'), new lang_string('helpcalendarcustomexport','admin'), 1));
     $temp->add(new admin_setting_configselect('calendar_exportlookahead', new lang_string('configexportlookahead','admin'), new lang_string('helpexportlookahead', 'admin'), 365, $days));
@@ -175,6 +178,14 @@ reports,core_reportbuilder|/reportbuilder/index.php',
     $temp->add(new admin_setting_configcheckbox('calendar_showicalsource', new lang_string('configshowicalsource', 'admin'), new lang_string('helpshowicalsource','admin'), 1));
     $ADMIN->add('appearance', $temp);
 
+    // @PATCH IOC001: new admin settings
+    $options = array();
+    for ($i=40; $i<=480; $i+=40) {
+        $options[$i] = $i;
+    }
+    $temp->add(new admin_setting_configselect('calendar_maxevents_returned',new lang_string('configmaxeventsreturned','admin'),new lang_string('helpmaxeventsreturned', 'admin'),40,$options));
+    // Fi
+    
     // blog
     $temp = new admin_settingpage('blog', new lang_string('blog','blog'), 'moodle/site:config', empty($CFG->enableblogs));
     $temp->add(new admin_setting_configcheckbox('useblogassociations', new lang_string('useblogassociations', 'blog'), new lang_string('configuseblogassociations','blog'), 1));
@@ -218,6 +229,9 @@ reports,core_reportbuilder|/reportbuilder/index.php',
         ));
     }
     $temp->add(new admin_setting_configcheckbox('navshowfullcoursenames', new lang_string('navshowfullcoursenames', 'admin'), new lang_string('navshowfullcoursenames_help', 'admin'), 0));
+    // @PATCH IOC001: new admin settings
+    $temp->add(new admin_setting_configcheckbox('forcedefaultmymoodle', new lang_string('forcedefaultmymoodle', 'admin'), new lang_string('configforcedefaultmymoodle', 'admin'), 0));
+    // Fi
     $temp->add(new admin_setting_configcheckbox('navshowcategories', new lang_string('navshowcategories', 'admin'), new lang_string('confignavshowcategories', 'admin'), 1));
     $temp->add(new admin_setting_configcheckbox('navshowmycoursecategories', new lang_string('navshowmycoursecategories', 'admin'), new lang_string('navshowmycoursecategories_help', 'admin'), 0));
     $temp->add(new admin_setting_configcheckbox('navshowallcourses', new lang_string('navshowallcourses', 'admin'), new lang_string('confignavshowallcourses', 'admin'), 0));
