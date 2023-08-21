@@ -250,6 +250,14 @@ define('PARAM_URL',      'url');
  */
 define('PARAM_USERNAME',    'username');
 
+// @PATCH IOC020: Afegir tipus PARAM_USERNAME_IOC per WebService Secretaria
+/**
+ * PARAM_USERNAME_IOC - Clean username to only contains allowed characters. This is to be used ONLY when manually creating user
+ * accounts, do NOT use when syncing with external systems!!
+ */
+define('PARAM_USERNAME_IOC',    'usernameioc');
+// Fi.
+
 /**
  * PARAM_STRINGID - used to check if the given string is valid string identifier for get_string()
  */
@@ -1250,6 +1258,19 @@ function clean_param($param, $type) {
                 $param = preg_replace('/[^-\.@_a-z0-9]/', '', $param);
             }
             return $param;
+
+        // @PATCH IOC020: Afegir tipus PARAM_USERNAME_IOC per WebService Secretaria.
+        case PARAM_USERNAME_IOC:
+            $param = fix_utf8($param);
+            $param = trim($param);
+            if (empty($CFG->extendedusernamechars)) {
+                $param = str_replace(" " , "", $param);
+                // Regular expression, eliminate all chars EXCEPT:
+                // alphanum, dash (-), underscore (_), at sign (@) and period (.) characters.
+                $param = preg_replace('/[^-\.@_A-Za-z0-9]/', '', $param);
+            }
+            return $param;
+        // Fi.
 
         case PARAM_EMAIL:
             $param = fix_utf8($param);
@@ -6198,10 +6219,20 @@ function email_to_user($user, $from, $subject, $messagetext, $messagehtml = '', 
             $messagehtml = trim(text_to_html($messagetext));
         }
         $context['body'] = $messagehtml;
+
+        // @PATCH IOC
+        $context['noreply'] = "<br /><br />" . str_repeat('-', 68) . "<br />" . get_string('noreply', 'message');
+        // Fi.
+
         $messagehtml = $renderer->render_from_template('core/email_html', $context);
     }
 
     $context['body'] = html_to_text(nl2br($messagetext));
+
+    // @PATCH IOC
+    $context['noreply'] = "\n\n" . str_repeat('-', 68) . "\n" . get_string('noreply', 'message');
+    // Fi.
+
     $mail->Subject = $renderer->render_from_template('core/email_subject', $context);
     $mail->FromName = $renderer->render_from_template('core/email_fromname', $context);
     $messagetext = $renderer->render_from_template('core/email_text', $context);
