@@ -42,6 +42,13 @@ if (!confirm_sesskey()) {
     throw new \moodle_exception('confirmsesskeybad');
 }
 
+// @PATCH IOC016: New action expert CSV.
+$url = new moodle_url(required_param('formaction', PARAM_URL));
+if ('csv' === $url->param('dataformat')) {
+    $formaction = 'exportcsv.php';
+}
+// Fi.
+
 if ($formaction == 'bulkchange.php') {
     // Backwards compatibility for enrolment plugins bulk change functionality.
     // This awful code is adapting from the participant page with it's param names and values
@@ -267,6 +274,18 @@ if ($formaction == 'bulkchange.php') {
         echo $OUTPUT->footer();
         exit();
     }
+
+// @PATCH IOC016: New action expert CSV
+} else if ('exportcsv.php' === $formaction) {
+        require_once($formaction);
+    } else {
+        throw new coding_exception('invalidaction');
+    }
+// Original.
+/*
 } else {
     throw new coding_exception('invalidaction');
 }
+*/
+// Fi.
+
