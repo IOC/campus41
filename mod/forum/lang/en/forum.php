@@ -674,6 +674,9 @@ $string['singleforum'] = 'A single simple discussion';
 $string['smallmessage'] = '{$a->user} posted in {$a->forumname}';
 $string['smallmessagedigest'] = 'Forum digest containing {$a} messages';
 $string['startedby'] = 'Started by';
+// @PATCH IOC022: Don't allow posts scheduled for the past.
+$string['starttimeerror'] = 'Start date cannot be earlier than present time';
+// Fi
 $string['subject'] = 'Subject';
 $string['subscribe'] = 'Subscribe to forum';
 $string['subscribediscussion'] = 'Subscribe to this discussion';

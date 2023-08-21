@@ -339,6 +339,13 @@ class mod_forum_post_form extends moodleform {
         if (empty($data['subject'])) {
             $errors['subject'] = get_string('erroremptysubject', 'forum');
         }
+
+        // @PATCH IOC022: Don't allow posts scheduled for the past.
+        if ($data['timestart'] && $data['timestart'] < time() - 60) {
+            $errors['timestart'] = get_string('starttimeerror', 'forum');
+        }
+        // Fi
+
         return $errors;
     }
 }
