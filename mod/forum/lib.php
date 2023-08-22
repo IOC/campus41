@@ -2454,7 +2454,19 @@ function forum_print_discussion_header(&$post, $forum, $group = -1, $datestring 
     }
 
     echo '<td class="lastpost">';
+
+    // @PATCH IOC048: Parches Mod Forum
+    if ($post->timestart and $post->replies === 0) {
+        $usedate = $post->timestart;
+    } else {
+        $usedate = (empty($post->timemodified)) ? $post->modified : $post->timemodified;  // Just in case
+    }
+    // Original.
+    /*
     $usedate = (empty($post->timemodified)) ? $post->created : $post->timemodified;
+    */
+    // Fi
+
     $parenturl = '';
     $usermodified = new stdClass();
     $usermodified->id = $post->usermodified;
@@ -4418,6 +4430,14 @@ function forum_tp_mark_forum_read($user, $forumid, $groupid=false) {
         $groupsel = " AND (d.groupid = ? OR d.groupid = -1)";
         $params[] = $groupid;
     }
+
+    // @PATCH IOC048: Parches Mod Forum.
+    $now = time();
+    $timedposts = ' AND (d.timestart < ? AND (d.timeend = 0 OR d.timeend > ?))';
+    $params[] = $now;
+    $params[] = $now;
+    $groupsel .= ' ' . $timedposts;
+    // Fi.
 
     $sql = "SELECT p.id
               FROM {forum_posts} p
