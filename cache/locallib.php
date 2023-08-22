@@ -67,6 +67,9 @@ class cache_config_writer extends cache_config {
      * infinite loop situations caused by the cache throwing exceptions during its initialisation.
      */
     protected function config_save() {
+        // @PATCH IOC042: Evitem escriure el fitxes MUC config
+        return;
+        // Fi
         global $CFG;
         static $confighash = '';
         $cachefile = static::get_config_file_path();
