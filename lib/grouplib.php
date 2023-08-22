@@ -749,7 +749,12 @@ function groups_allgroups_course_menu($course, $urlroot, $update = false, $activ
  * @return mixed void or string depending on $return param
  */
 function groups_print_activity_menu($cm, $urlroot, $return=false, $hideallparticipants=false) {
+    // @PATCH IOC033: Mostrar els missatges no llegits en el selector de grup.
+    global $DB, $CFG, $USER, $OUTPUT;
+    /*
     global $USER, $OUTPUT;
+    */
+    // Fi.
 
     if ($urlroot instanceof moodle_url) {
         // no changes necessary
@@ -793,6 +798,66 @@ function groups_print_activity_menu($cm, $urlroot, $return=false, $hideallpartic
     }
 
     $groupsmenu += groups_sort_menu_options($allowedgroups, $usergroups);
+
+    // @PATCH IOC033: Mostrar els missatges no llegits en el selector de grup.
+    $unread = false;
+    if ($allowedgroups and $DB->record_exists('modules', array('id' => $cm->module, 'name' => 'forum'))) {
+        $forum = $DB->get_record('forum', array('id' => $cm->instance));
+        if (forum_tp_can_track_forums($forum)) {
+            list ($sqlingroups, $groupids) = $DB->get_in_or_equal(array_keys($allowedgroups), SQL_PARAMS_NAMED);
+            $cutoffdate = isset($CFG->forum_oldpostdays) ? (time() - ($CFG->forum_oldpostdays * 24 * 60 * 60)) : 0;
+            $now = time();
+            $sql = "SELECT d.groupid, COUNT(p.id) AS count
+                    FROM {forum_posts} p
+                    JOIN {forum_discussions} d ON p.discussion = d.id
+                    LEFT JOIN {forum_read} r ON r.postid = p.id AND r.userid = :userid
+                    WHERE d.forum = :forumid AND d.groupid $sqlingroups
+                    AND d.timemodified >= :timemodified AND p.modified >= :modified AND r.id is NULL
+                    AND (d.timestart < :now1 AND (d.timeend = 0 OR d.timeend > :now2))
+                    GROUP BY d.groupid";
+            $params = array(
+                'userid' => $USER->id,
+                'forumid' => $cm->instance,
+                'timemodified' => $cutoffdate,
+                'modified' => $cutoffdate,
+                'now1' => $now,
+                'now2' => $now,
+            );
+            $unread = $DB->get_records_sql($sql, array_merge($params, $groupids));
+        }
+    }
+
+    if ($unread and $groupsmenu) {
+        if (empty($usergroups)) {
+            foreach ($groupsmenu as $key => $group) {
+                if (isset($unread[$key])) {
+                    if ($unread[$key]->count == 1) {
+                        $unreadstr = get_string('unreadpostsone', 'forum');
+                    } else {
+                        $unreadstr = get_string('unreadpostsnumber', 'forum', $unread[$key]->count);
+                    }
+                    $groupsmenu[$key] .= " ($unreadstr)";
+                }
+            }
+        } else {
+            foreach (array(1, 2) as $position) {
+                if (isset($groupsmenu[$position]) && is_array($groupsmenu[$position])) {
+                    list ($keytemp, ) = each($groupsmenu[$position]);
+                    foreach ($groupsmenu[$position][$keytemp] as $key => $group) {
+                        if (isset($unread[$key])) {
+                            if ($unread[$key]->count == 1) {
+                                $unreadstr = get_string('unreadpostsone', 'forum');
+                            } else {
+                                $unreadstr = get_string('unreadpostsnumber', 'forum', $unread[$key]->count);
+                            }
+                            $groupsmenu[$position][$keytemp][$key] .= " ($unreadstr)";
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // Fi.
 
     if ($groupmode == VISIBLEGROUPS) {
         $grouplabel = get_string('groupsvisible');
