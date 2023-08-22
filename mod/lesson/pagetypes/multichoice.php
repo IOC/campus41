@@ -87,7 +87,17 @@ class lesson_page_type_multichoice extends lesson_page {
     public function display($renderer, $attempt) {
         global $CFG, $PAGE;
         $answers = $this->get_used_answers();
+
+        // @PATCH IOC034: Configure whether shuffle multiple choice answers.
+        if ($this->properties->shuffle) {
+            shuffle($answers);
+        }
+        // Original
+        /*
         shuffle($answers);
+        */
+        // Fi.
+
         $action = $CFG->wwwroot.'/mod/lesson/continue.php';
         $params = array('answers'=>$answers, 'lessonid'=>$this->lesson->id, 'contents'=>$this->get_contents(), 'attempt'=>$attempt);
         if ($this->properties->qoption) {
@@ -123,7 +133,17 @@ class lesson_page_type_multichoice extends lesson_page {
         $formattextdefoptions->para = false;
 
         $answers = $this->get_used_answers();
+
+        // @PATCH IOC034: Configure whether shuffle multiple choice answers.
+        if ($this->properties->shuffle) {
+            shuffle($answers);
+        }
+        // Original
+        /*
         shuffle($answers);
+        */
+        // Fi.
+
         $action = $CFG->wwwroot.'/mod/lesson/continue.php';
         $params = array('answers'=>$answers, 'lessonid'=>$this->lesson->id, 'contents'=>$this->get_contents());
         if ($this->properties->qoption) {
@@ -443,6 +463,12 @@ class lesson_add_page_form_multichoice extends lesson_add_page_form_base {
         $this->_form->addElement('checkbox', 'qoption', get_string('options', 'lesson'), get_string('multianswer', 'lesson'));
         $this->_form->setDefault('qoption', 0);
         $this->_form->addHelpButton('qoption', 'multianswer', 'lesson');
+
+        // @PATCH IOC034: Configure whether shuffle multiple choice answers.
+        $this->_form->addElement('selectyesno', 'shuffle', get_string('shuffle', 'lesson'), get_string('shuffle', 'lesson'));
+        $this->_form->setDefault('shuffle', 1);
+        $this->_form->addHelpButton('shuffle', 'shuffle', 'lesson');
+        // Fi.
 
         for ($i = 0; $i < $this->_customdata['lesson']->maxanswers; $i++) {
             $this->_form->addElement('header', 'answertitle'.$i, get_string('answer').' '.($i+1));

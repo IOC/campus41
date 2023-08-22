@@ -549,6 +549,12 @@ $string['sent'] = 'Sent';
 $string['shortanswer'] = 'Short answer';
 $string['showanunansweredpage'] = 'Show an unanswered page';
 $string['showanunseenpage'] = 'Show an unseen page';
+
+// @PATCH IOC034: Configure whether shuffle multiple choice answers.
+$string['shuffle'] = 'Shuffle answers';
+$string['shuffle_help'] = 'If enabled, multiple choice answers will be shuffled';
+// Fi.
+
 $string['singleanswer'] = 'Single answer';
 $string['skip'] = 'Skip navigation';
 $string['slideshow'] = 'Slideshow';

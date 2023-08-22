@@ -52,6 +52,28 @@ defined('MOODLE_INTERNAL') || die();
 function xmldb_lesson_upgrade($oldversion) {
     global $CFG;
 
+    // @PATCH IOC034: Configure whether shuffle multiple choice answers.
+    {
+        // Define field shuffle to be added to lesson_pages.
+        $table = new xmldb_table('lesson_pages');
+        $field = new xmldb_field('shuffle', XMLDB_TYPE_INTEGER, '3', null, XMLDB_NOTNULL, null, '1', 'contentsformat');
+
+        // Conditionally launch add field shuffle.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+    // Fi.
+
+    // Automatically generated Moodle v3.6.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    // Automatically generated Moodle v3.7.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    // Automatically generated Moodle v3.8.0 release upgrade line.
+    // Put any upgrade step following this.
+
     // Automatically generated Moodle v3.9.0 release upgrade line.
     // Put any upgrade step following this.
 

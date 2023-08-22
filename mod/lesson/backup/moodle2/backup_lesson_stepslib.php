@@ -89,6 +89,10 @@ class backup_lesson_activity_structure_step extends backup_activity_structure_st
             'prevpageid','nextpageid','qtype','qoption','layout',
             'display','timecreated','timemodified','title','contents',
             'contentsformat'
+
+            // @PATCH IOC034: Configure whether shuffle multiple choice answers.
+            ,'shuffle'
+            // Fi.
         ));
 
         // The lesson_answers table
