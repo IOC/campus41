@@ -5175,6 +5175,18 @@ function remove_course_contents($courseid, $showfeedback = true, array $options 
     remove_course_grades($courseid, $showfeedback);
     remove_grade_letters($coursecontext, $showfeedback);
 
+    // @PATCH IOC036: Suprimeix l'històric de qualificacions en suprimir un curs.
+    $DB->execute('DELETE gg.* ' .
+                 'FROM {grade_grades_history} gg ' .
+                 'JOIN {grade_items_history} gi ON gi.oldid = gg.itemid ' .
+                 'WHERE gi.courseid = :courseid',
+                 array('courseid' => $courseid));
+    $DB->delete_records('grade_items_history', array('courseid' => $courseid));
+    $DB->delete_records('grade_categories_history', array('courseid' => $courseid));
+    $DB->delete_records('grade_outcomes_history', array('courseid' => $courseid));
+    $DB->delete_records('scale_history', array('courseid' => $courseid));
+    // Fi.
+
     // Delete course blocks in any all child contexts,
     // they may depend on modules so delete them first.
     $childcontexts = $coursecontext->get_child_contexts(); // Returns all subcontexts since 2.2.
