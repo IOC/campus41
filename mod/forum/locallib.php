@@ -40,10 +40,20 @@ class forum_portfolio_caller extends portfolio_module_caller_base {
     protected $attachment;
 
     private $post;
+
+    // @PATCH IOC043: Export whole forum using portfolio.
+    protected $forum;
+    protected $discussion;
+    protected $posts;
+    protected $keyedfiles;
+    // Original
+    /*
     private $forum;
     private $discussion;
     private $posts;
     private $keyedfiles; // just using multifiles isn't enough if we're exporting a full thread
+    */
+    // Fi.
 
     /**
      * @return array
@@ -253,7 +263,13 @@ class forum_portfolio_caller extends portfolio_module_caller_base {
      *
      * @return int id of new entry
      */
+    // @PATCH IOC043: Export whole forum using portfolio.
+    protected function prepare_post_leap2a(portfolio_format_leap2a_writer $leapwriter, $post, $posthtml) {
+    // Original.
+    /*
     private function prepare_post_leap2a(portfolio_format_leap2a_writer $leapwriter, $post, $posthtml) {
+    */
+    // Fi.
         $entry = new portfolio_format_leap2a_entry('forumpost' . $post->id,  $post->subject, 'resource', $posthtml);
         $entry->published = $post->created;
         $entry->updated = $post->modified;
@@ -271,7 +287,13 @@ class forum_portfolio_caller extends portfolio_module_caller_base {
      * @param mixed $justone false of id of single file to copy
      * @return bool|void
      */
+    // @PATCH IOC043: Export whole forum using portfolio.
+    protected function copy_files($files, $justone=false) {
+    // Original.
+    /*
     private function copy_files($files, $justone=false) {
+    */
+    // Fi.
         if (empty($files)) {
             return;
         }
@@ -404,6 +426,337 @@ class forum_portfolio_caller extends portfolio_module_caller_base {
     }
 }
 
+// @PATCH IOC043: Export whole forum using portfolio.
+class forum_full_portfolio_caller extends forum_portfolio_caller {
+
+    private $index;
+    private $cssfile;
+    private $filename;
+
+    /**
+     * @return array
+     */
+    public static function expected_callbackargs() {
+        return array(
+            'forumid'       => true,
+        );
+    }
+    /**
+     * @param array $callbackargs
+     */
+    public function __construct($callbackargs) {
+        portfolio_module_caller_base::__construct($callbackargs);
+        if (!$this->forumid) {
+            throw new portfolio_caller_exception('mustprovidediscussionorpost', 'forum');
+        }
+        $this->cssfile = 'exportforum.css';
+        $this->filename = '';
+    }
+
+    /**
+     * this is a very cut down version of what is in forum_make_mail_post
+     *
+     * @global object
+     * @param int $post
+     * @return string
+     */
+    private function prepare_post($post, $fileoutputextras=null) {
+        global $DB;
+        static $users;
+        if (empty($users)) {
+            $users = array($this->user->id => $this->user);
+        }
+        if (!array_key_exists($post->userid, $users)) {
+            $users[$post->userid] = $DB->get_record('user', array('id' => $post->userid));
+        }
+        // add the user object on to the post so we can pass it to the leap writer if necessary
+        $post->author = $users[$post->userid];
+        $viewfullnames = true;
+        // format the post body
+        $options = portfolio_format_text_options();
+        $format = $this->get('exporter')->get('format');
+        $formattedtext = format_text($post->message, $post->messageformat, $options, $this->get('course')->id);
+        $formattedtext = portfolio_rewrite_pluginfile_urls($formattedtext, $this->modcontext->id, 'mod_forum', 'post', $post->id, $format);
+
+        $output = html_writer::tag('a', '', array('id' => 'p' . $post->id));
+        $output .= '<table border="0" cellpadding="3" cellspacing="0" class="forumpost">';
+
+        $output .= '<tr class="header"><td>';// can't print picture.
+        $output .= '</td>';
+
+        if ($post->parent) {
+            $output .= '<td class="topic">';
+        } else {
+            $output .= '<td class="topic starter">';
+        }
+        $output .= '<div class="subject">'.format_string($post->subject).'</div>';
+
+        $fullname = fullname($users[$post->userid], $viewfullnames);
+        $by = new stdClass();
+        $by->name = $fullname;
+        $by->date = userdate($post->modified, '', $this->user->timezone);
+        $output .= '<div class="author">'.get_string('bynameondate', 'forum', $by).'</div>';
+
+        $output .= '</td></tr>';
+
+        $output .= '<tr><td class="left side" valign="top">';
+
+        $output .= '</td><td class="content">';
+
+        $output .= $formattedtext;
+
+        if (is_array($this->keyedfiles) && array_key_exists($post->id, $this->keyedfiles) && is_array($this->keyedfiles[$post->id]) && count($this->keyedfiles[$post->id]) > 0) {
+            $output .= '<div class="attachments">';
+            $output .= '<br /><b>' .  get_string('attachments', 'forum') . '</b>:<br /><br />';
+            foreach ($this->keyedfiles[$post->id] as $file) {
+                $output .= $format->file_output($file)  . '<br/ >';
+            }
+            $output .= "</div>";
+        }
+
+        $output .= '</td></tr></table>'."\n\n";
+
+        if (!empty($post->children)) {
+            $output .= html_writer::start_div('indent');
+            foreach ($post->children as $child) {
+                $output .= $this->prepare_post($child);
+            }
+            $output .= html_writer::end_div();
+        }
+
+        return $output;
+    }
+
+    /**
+     * @global object
+     */
+    public function load_data() {
+        global $DB;
+
+        if (!$this->forumid) {
+            throw new portfolio_caller_exception('invalidforumid', 'forum');
+        }
+
+        if (!$this->forum = $DB->get_record('forum', array('id' => $this->forumid))) {
+            throw new portfolio_caller_exception('invalidforumid', 'forum');
+        }
+
+        if (!$this->cm = get_coursemodule_from_instance('forum', $this->forumid)) {
+            throw new portfolio_caller_exception('invalidcoursemodule');
+        }
+
+        $posts = array();
+        $this->posts = array();
+        $this->multifiles = array();
+        $this->index = array();
+
+        $this->modcontext = context_module::instance($this->cm->id);
+        $groupmode    = groups_get_activity_groupmode($this->cm);
+        $currentgroup = groups_get_activity_group($this->cm);
+
+        // Users must fulfill timed posts.
+        $timelimit = '';
+        if (!empty($CFG->forum_enabletimedposts)) {
+            if (!has_capability('mod/forum:viewhiddentimedposts', $this->modcontext)) {
+                $timelimit = ' AND ((d.timestart <= :tltimestart AND (d.timeend = 0 OR d.timeend > :tltimeend))';
+                $params['tltimestart'] = $now;
+                $params['tltimeend'] = $now;
+                if (isloggedin()) {
+                    $timelimit .= ' OR d.userid = :tluserid';
+                    $params['tluserid'] = $USER->id;
+                }
+                $timelimit .= ')';
+            }
+        }
+
+        // Limiting to posts accessible according to groups.
+        $groupselect = '';
+        if ($groupmode) {
+            if ($groupmode == VISIBLEGROUPS || has_capability('moodle/site:accessallgroups', $this->modcontext)) {
+                if ($currentgroup) {
+                    $groupselect = 'AND (d.groupid = :groupid OR d.groupid = -1)';
+                    $params['groupid'] = $currentgroup;
+                }
+            } else {
+                if ($currentgroup) {
+                    $groupselect = 'AND (d.groupid = :groupid OR d.groupid = -1)';
+                    $params['groupid'] = $currentgroup;
+                } else {
+                    $groupselect = 'AND d.groupid = -1';
+                }
+            }
+        }
+
+        $params['forumid'] = $this->forumid;
+
+        $sql = "SELECT d.id, d.name, d.firstpost, d.timemodified
+                  FROM {forum_discussions} d
+                 WHERE d.forum = :forumid
+                       $timelimit
+                       $groupselect
+                 ORDER BY d.timemodified DESC";
+        $discussions = $DB->get_records_sql($sql, $params);
+        $fs = get_file_storage();
+        foreach ($discussions as $discussion) {
+            $fs = get_file_storage();
+            $posts = forum_get_all_discussion_posts($discussion->id, 'p.created ASC');
+            $this->posts = array_merge($this->posts, $posts);
+            $numattachments = 0;
+            foreach ($posts as $post) {
+                $attach = $fs->get_area_files($this->modcontext->id, 'mod_forum', 'attachment', $post->id, 'timemodified', false);
+                $embed  = $fs->get_area_files($this->modcontext->id, 'mod_forum', 'post', $post->id, 'timemodified', false);
+                $files = array_merge($attach, $embed);
+                $numattachments += count($files);
+                if ($files) {
+                    $this->keyedfiles[$post->id] = $files;
+                } else {
+                    continue;
+                }
+                $this->multifiles = array_merge($this->multifiles, array_values($this->keyedfiles[$post->id]));
+            }
+            $discussion->attachment = $numattachments;
+            array_push($this->index, $discussion);
+        }
+        if (empty($this->multifiles) && !empty($this->singlefile)) {
+            $this->multifiles = array($this->singlefile); // copy_files workaround
+        }
+        // depending on whether there are files or not, we might have to change richhtml/plainhtml
+        if (empty($this->attachment)) {
+            if (!empty($this->multifiles)) {
+                $this->add_format(PORTFOLIO_FORMAT_RICHHTML);
+            } else {
+                $this->add_format(PORTFOLIO_FORMAT_PLAINHTML);
+            }
+        }
+    }
+
+    /**
+     * export whole forum
+     *
+     * @global object
+     * @global object
+     * @uses PORTFOLIO_FORMAT_RICH
+     * @return mixed
+     */
+    public function prepare_package() {
+        global $CFG;
+
+        $this->filename = clean_filename($this->get('course')->shortname . '_' . $this->forum->name);
+        $this->filename = str_replace(' ', '_', $this->filename) . '.zip';
+
+        // set up the leap2a writer if we need it
+        $writingleap = false;
+        if ($this->exporter->get('formatclass') == PORTFOLIO_FORMAT_LEAP2A) {
+            $leapwriter = $this->exporter->get('format')->leap2a_writer();
+            $writingleap = true;
+        }
+
+        $content = (!$writingleap ? $this->html_header($this->forum->name) : '');
+        $ids = array(); // if we're writing leap2a, keep track of all entryids so we can add a selection element
+        if (!$writingleap) {
+            if (file_exists($CFG->dirroot . '/mod/forum/' . $this->cssfile)) {
+                $csscontent = file_get_contents($CFG->dirroot . '/mod/forum/' . $this->cssfile);
+                $this->get('exporter')->write_new_file($csscontent, $this->cssfile);
+            }
+            $content .= $this->create_index();
+        }
+
+        foreach ($this->posts as $post) {
+            $posthtml = (!$post->parent) ? $this->prepare_post($post) : '';
+            if ($writingleap) {
+                $ids[] = $this->prepare_post_leap2a($leapwriter, $post, $posthtml);
+            } else {
+                $content .= $posthtml;
+            }
+        }
+
+        $this->copy_files($this->multifiles);
+        $name = 'forum.html';
+        $manifest = ($this->exporter->get('format') instanceof PORTFOLIO_FORMAT_RICH);
+        if ($writingleap) {
+            // add on an extra 'selection' entry
+            $selection = new portfolio_format_leap2a_entry('forum' . $this->forumid,
+                get_string('forum', 'forum') . ': ' . $this->forum->name, 'selection');
+            $leapwriter->add_entry($selection);
+            $leapwriter->make_selection($selection, $ids, 'Grouping');
+            $content = $leapwriter->to_xml();
+            $name = $this->get('exporter')->get('format')->manifest_name();
+        } else {
+            $content .= $this->html_footer();
+        }
+        $this->get('exporter')->write_new_file($content, $name, $manifest);
+    }
+
+    /**
+     * @global object
+     * @return string
+     */
+    public function get_return_url() {
+        global $CFG;
+        return $CFG->wwwroot . '/mod/forum/view.php?id=' . $this->cm->id;
+    }
+
+    /**
+     * @global object
+     * @return array
+     */
+    public function get_navigation() {
+        global $CFG;
+
+        $navlinks = array();
+        $navlinks[] = array(
+            'name' => format_string($this->forum->name),
+            'link' => $CFG->wwwroot . '/mod/forum/view.php?id=' . $this->forum->id,
+            'type' => 'title'
+        );
+        return array($navlinks, $this->cm);
+    }
+
+    /**
+     * @return string
+     */
+    public function get_filename() {
+        return $this->filename;
+    }
+
+    private function html_header($title = '') {
+        $html = '<html>
+                <head>
+                    <meta charset="utf-8"/>
+                    <title>' . $title . '</title>
+                    <link href="' . $this->cssfile . '" type="text/css" rel="stylesheet">
+                </head>
+                <body><h1>' . $title . ' ('. $this->get('course')->fullname .')</h1>';
+        return $html;
+    }
+
+    private function html_footer() {
+        $html = '</body>
+                </html>';
+        return $html;
+    }
+
+    private function create_index() {
+        $html = html_writer::start_div('forum_index');
+        foreach ($this->index as $value) {
+            $html .= html_writer::start_div('forum_discussion_title');
+            $html .= html_writer::tag('a', $value->name, array(
+                        'href' => '#p' . $value->firstpost,
+                    )
+            );
+            $date = '(' . userdate($value->timemodified) . ')';
+            $html .= html_writer::tag('span', $date, array('class' => 'forum_discussion_date'));
+            if ($value->attachment) {
+                $text = get_string('areaattachment', 'forum');
+                $html .= html_writer::tag('span', '(' . $text . ': ' . $value->attachment . ')');
+            }
+            $html .= html_writer::end_div();
+        }
+        $html .= html_writer::end_div();
+        return $html;
+    }
+}
+// Fi.
 
 /**
  * Class representing the virtual node with all itemids in the file browser

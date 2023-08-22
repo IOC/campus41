@@ -285,6 +285,9 @@ $string['exportstriphtml_help'] = 'Whether HTML tags such as p and br should be 
 $string['exportoptions'] = 'Export options';
 $string['exporthumandates'] = 'Human-readable dates';
 $string['exporthumandates_help'] = 'Whether dates should be exported in a human-readable format or as a timestamp (sequence of numbers).';
+// @PATCH IOC043: Export whole forum using portfolio
+$string['exportforum'] = 'Export whole forum to portfolio';
+// Fi
 $string['firstpost'] = 'First post';
 $string['favourites'] = 'Starred';
 $string['favouriteupdated'] = 'Your star option has been updated.';
