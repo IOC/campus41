@@ -165,8 +165,21 @@ class exported_discussion_summaries {
         $firstposts = $postvault->get_first_post_for_discussion_ids($discussionids);
 
         array_walk($exportedposts['summaries'], function($summary) use ($firstposts, $latestposts) {
+
+            // @PATCH IOC050: Show scheduled start date instead of modification date in discussion list.
+            if (!empty($summary->discussion->times['start'])) {
+                $summary->discussion->times['created'] = $summary->discussion->times['start'];
+                $summary->discussion->times['modified'] = $summary->discussion->times['start'];
+            } else {
+            // Fi.
+
             $summary->discussion->times['created'] = (int) $firstposts[$summary->discussion->firstpostid]->get_time_created();
             $summary->discussion->times['modified'] = (int) $latestposts[$summary->discussion->id]->get_time_created();
+
+            // @PATCH IOC050: Show scheduled start date instead of modification date in discussion list.
+            }
+            // Fi.
+
         });
 
         // @PATCH IOC043: Export whole forum using portfolio.
