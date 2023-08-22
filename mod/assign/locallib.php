@@ -2875,6 +2875,12 @@ class assign {
             $flags->mailed = 0;
         }
 
+        // @PATCH IOC031: Permet qualificar "sense qualificació" a les tasques.
+        if ($grade->grade === null) {
+            $flags->mailed = 1;
+        }
+        // Fi.
+
         return $this->update_user_flags($flags);
     }
 
@@ -7958,7 +7964,13 @@ class assign {
                     $mform->addHelpButton('gradedisabled', 'gradeoutofhelp', 'assign');
                 }
             } else {
+                // @PATCH IOC031: Permet qualificar "sense qualificació" a les tasques.
+                $grademenu = array(-1 => get_string('nograde'));
+                $grademenu += make_grades_menu($this->get_instance()->grade);
+                /*
                 $grademenu = array(-1 => get_string("nograde")) + make_grades_menu($this->get_instance()->grade);
+                */
+                // Fi.
                 if (count($grademenu) > 1) {
                     $gradingelement = $mform->addElement('select', 'grade', get_string('gradenoun') . ':', $grademenu);
 
@@ -8679,6 +8691,13 @@ class assign {
                 // Handle the case when grade is set to No Grade.
                 if (isset($formdata->grade)) {
                     $grade->grade = grade_floatval(unformat_float($formdata->grade));
+
+                    // @PATCH IOC031: Permet qualificar "sense qualificació" a les tasques.
+                    if ($formdata->grade == -1) {
+                        $grade->grade = null;
+                    }
+                    // Fi.
+
                 }
             }
             if (isset($formdata->workflowstate) || isset($formdata->allocatedmarker)) {
