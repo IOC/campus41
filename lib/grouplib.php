@@ -788,6 +788,9 @@ function groups_print_activity_menu($cm, $urlroot, $return=false, $hideallpartic
         $usergroups = groups_get_all_groups($cm->course, $USER->id, $cm->groupingid);
     } else {
         $allowedgroups = groups_get_all_groups($cm->course, $USER->id, $cm->groupingid); // only assigned groups
+        // @PATCH IOC044: Filter groups affected by availability restrictions.
+        $allowedgroups = groups_filter_groups_groupings_restricted_activity($cm, $allowedgroups);
+        // Fi.
     }
 
     $activegroup = groups_get_activity_group($cm, true, $allowedgroups);
@@ -1455,3 +1458,56 @@ function groups_get_activity_shared_group_members($cm, $userid = null) {
     }
     return groups_get_groups_members($groupsids);
 }
+
+// @PATCH IOC044: Filter groups affected by availability restrictions
+/**
+ * Returns groups available using group and grouping restrictions.
+ *
+ * @param stdClass|cm_info $cm course module
+ * @param array $groups groups
+ * @return array a list of groups
+ */
+function groups_filter_groups_groupings_restricted_activity($cm, $groups) {
+    if ($cm->availability) {
+        $groupcond = array();
+        $groupingcond = array();
+        $modinfo = get_fast_modinfo($cm->course);
+        $info = new \core_availability\info_module($modinfo->get_cm($cm->id));
+        $tree = $info->get_availability_tree();
+        list($innernot, $andoperator) = $tree->get_logic_flags(false);
+        $onlygroupsin = ((empty($innernot) and empty($andoperator)) or (empty($innernot) and !empty($andoperator)));
+        if ($dates = $tree->get_all_children('availability_group\condition')) {
+            $restrictedgroups = array_map(function ($g) {
+                return $g->groupid;
+            }, $dates);
+            if (!in_array(0, $restrictedgroups)) {
+                if ($onlygroupsin) {
+                    $groupcond = array_intersect_key($groups, array_flip($restrictedgroups));
+                } else {
+                    $groupcond = array_diff_key($groups, array_flip($restrictedgroups));
+                }
+            } else {
+                $groupcond = $groups;
+            }
+        }
+        if ($dates = $tree->get_all_children('availability_grouping\condition')) {
+            $restrictedgroups = array();
+            $restrictedgroupings = array_map(function ($g) {
+                return $g->groupingid;
+            }, $dates);
+            foreach ($restrictedgroupings as $groupingid) {
+                $restrictedgroups += groups_get_all_groups($cm->course, 0, $groupingid);
+            }
+            if ($onlygroupsin) {
+                $groupingcond = array_intersect_key($groups, $restrictedgroups);
+            } else {
+                $groupingcond = array_diff_key($groups, $restrictedgroups);
+            }
+        }
+        if (!empty($groupcond) || !empty($groupingcond)) {
+            $groups = $groupcond + $groupingcond;
+        }
+    }
+    return $groups;
+}
+// Fi.

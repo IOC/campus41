@@ -168,6 +168,11 @@ class mod_forum_post_form extends moodleform {
 
             if ($groupmode = groups_get_activity_groupmode($cm, $course)) {
                 $groupdata = groups_get_activity_allowed_groups($cm);
+                // @PATCH IOC044: Filter groups affected by availability restrictions
+                if ($groupmode == SEPARATEGROUPS and !has_capability('moodle/site:accessallgroups', $modcontext)) {
+                    $groupdata = groups_filter_groups_groupings_restricted_activity($cm, $groupdata);
+                }
+                // Fi
                 $groupinfo = array();
                 foreach ($groupdata as $groupid => $group) {
                     // Check whether this user can post in this group.
