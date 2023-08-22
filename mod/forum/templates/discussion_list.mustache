@@ -213,7 +213,13 @@
                                             {{#discussion.pinned}}
                                                 {{#pix}}i/pinned, mod_forum, {{#str}}discussionpinned, mod_forum{{/str}}{{/pix}}
                                             {{/discussion.pinned}}
+                                            {{! @PATCH IOC046: Show the number of attachments in each discussion. }}
+                                            <a class="w-100 h-100 d-block" href="{{discussion.urls.view}}" title="{{discussion.title}}" aria-label="{{discussion.title}}">
+                                            {{! Original }}
+                                            <!--
                                             <a class="w-100 h-100 d-block" href="{{discussion.urls.view}}" title="{{discussion.name}}" aria-label="{{discussion.name}}">
+                                            -->
+                                            {{! Fi }}
                                                 {{#shortentext}}100, {{{discussion.name}}}{{/shortentext}}
                                             </a>
                                         </div>
