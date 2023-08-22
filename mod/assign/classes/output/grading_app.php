@@ -142,6 +142,25 @@ class grading_app implements templatable, renderable {
         $export->duedate = $this->assignment->get_instance()->duedate;
         $export->duedatestr = userdate($this->assignment->get_instance()->duedate);
 
+        // @PATCH IOC047: Parches Assign
+        $filter = get_user_preferences('assign_filter', '');
+        $export->filtersubmitted = false;
+        $export->filternotsubmitted = false;
+        $export->filterrequiregrading = false;
+        $export->filtergrantedextension = false;
+        if ($this->assignment->is_any_submission_plugin_enabled()) {
+            if ($filter == ASSIGN_FILTER_SUBMITTED) {
+                $export->filtersubmitted = true;
+            } else if ($filter == ASSIGN_FILTER_NOT_SUBMITTED) {
+                $export->filternotsubmitted = true;
+            } else if ($filter == ASSIGN_FILTER_REQUIRE_GRADING) {
+                $export->filterrequiregrading = true;
+            } else if ($filter == ASSIGN_FILTER_GRANTED_EXTENSION) {
+                $export->filtergrantedextension = true;
+            }
+        }
+        // Fi.
+
         // Time remaining.
         $due = '';
         if ($export->duedate - $time <= 0) {

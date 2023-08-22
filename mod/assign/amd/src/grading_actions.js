@@ -34,6 +34,10 @@ define(['jquery', 'mod_assign/grading_events'], function($, GradingEvents) {
         this._region = $(selector);
 
         this.registerEventListeners();
+
+        // @PATCH IOC047: Parches Assign
+        this.collapseReviewPanel();
+        // Fi.
     };
 
     /** @property {String} Selector for the page region containing the user navigation. */

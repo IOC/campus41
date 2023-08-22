@@ -2275,6 +2275,25 @@ class assign {
                 if (empty($tablesort)) {
                     $orderby = "COALESCE(s.timecreated, " . time() . ") ASC, COALESCE(s.id, " . PHP_INT_MAX . ") ASC, um.id ASC";
                 }
+
+            // @PATCH IOC047: Parches Assign
+            } else {
+                $filter = get_user_preferences('assign_filter', '');
+                if ($filter == ASSIGN_FILTER_REQUIRE_GRADING) {
+                    $additionaljoins .= " LEFT JOIN {assign_user_mapping} um
+                              ON u.id = um.userid
+                             AND um.assignment = :assignmentid1
+                       LEFT JOIN {assign_submission} s
+                              ON u.id = s.userid
+                             AND s.assignment = :assignmentid2
+                             AND s.latest = 1
+                        ";
+                    $params['assignmentid1'] = (int) $instance->id;
+                    $params['assignmentid2'] = (int) $instance->id;
+
+                    $orderby = "COALESCE(s.timemodified, " . time() . ") ASC";
+                }
+            // Fi.
             }
 
             if ($instance->markingworkflow &&
@@ -2986,7 +3005,15 @@ class assign {
         // Fi.
 
         // Only push to gradebook if the update is for the most recent attempt.
+
+        // @PATCH IOC047: Parches Assign
+        if ($submission && $submission->attemptnumber != $grade->attemptnumber && !$gradeattempt) {
+        // Original.
+        /* 
         if ($submission && $submission->attemptnumber != $grade->attemptnumber) {
+        */
+        // Fi.
+
             return true;
         }
 
