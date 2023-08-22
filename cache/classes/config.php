@@ -113,7 +113,13 @@ class cache_config {
         global $CFG;
         if (!empty($CFG->altcacheconfigpath)) {
             $path = $CFG->altcacheconfigpath;
+            // @PATCH IOC049: Not Writable Local Config Cache File.
+            if (is_dir($path)) {
+            // Original.
+            /*
             if (is_dir($path) && is_writable($path)) {
+            */
+            // Fi.
                 // Its a writable directory, thats fine.
                 return $path.'/cacheconfig.php';
             } else if (is_writable(dirname($path)) && (!file_exists($path) || is_writable($path))) {
