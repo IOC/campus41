@@ -164,6 +164,17 @@ if ($mform->is_cancelled()) {
     grade_item::set_properties($gradeitem, $data);
     $gradeitem->outcomeid = null;
 
+    // @PATCH IOC011: grade tree improvements
+    if ($grades = grade_grade::fetch_all(array('itemid' => $id))) {
+        foreach ($grades as $grade) {
+            $grade->rawgrademin = $grade_item->grademin;
+            $grade->rawgrademax = $grade_item->grademax;
+            $grade->rawscaleid  = $grade_item->scaleid;
+            $grade->update('gradebook');
+        }
+    }
+    // fi
+
     // Handle null decimals value
     if (!property_exists($data, 'decimals') or $data->decimals < 0) {
         $gradeitem->decimals = null;

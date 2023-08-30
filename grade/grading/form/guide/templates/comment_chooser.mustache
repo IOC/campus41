@@ -50,7 +50,11 @@
     <div class="list-group">
         {{#comments}}
             <button class="list-group-item list-group-item-action" id="comment-option-{{criterionId}}-{{id}}" tabindex="0">
-                {{description}}
+                {{! PATCH IOC011 }}
+                {{{description}}}
+                {{! Original. }}
+                {{!description!}}
+                {{! Fi. }}
             </button>
         {{/comments}}
     </div>

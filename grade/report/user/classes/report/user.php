@@ -823,7 +823,16 @@ class user extends grade_report {
                         $data['feedback']['class'] = $classfeedback.' feedbacktext';
                         $data['feedback']['content'] = get_string('overridden', 'grades').': ' .
                             format_text($gradegrade->feedback, $gradegrade->feedbackformat,
-                                ['context' => $gradegrade->get_context()]);
+                                // @PATCH IOC011: rich format grade comments.
+                                [
+                                    'context' => $grade_grade->get_context(),
+                                    'noclean' => true,
+                                ]);
+                                // Original.
+                                /*
+                                ['context' => $grade_grade->get_context()]);
+                                */
+                                // Fi.
                         $gradeitemdata['feedback'] = $gradegrade->feedback;
                     } else if (empty($gradegrade->feedback) || (!$this->canviewhidden && $gradegrade->is_hidden())) {
                         $data['feedback']['class'] = $classfeedback.' feedbacktext';
@@ -831,7 +840,16 @@ class user extends grade_report {
                     } else {
                         $data['feedback']['class'] = $classfeedback.' feedbacktext';
                         $data['feedback']['content'] = format_text($gradegrade->feedback, $gradegrade->feedbackformat,
-                            ['context' => $gradegrade->get_context()]);
+                            // @PATCH IOC011: rich format grade comments.
+                            [
+                                'context' => $grade_grade->get_context(),
+                                'noclean' => true,
+                            ]);
+                            // Original.
+                            /*
+                            ['context' => $grade_grade->get_context()]);
+                            */
+                            // Fi.
                         $gradeitemdata['feedback'] = $gradegrade->feedback;
                     }
                     $data['feedback']['headers'] = "$headercat $headerrow feedback";

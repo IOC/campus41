@@ -100,7 +100,15 @@ class grader_report_preferences_form extends moodleform {
 
         // View capability is the lowest permission. Users with grade:manage or grade:edit must also have grader:view
         if (has_capability('gradereport/grader:view', $context)) {
+
+            // @PATCH IOC011: grade UI improvement
+            $options = array(10 => '10', 20 => '20', 50 => '50', 100 => '100');
+            $preferences['prefgeneral']['studentsperpage'] = $options;
+            // Original.
+            /*
             $preferences['prefgeneral']['studentsperpage'] = 'text';
+            */
+            // Fi.
             if (has_capability('moodle/course:viewsuspendedusers', $context)) {
                 $preferences['prefgeneral']['showonlyactiveenrol'] = $checkbox_default;
             }

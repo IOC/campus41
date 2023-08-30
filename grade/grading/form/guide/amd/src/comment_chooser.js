@@ -78,6 +78,13 @@ define(['jquery', 'core/templates', 'core/notification', 'core/yui'], function($
                         if (remarkText.trim() !== '') {
                             remarkText += '\n';
                         }
+                        // @PATCH IOC011: grading comments.
+                        var parsedDescription;
+                        parsedDescription = $.parseHTML(comment.description);
+                        if (parsedDescription[0]) {
+                            comment.description = parsedDescription[0].textContent;
+                        }
+                        // fi
                         remarkText += comment.description;
 
                         remarkTextArea.val(remarkText);
