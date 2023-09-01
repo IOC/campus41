@@ -188,8 +188,10 @@ class downloader {
         // Individual submissions are by user.
         if ($manager->is_blind_marking()) {
             $fullname = get_string('participant', 'mod_assign');
-        } else {
-            $fullname = fullname($student, has_capability('moodle/site:viewfullnames', $manager->get_context()));
+        // @PATCH IOC028: Changed lastname firstname order on downloaded filename
+        } else if (has_capability('moodle/site:viewfullnames', $manager->get_context())) {
+            $fullname = $student->lastname .' '. $student->firstname;
+        // Fi
         }
         $prefix = str_replace('_', ' ', $fullname);
         $prefix = clean_filename($prefix . '_' . $manager->get_uniqueid_for_user($student->id));
