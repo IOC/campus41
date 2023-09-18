@@ -1120,8 +1120,31 @@ class assign_grading_table extends table_sql implements renderable {
 
         if ($this->assignment->is_any_submission_plugin_enabled()) {
 
+            // @PATCH IOC027: Show a message when a student removes their own submission.
+            $deletedsubmission = $deletedclass = '';
+            if ($status === ASSIGN_SUBMISSION_STATUS_SUBMITTED) {
+                if ($this->assignment->get_instance()->teamsubmission) {
+                    $group = false;
+                    $submission = false;
+                    $this->get_group_and_submission($row->id, $group, $submission, -1);
+                } else {
+                    $submission = $this->assignment->get_user_submission($row->id, false);
+                }
+                if (!$submission or $this->assignment->submission_empty($submission)) {
+                    $deletedsubmission = html_writer::tag('div', get_string('submissionstatus_submitted_deleted', 'assign'));
+                    $deletedclass = 'deleted';
+                }
+            }
+
+            $o .= $this->output->container(get_string('submissionstatus_' . $displaystatus, 'assign') . $deletedsubmission,
+                                           array('class' => 'submissionstatus' .$displaystatus . $deletedclass));
+            // Original.
+            /*
             $o .= $this->output->container(get_string('submissionstatus_' . $displaystatus, 'assign'),
                                            array('class' => 'submissionstatus' .$displaystatus));
+            */
+            // Fi.
+            
             if ($due && $timesubmitted > $due && $status != ASSIGN_SUBMISSION_STATUS_NEW) {
                 $usertime = format_time($timesubmitted - $due);
                 $latemessage = get_string('submittedlateshort',

@@ -696,8 +696,22 @@ class renderer extends \plugin_renderer_base {
         $cell2attributes = [];
         if (!$status->teamsubmissionenabled) {
             if ($status->submission && $status->submission->status != ASSIGN_SUBMISSION_STATUS_NEW) {
+                // @PATCH IOC027: Show a message when a student removes their own submission.
+                $deletedsubmission = $deletedclass = '';
+                $assignment = new assign($status->context, null, null);
+                if ($status->submission->status == ASSIGN_SUBMISSION_STATUS_SUBMITTED and $assignment->submission_empty($status->submission)) {
+                    $deletedsubmission = get_string('submissionstatus_submitted_deleted', 'assign');
+                    $deletedclass = 'deleted';
+                }
+                // Fi.
                 $cell2content = get_string('submissionstatus_' . $status->submission->status, 'assign');
+                // @PATCH IOC027: Show a message when a student removes their own submission.
+                $cell2attributes = array('class' => 'submissionstatus' . $status->submission->status . $deletedclass);
+                // Original.
+                /*
                 $cell2attributes = array('class' => 'submissionstatus' . $status->submission->status);
+                */
+                // Fi.
             } else {
                 if (!$status->submissionsenabled) {
                     $cell2content = get_string('noonlinesubmissions', 'assign');
@@ -711,7 +725,19 @@ class renderer extends \plugin_renderer_base {
                 $cell2content = get_string('nosubmission', 'assign');
             } else if ($status->teamsubmission && $status->teamsubmission->status != ASSIGN_SUBMISSION_STATUS_NEW) {
                 $teamstatus = $status->teamsubmission->status;
+                // @PATCH IOC027: Show a message when a student removes their own submission.
+                $deletedsubmission = $deletedclass = '';
+                $assignment = new assign($status->context, null, null);
+                if ($teamstatus == ASSIGN_SUBMISSION_STATUS_SUBMITTED and $assignment->submission_empty($status->teamsubmission)) {
+                    $deletedsubmission = get_string('submissionstatus_submitted_deleted', 'assign');
+                    $deletedclass = 'deleted';
+                }
+                $cell2content = get_string('submissionstatus_' . $teamstatus, 'assign') . ' ' . $deletedsubmission;
+                // Original.
+                /*
                 $cell2content = get_string('submissionstatus_' . $teamstatus, 'assign');
+                */
+                // Fi.
 
                 $members = $status->submissiongroupmemberswhoneedtosubmit;
                 $userslist = array();
@@ -730,6 +756,14 @@ class renderer extends \plugin_renderer_base {
                     $formatteduserstr = get_string('userswhoneedtosubmit', 'assign', $userstr);
                     $cell2content .= $this->output->container($formatteduserstr);
                 }
+
+                // @PATCH IOC027: Show a message when a student removes their own submission.
+                $cell2attributes = array('class' => 'submissionstatus' . $status->teamsubmission->status. $deletedclass);
+                // Original.
+                /*
+                $cell2attributes = array('class' => 'submissionstatus' . $status->teamsubmission->status);
+                */
+                // Fi.
 
                 $cell2attributes = array('class' => 'submissionstatus' . $status->teamsubmission->status);
             } else {
