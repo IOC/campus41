@@ -1,0 +1,13 @@
+<?php if ($error): ?>
+<p id="errorlog_error"><?php echo $error; ?></p>
+<?php else: ?>
+<div id="errorlog_scroll">
+  <pre id="errorlog_content"><?php echo $content; ?></pre>
+</div>
+<form id="errorlog_form" method="get">
+  <p><?php print_string('errorlog_filter', 'local_errorlog'); ?>:
+    <input type="text" name="filter" size="40" value="<?php echo $filter; ?>" />
+    <input type="submit" value="<?php print_string('errorlog_refresh', 'local_errorlog'); ?>" />
+  </p>
+</form>
+<?php endif; ?>

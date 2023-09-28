@@ -1,0 +1,23 @@
+#errorlog_content {
+    color: black;
+    background-color: white;
+    font-family: monospace;
+    font-size:1em;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+#errorlog_scroll {
+    height: 500px;
+    width: 98%;
+    min-width: 950px;
+    overflow: auto;
+    border: solid 1px silver;
+    margin: 5px 0 15px 0;
+    padding: 5px;
+}
+
+#errorlog_error {
+    margin: 10px;
+}
