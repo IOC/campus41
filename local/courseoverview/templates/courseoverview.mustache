@@ -1,0 +1,85 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_courseoverview/courseoverview
+}}
+
+{{#data}}
+
+    <div id="local-course-overview-container-{{course_id}}" class="local-course-overview-container">
+        {{#is_unread_forums}}
+            <span id="local-course-overview-item-{{course_id}}" class="local-course-overview-item"
+                  onclick=\'
+                      function toggleVisibility{{course_id}}() {
+                          let item = document.getElementById("local-course-overview-forum-{{course_id}}");
+                          if (item.style.display === "none") {
+                              item.style.display = "block";
+                          } else {
+                              item.style.display = "none";
+                          }
+                      }
+                      toggleVisibility{{course_id}}();
+                      \'>
+                {{#pix}} icon, mod_forum, {{#str}}unreadposts, mod_forum{{/str}} {{/pix}}
+                <span class="local-course-overview-item-forum">{{unread_forums}}</span>
+            </span>
+        {{/is_unread_forums}}
+
+        {{#is_teacher}}
+            {{#is_teacher_pending_assign}}
+                <span class="local-course-overview-item">
+                    <a href="{{url_assign}}" target="_blank">
+                        {{#pix}}icon, mod_assign, {{#str}}pendingassignmentsteacher, local_courseoverview{{/str}} {{/pix}}
+                        <span>{{teacher_pending_assign}}</span>
+                    </a>
+                </span>
+            {{/is_teacher_pending_assign}}
+            {{#teacher_pending_quiz}}
+                <span class="local-course-overview-item">
+                    <a href="{{url_quiz}}" target="_blank">
+                        {{#pix}}icon, mod_quiz, {{#str}}pendingquizzesteacher, local_courseoverview{{/str}} {{/pix}}
+                        <span>{{teacher_pending_quiz}}</span>
+                    </a>
+                </span>
+            {{/teacher_pending_quiz}}
+        {{/is_teacher}}
+
+        {{#is_student}}
+            {{#is_student_pending_assign}}
+                <span class="local-course-overview-item">
+                    <a href="{{url_assign}}" target="_blank">
+                        {{#pix}}icon, mod_assign, {{#str}}pendingassignments, local_courseoverview{{/str}}{{/pix}}
+                        <span>{{student_pending_assign}}</span>
+                    </a>
+                </span>
+            {{/is_student_pending_assign}}
+            {{#is_student_pending_quiz}}
+                <span class="local-course-overview-item">
+                    <a href="{{url_quiz}}" target="_blank">
+                        {{#pix}}icon, mod_quiz, {{#str}}pendingquizzes, local_courseoverview{{/str}}{{/pix}}
+                        <span>{{student_pending_quiz}}</span>
+                    </a>
+                </span>
+            {{/is_student_pending_quiz}}
+        {{/is_student}}
+
+        <div id="local-course-overview-forum-{{course_id}}" style="display:none;">
+            {{{forums_details}}}
+        </div>
+    </div>
+
+{{/data}}

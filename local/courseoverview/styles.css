@@ -1,0 +1,41 @@
+/* Card format */
+.dashboard-card .local-course-overview-container {
+    padding: 0 0 .8rem .8rem;
+}
+
+/* In card format, avoid the div grow when another card grows. */
+div.dashboard-card div.course-info-container {
+    flex-grow: unset;
+}
+
+/* List format */
+.list-group-item .local-course-overview-container {
+    padding: 0;
+}
+
+.list-group-item .local-course-overview-container ul li {
+    list-style-type: disc;
+}
+
+/* Summary format */
+.course-summaryitem .local-course-overview-container {
+    margin-left: 85px;
+}
+
+/* Styles for the box of icons (courseoverview.mustache) */
+.local-course-overview-item {
+    padding-right: 0.6rem;
+}
+
+.local-course-overview-item img {
+    vertical-align: text-top;
+}
+
+.local-course-overview-item-forum {
+    font-weight: bold;
+    color: #2A84F9;
+}
+
+.local-course-overview-item {
+    cursor: pointer;
+}

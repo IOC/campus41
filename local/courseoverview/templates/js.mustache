@@ -1,0 +1,88 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_courseoverview/js
+}}
+
+{{#js}}
+
+require([], function () {
+
+    var attrObserver = new MutationObserver((mutations, observer) => {
+
+        mutations.forEach((mu) => {
+
+            // Ignore changes that don't involve adding content.
+            if (mu.addedNodes.length == 0) {
+                return;
+            }
+
+            // Avoid duplicated content.
+            let courses_overview_container = document.querySelectorAll('.local-course-overview-container');
+            if (courses_overview_container.length > 0) {
+                return;
+            }
+
+            let courses = [
+                {{#courses}}
+                {
+                    course_id: {{{course_id}}},
+                    data: '{{{data}}}'
+                },
+                {{/courses}}
+            ];
+
+            // Get all the divs in the page that contain information about the courses
+            let list_course = document.querySelectorAll('.block_myoverview [data-region="course-content"]');
+
+            // Inject data into each course. This is done by matching all the divs in the page with the list of courses.
+            for (let i = 0; i < list_course.length; ++i) {
+                for (let j = 0; j < courses.length; ++j) {
+                    if (list_course[i].dataset.courseId == courses[j].course_id) {
+                        list_course[i].insertAdjacentHTML('beforeend', courses[j].data);
+                    }
+                }
+            }
+
+            observer.disconnect();
+
+            // Program changes produced by commuting the course view.
+            let courses_view = document.querySelectorAll('.block_myoverview [data-region="courses-view"]');
+
+            for (var i = 0; i < courses_view.length; ++i) {
+                attrObserver.observe(courses_view[0], {
+                    childList: true,
+                    subtree: true,
+                });
+            }
+
+        });
+    });
+
+    // Program initial change, which involves adding the courses information.
+    let courses_view = document.querySelectorAll('.block_myoverview [data-region="courses-view"]');
+
+    for (var i = 0; i < courses_view.length; ++i) {
+        attrObserver.observe(courses_view[0], {
+            childList: true,
+            subtree: true,
+        });
+    }
+
+});
+
+{{/js}}
