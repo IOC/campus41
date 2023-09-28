@@ -4921,6 +4921,17 @@ class restore_create_categories_and_questions extends restore_structure_step {
 
             // Let's create the question_category and save mapping.
             $newitemid = $DB->insert_record('question_categories', $data);
+
+            //------------------------------
+            // @PATCH IOC051 : Esborra preguntes aleatòries òrfenes en finalitzar un restore
+            //------------------ Codi afegit:
+            if ($data->qtype === 'random') {
+                global $CFG;
+                if (!isset($CFG->insertedrandomquestions)) $CFG->insertedrandomquestions = [];
+                $CFG->insertedrandomquestions[] = $newitemid;
+            }
+            //---------------------- Fi patch (resten 1)
+
             $this->set_mapping('question_category', $oldid, $newitemid);
             // Also annotate them as question_category_created, we need
             // that later when remapping parents.

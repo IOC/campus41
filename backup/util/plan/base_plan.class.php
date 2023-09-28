@@ -191,6 +191,34 @@ abstract class base_plan implements checksumable, executable {
             $task->execute();
         }
 
+        //------------------------------
+        // @PATCH IOC051 : Esborra preguntes aleatòries òrfenes en finalitzar un restore
+        //------------------ Codi afegit:
+        global $CFG, $DB;
+
+        if (!empty($CFG->insertedrandomquestions)) {
+
+            $unusedrandomids = $DB->get_records_sql('
+                SELECT q.id, 1
+                  FROM {question} q
+             LEFT JOIN {quiz_slots} qslots ON q.id = qslots.questionid
+                 WHERE qslots.questionid IS NULL
+                   AND q.qtype = ? AND hidden = ? AND q.id IN ('. join(",", $CFG->insertedrandomquestions) .')', ['random', 0]);
+
+            unset($CFG->insertedrandomquestions);
+
+            $count = 0;
+            foreach ($unusedrandomids as $unusedrandomid => $notused) {
+                question_delete_question($unusedrandomid);
+                // In case the question was not actually deleted (because it was in use somehow
+                // mark it as hidden so the query above will not return it again.
+                $DB->set_field('question', 'hidden', 1, ['id' => $unusedrandomid]);
+                $count += 1;
+            }
+
+        }
+        //---------------------- Fi patch (resten 0)
+
         // Finish progress tracking.
         $progress->end_progress();
     }
