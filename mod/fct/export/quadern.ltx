@@ -1,0 +1,378 @@
+\documentclass[a4paper,11pt,svgnames,oneside]{book}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage[OT1]{fontenc}
+\usepackage{textcomp}%Extended characters
+\usepackage[catalan]{babel}
+\usepackage{longtable}
+\usepackage{hyperref}%Create hyperlinks
+\usepackage{fancyhdr}%Customized headers
+\usepackage[top=20mm, bottom=20mm, right=20mm, left=20mm]{geometry}
+\usepackage{textpos}%Set text in a position
+\usepackage{titlesec}%Customize sections
+\usepackage{setspace}%Control over line spacing
+\usepackage{paralist}%Used to show quiz solutions
+\usepackage[gen]{eurosym}%Euro currency symbol
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{parcolumns}
+
+% Fonts size
+\renewcommand{\tiny}{\fontsize{6}{7.2}\selectfont}
+\renewcommand{\small}{\fontsize{7.5}{9}\selectfont}
+\renewcommand{\scriptsize}{\fontsize{8.5}{10.2}\selectfont}
+\renewcommand{\normalsize}{\fontsize{11}{13.2}\selectfont}
+\renewcommand{\large}{\bfseries\fontsize{12}{14.4}\selectfont}
+\renewcommand{\Large}{\fontsize{13}{15.6}\selectfont}
+\renewcommand{\LARGE}{\fontsize{14}{16.8}\selectfont}
+\renewcommand{\huge}{\fontsize{17}{20.4}\selectfont}
+\renewcommand{\Huge}{\fontsize{30}{36}\selectfont}
+\newcommand{\subsub}{\fontsize{10}{11.2}\selectfont}
+\renewcommand{\arraystretch}{1.5}
+
+% Customize headings
+\newcommand{\headingnumbers}{
+    \titleformat{\chapter}[display]
+    {\normalfont\bfseries}{}{0pt}{\fontfamily{phv}\selectfont\Large \thechapter.\ }
+    \titlespacing*{\chapter}{0pt}{-15pt}{10pt}
+    \titleformat{\section}[display]
+    {\normalfont\bfseries}{}{0pt}{\fontfamily{phv}\selectfont\normalsize\bfseries\large \thesection\ }
+    \titleformat{\subsection}[display]
+    {\normalfont\bfseries}{}{0pt}{\fontfamily{phv}\selectfont\normalsize\bfseries\normalsize }
+    \titleformat{\subsubsection}[display]
+    {\normalfont\bfseries}{}{0pt}{\fontfamily{phv}\selectfont\subsub\bfseries }
+}
+
+% TOC Depth
+\setcounter{tocdepth}{1}
+
+% Customize links style
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=black,pdfborder={0 0 0},}
+
+% table row height
+\renewcommand{\arraystretch}{1.5}
+
+\begin{document}
+\thispagestyle{empty}
+\begin{textblock*}{100mm}(12cm,-1cm)
+    \includegraphics[height=10mm,width=50mm]{logo.pdf}
+\end{textblock*}
+
+% FrontPage
+\hyphenpenalty=100000
+\begin{spacing}{0.8}
+\begin{textblock*}{145mm}(1cm,7,6cm)
+    \raggedright\noindent\fontfamily{phv}\selectfont
+    \Huge \bfseries
+    ##quadern-practiques \\
+    \vspace{2mm}
+    ##fct \\
+    \vspace{5mm}
+    \huge
+    @@cicle:nom \\
+    \vspace{10mm}
+    \vspace{.6em}
+    \hspace{0em}
+    \begin{spacing}{1}
+        \Large \mdseries
+\begin{tabular}{lp{.6\textwidth}}
+\bfseries{##alumne} & @@quadern:alumne|usuari \\
+\bfseries{##empresa} & @@quadern:empresa:nom \\
+\bfseries{##tutor-centre} & @@quadern:tutor-centre|usuari \\
+\bfseries{##tutor-empresa} & @@quadern:tutor-empresa|usuari
+\end{tabular}
+\end{spacing}
+\end{textblock*}
+\end{spacing}
+\hyphenpenalty=1000
+
+% Empty page
+\newpage
+\thispagestyle{empty}
+\newpage
+
+% TOC
+\tableofcontents
+\newpage
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[LO]{\fontfamily{phv}\selectfont\tiny @@fct:centre:nom}
+    \fancyhead[CO]{\fontfamily{phv}\selectfont\tiny\thepage}
+    \fancyhead[RO]{\fontfamily{phv}\selectfont\tiny ##quadern-practiques}
+    \fancyfoot[RO]{}
+}
+
+% Header fancy pages
+\lhead{\fontfamily{phv}\selectfont\tiny @@fct:centre:nom}
+\chead{\fontfamily{phv}\selectfont\tiny\thepage}
+\rhead{\fontfamily{phv}\selectfont\tiny ##quadern-practiques}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+
+\headingnumbers
+\pagestyle{fancy}
+
+\chapter{##dades-generals}
+
+\section{##centre-docent}
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{##nom:} & @@fct:centre:nom \\
+\textbf{##adreca:} & @@fct:centre:adreca \\
+\textbf{##codi-postal:} & @@fct:centre:codi-postal \\
+\textbf{##poblacio:} & @@fct:centre:poblacio \\
+\textbf{##telefon:} & @@fct:centre:telefon \\
+\textbf{##fax:} & @@fct:centre:fax \\
+\textbf{##email:} & @@fct:centre:email
+\end{tabular}
+
+\section{##alumne}
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{##nom:} & @@quadern:alumne|usuari  \\
+\textbf{##dni:} & @@quadern:dades-alumne:dni \\
+\textbf{##data-naixement:} & @@quadern:dades-alumne:data-naixement|data \\
+\textbf{##adreca:} & @@quadern:dades-alumne:adreca \\
+\textbf{##codi-postal:} & @@quadern:dades-alumne:codi-postal \\
+\textbf{##poblacio:} & @@quadern:dades-alumne:poblacio \\
+\textbf{##telefon:} & @@quadern:dades-alumne:telefon \\
+\textbf{##email:} & @@quadern:dades-alumne:email \\
+\textbf{##procedencia:} & @@quadern:dades-alumne:procedencia|string \\
+\textbf{##targeta-sanitaria:} & @@quadern:dades-alumne:targeta-sanitaria \\
+\textbf{##inss:} & @@quadern:dades-alumne:inss
+\end{tabular}
+
+\section{##empresa}
+
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{##nom:} & @@quadern:empresa:nom \\
+\textbf{##adreca:} & @@quadern:empresa:adreca \\
+\textbf{##codi-postal:} & @@quadern:empresa:codi-postal \\
+\textbf{##poblacio:} & @@quadern:empresa:poblacio \\
+\textbf{##telefon:} & @@quadern:empresa:telefon \\
+\textbf{##fax:} & @@quadern:empresa:fax  \\
+\textbf{##email:} & @@quadern:empresa:email \\
+\textbf{##nif:} & @@quadern:empresa:nif
+\end{tabular}
+
+
+\subsection{##responsable-conveni}
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{##nom:} & @@quadern:empresa:nom-responsable \\
+\textbf{##cognoms:} & @@quadern:empresa:cognoms-responsable \\
+\textbf{##dni:} & @@quadern:empresa:dni-responsable \\
+\textbf{##carrec:} & @@quadern:empresa:carrec-responsable
+\end{tabular}
+
+\subsection{##tutor-empresa}
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{##nom:} & @@quadern:empresa:nom-tutor \\
+\textbf{##cognoms:} & @@quadern:empresa:cognoms-tutor \\
+\textbf{##dni:} & @@quadern:empresa:dni-tutor \\
+\textbf{##email:} & @@quadern:empresa:email-tutor
+\end{tabular}
+
+{{ if lloc-practiques }}
+\subsection{##lloc-practiques}
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{##nom:} & @@quadern:empresa:nom-lloc-practiques \\
+\textbf{##adreca:} & @@quadern:empresa:adreca-lloc-practiques \\
+\textbf{##codi-postal:} & @@quadern:empresa:codi-postal-lloc-practiques \\
+\textbf{##poblacio:} & @@quadern:empresa:poblacio-lloc-practiques \\
+\textbf{##telefon:} & @@quadern:empresa:telefon-lloc-practiques
+\end{tabular}
+{{ endif lloc-practiques }}
+
+\section{##conveni}
+
+{{ loop quadern:convenis }}
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{##codi:} & @@value:codi \\
+\textbf{##data-inici:} & @@value:data-inici|data \\
+\textbf{##data-final:} & @@value:data-final|data
+\end{tabular}
+\raggedright
+\vspace{1em}
+{{ endloop quadern:convenis }}
+
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{#b#prorrogues:} & @@quadern:prorrogues \\
+\textbf{##hores-practiques:} & @@quadern:hores-practiques \\
+\textbf{##hores-realitzades:} &  @@hores-realitzades \\
+\textbf{##hores-practiques-pendents:} & @@hores-practiques-pendents
+\end{tabular}
+
+\section{##horari-practiques}
+
+{{ loop quadern:convenis }}
+\begin{center}
+\textbf{##conveni @@value:codi}
+\end{center}
+\begin{center}
+\begin{tabular*}{0.55\textwidth}{@{\extracolsep{\fill}}lll}
+\hline
+\textbf{##dia} & \textbf{##de} & \textbf{##a} \\
+\hline
+{{ loop value:horari }}
+@@value:dia & @@value:hora-inici|hora & @@value:hora-final|hora \\
+{{ endloop value:horari }}
+\hline
+\end{tabular*}
+\end{center}
+
+{{ endloop quadern:convenis }}
+
+\section{##dades-relatives}
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{##hores-credit:} & @@quadern:hores-credit \\
+\textbf{##exempcio:} & @@quadern:exempcio|exempcio \\
+\textbf{##hores-anteriors:} & @@quadern:hores-anteriors  \\
+\textbf{##hores-realitzades:} & @@hores-realitzades-detall \\
+\textbf{##hores-pendents:} & @@hores-pendents
+\end{tabular}
+
+\chapter{##pla-activitats}
+
+\begin{itemize}[]
+{{ loop activitats }}
+\item @@value:descripcio
+{{ endloop activitats }}
+\end{itemize}
+
+\chapter{##quinzenes}
+
+\begin{center}
+\begin{tabular*}{0.55\textwidth}{@{\extracolsep{\fill}}llll}
+\hline
+\textbf{Any} & \textbf{Període} & \textbf{Dies} & \textbf{Hores} \\
+\hline
+{{ loop quinzenes }}
+@@value:any & @@value|periode & @@value:dies|count & @@value:hores|float \\
+{{ endloop quinzenes }}
+\hline
+\end{tabular*}
+\end{center}
+
+{{ loop quinzenes }}
+\section{##quinzena @@value|periode @@value:any}
+\begin{tabular}{ll}
+\textbf{##dies:} &  @@value:dies|list \\
+\textbf{##hores:} & @@value:hores|hores
+\end{tabular}
+
+\subsection{##activitats-realitzades}
+\begin{itemize}[]
+{{ loop value:activitats }}
+\item @@value|activitat
+{{ endloop value:activitats }}
+\end{itemize}
+
+\subsection{##valoracions-observacions}
+\begin{parcolumns}[nofirstindent=true, colwidths={2=0.8\textwidth}]{2}
+\colchunk{\textbf{##valoracions:}}
+\colchunk{@@value:valoracions}
+\colplacechunks
+\vspace{1em}
+\colchunk{\textbf{##observacions:}}
+\colchunk{@@value:observacions-alumne}
+\colplacechunks
+\end{parcolumns}
+
+\subsection{##retroaccio}
+\begin{parcolumns}[nofirstindent=true, colwidths={2=0.8\textwidth}]{2}
+\colchunk{\textbf{##tutor-centre:}}
+\colchunk{@@value:observacions-centre}
+\colplacechunks
+\vspace{1em}
+\colchunk{\textbf{##tutor-empresa:}}
+\colchunk{@@value:observacions-empresa}
+\colplacechunks
+\end{parcolumns}
+
+{{ endloop quinzenes }}
+
+\chapter{##valoracio}
+
+{{ if quadern:valoracio-parcial }}
+\section{##valoracio-parcial-actituds}
+\begin{center}
+\begin{longtable}{p{.8\textwidth}l}
+\endfirsthead
+\endhead
+\endfoot
+\endlastfoot
+{{ loop quadern:valoracio-parcial }}
+\textbf{@@key|actitud} & @@value|valoracio \\
+{{ endloop quadern:valoracio-parcial }}
+\end{longtable}
+\end{center}
+\raggedbottom
+{{ endif quadern:valoracio-parcial }}
+
+{{ if quadern:valoracio-final }}
+\section{##valoracio-final-actituds}
+\begin{center}
+\begin{longtable}{p{.8\textwidth}l}
+\endfirsthead
+\endhead
+\endfoot
+\endlastfoot
+{{ loop quadern:valoracio-final }}
+\textbf{@@key|actitud} & @@value|valoracio \\
+{{ endloop quadern:valoracio-final }}
+\end{longtable}
+\end{center}
+\raggedbottom
+{{ endif quadern:valoracio-final }}
+
+{{ if quadern:valoracio-resultats }}
+\section{##valoracio-resultats}
+\begin{center}
+\begin{longtable}{p{.8\textwidth}l}
+\endfirsthead
+\endhead
+\endfoot
+\endlastfoot
+{{ loop quadern:valoracio-resultats }}
+\textbf{@@key|resultat} & @@value|valoracio \\
+{{ endloop quadern:valoracio-resultats }}
+\end{longtable}
+\end{center}
+{{ endif quadern:valoracio-resultats }}
+
+\section{##valoracio-activitats}
+\begin{center}
+\begin{longtable}{p{.8\textwidth}l}
+\endfirsthead
+\endhead
+\endfoot
+\endlastfoot
+{{ loop activitats }}
+\textbf{@@value:descripcio} & @@value:nota|valoracio \\
+{{ endloop activitats }}
+\end{longtable}
+\end{center}
+
+\section{##qualificacio quadern}
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{##qualificacio:} & @@quadern:qualificacio:apte|qualificacio
+\linebreak
+@@quadern:qualificacio:nota|valoracio \\
+\textbf{data:} & @@quadern:qualificacio:data|data \\
+\textbf{##observacions:} & @@quadern:qualificacio:observacions
+\end{tabular}
+
+{{ if ultim-quadern }}
+\chapter{##qualificacio-global}
+
+\begin{tabular}{lp{.8\textwidth}}
+\textbf{##qualificacio} & @@quadern:qualificacio-global:apte|qualificacio
+\linebreak
+@@quadern:qualificacio-global:nota|valoracio \\
+\textbf{##data:} & @@quadern:qualificacio-global:data|data \\
+\textbf{##observacions:} & @@quadern:qualificacio-global:observacions
+\end{tabular}
+{{ endif ultim-quadern }}
+
+\end{document}

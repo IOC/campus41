@@ -1,0 +1,308 @@
+/* General */
+
+{
+    padding: 0.5em;
+}
+
+.amagat {
+    display: none;
+}
+
+.contingut {
+    padding: 2.5em 1.5em 1.5em 1.5em;
+    margin-left: 2px;
+}
+
+.contingut p {
+    text-align: center;
+}
+
+.contingut h2 {
+    font-size: 100%;
+    font-weight: bold;
+    text-align: center;
+    margin: 0.5em;
+}
+
+.fct_image {
+    max-width: 60%;
+}
+
+a.fct_obert {
+    color: #008000;
+}
+
+a.fct_proposat {
+    color: #ffa500;
+}
+
+a.fct_tancat {
+    color: #f00;
+}
+
+/* Pestanyes */
+
+.fct_tabs .tabtree .tabrow0 {
+    margin: 0 auto;
+    padding-bottom: 0;
+}
+
+.fct_tabs .tabtree .tabrow1 {
+    margin: 0;
+}
+
+.fct_tabs .tabtree ul.tabrow1 li.active {
+    font-weight: bold;
+}
+
+/* Taules */
+
+.contingut table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contingut th {
+    text-align: left;
+    padding: 0.1em 1em;
+}
+
+.contingut td {
+    text-align: left;
+    padding: 0.2em 1em;
+}
+
+.contingut td.accions {
+    width: 30px;
+}
+
+/* Formularis */
+
+form a.boto {
+    margin: 10px;
+}
+
+#valoracio_actituds .fitemtitle,
+#activitats .fitemtitle,
+#valoracio_resultats .fitemtitle,
+.databox .fitemtitle {
+    float: left;
+    width: 70%;
+}
+
+#valoracio_actituds .felement,
+#activitats .felement,
+#valoracio_resultats .felement,
+.databox .felement {
+    float: left;
+    margin-left: 1em;
+    width: 20%;
+}
+
+#activitats_realitzades .fitemtitle,
+#activitats_cicle .fitemtitle,
+#llista_empreses .fitemtitle,
+#cicle_formatiu .fitemtitle {
+    width: 10%;
+    text-align: left;
+}
+
+#activitats_realitzades .felement,
+#activitats_cicle .felement,
+#llista_empreses .felement,
+#cicle_formatiu .felement {
+    width: 80%;
+}
+
+form.fct_form_element_afegir_franja_horari {
+    width: 40%;
+    margin-top: 2em;
+}
+
+form .frases_areatext h4 {
+    margin: 0 0;
+    cursor: pointer;
+}
+
+form .frases_areatext ul {
+    margin: 5px 0;
+    list-style-type: none;
+}
+
+form .frases_areatext li:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+form .fct_search_elem {
+    margin-right: 2em;
+}
+
+#calendari_dies {
+    font-size: 0.8em;
+    margin: 5px 0;
+}
+
+#calendari_dies td, #calendari_dies th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    width: 2em;
+}
+
+.fct_quadern_valoracio_activitat .fct_valoracio,
+.fct_quadern_valoracio .fct_valoracio {
+    display: inline-block;
+    width: 80%;
+}
+
+.fct_quadern_valoracio select,
+.fct_quadern_valoracio_activitat select {
+    float: right;
+}
+
+.fct_quadern_valoracio .mform .fitem fieldset.felement,
+.fct_quadern_valoracio_activitat .mform .fitem fieldset.felement {
+    margin-left: 0;
+}
+
+/* Llista de quaderns */
+
+_quaderns td, _seguiment td {
+    padding: 0;
+}
+
+#quaderns tr:hover,
+_seguiment tr:hover,
+#quinzenes tr:hover {
+    background: #dddddd;
+}
+
+_quaderns td a, _seguiment td a  {
+    display: block;
+    padding: 2px 14px;
+}
+
+_quaderns td a:hover, _seguiment td a:hover {
+    text-decoration: none;
+}
+
+.selectors_quaderns {
+    margin-bottom: 1em;
+}
+
+.selectors_quaderns div  {
+    display: inline;
+    margin-right: 20px;
+}
+
+.selectors_quaderns div label {
+    margin-right: 5px;
+}
+
+/* Data */
+.databox {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.databox .fitem {
+    padding: 1em 0;
+}
+
+.databox .datalist {
+    list-style: none;
+    margin-left: 25%;
+}
+
+.databoxtitle {
+    font-weight: bold;
+    font-size: 1.2em;
+    border-bottom: 1px solid #aaa;
+    display: inline-block;
+    width: 100%;
+}
+
+.fct_message {
+    width: 100%;
+    text-align: center;
+}
+
+.datagroup {
+    margin: 0.5em 0;
+}
+
+.datagroup .datatitle {
+    display: inline-block;
+    width: 30%;
+    text-align: right;
+    font-style: italic;
+    vertical-align: top;
+}
+
+.datagroup .datacontent {
+    display: inline-block;
+    margin-left: 1em;
+    width: 60%;
+}
+
+.fct_actions {
+    margin: 2em auto;
+    text-align: center;
+    border-top: 1px solid #aaa;
+    width: 60%;
+}
+
+.fct_actions a {
+    display: inline-block;
+    margin: 1em;
+}
+
+.fct_actions.fct_clear {
+    margin: 3em auto;
+
+}
+
+.fct_resum_seguiment,
+.fct_data_prevista {
+    margin-top: 1em;
+    text-align: center;
+    width: 100%;
+}
+
+.fct_feedback {
+    margin: 0 auto;
+    width: 80%;
+}
+
+/* Tables */
+.avisos.generaltable,
+.quaderns.generaltable,
+.quadernactivitat.generaltable {
+    width: 100%;
+}
+
+.convenis.generaltable {
+    margin: 0 auto 1em auto;
+    width: 40%;
+}
+
+.horari.generaltable,
+.resumseguiment.generaltable {
+    margin: 2em auto;
+    min-width: 30%;
+}
+
+.quinzenes.generaltable,
+.cicles.generaltable {
+    margin: 0 auto;
+    min-width: 40%;
+}
+
+.avisos.generaltable td.lastcol.edit,
+.quaderns.generaltable td.lastcol.edit,
+.quinzenes.generaltable td.lastcol.edit,
+.quadernactivitat.generaltable td.lastcol.edit,
+.horari.generaltable td.lastcol.edit,
+.cicles.generaltable td.lastcol.edit {
+    text-align: center;
+}

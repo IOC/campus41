@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>##quadern-practiques</title>
+    <style>
+      body { padding: 0 2em }
+      h1 { font-size: 1.5em }
+      h2 { font-size: 1.2em }
+      h3 { font-size: 1em }
+      table th { text-align: left }
+      table td, th { padding: 0.1em 1em }
+      table, p { margin: 1em 0 }
+    </style>
+    <script>window.onload = window.print;</script>
+  </head>
+  <body>
+
+    <h1>##quadern-practiques</h1>
+
+    <table>
+      <tr><td>##alumne</td><td>@@quadern:alumne|usuari</td></tr>
+      <tr><td>##empresa</td><td>@@quadern:empresa:nom</td></tr>
+      <tr><td>##tutor-centre</td><td>@@quadern:tutor-centre|usuari</td></tr>
+      <tr><td>##tutor-empresa</td><td>@@quadern:tutor-empresa|usuari</td></tr>
+      <tr><td>##cicle-formatiu</td><td>@@cicle:nom</td></tr>
+      <tr><td>##estat</td><td>@@quadern:estat|estat</td></tr>
+    </table>
+
+    <h2>##alumne</h2>
+
+    <table>
+      <tr><td>##nom:</td><td>@@quadern:alumne|usuari</td></tr>
+      <tr><td>##dni:</td><td>@@quadern:dades-alumne:dni</td></tr>
+      <tr><td>##data-naixement:</td><td>@@quadern:dades-alumne:data-naixement|data</td></tr>
+      <tr><td>##adreca:</td><td>@@quadern:dades-alumne:adreca</td></tr>
+      <tr><td>##codi-postal:</td><td>@@quadern:dades-alumne:codi-postal</td></tr>
+      <tr><td>##poblacio:</td><td>@@quadern:dades-alumne:poblacio</td></tr>
+      <tr><td>##telefon:</td><td>@@quadern:dades-alumne:telefon</td></tr>
+      <tr><td>##email:</td><td>@@quadern:dades-alumne:email</td></tr>
+      <tr><td>##procedencia:</td><td>@@quadern:dades-alumne:procedencia|string</td></tr>
+      <tr><td>##targeta-sanitaria:</td><td>@@quadern:dades-alumne:targeta-sanitaria</td></tr>
+      <tr><td>##inss:</td><td>@@quadern:dades-alumne:inss</td></tr>
+    </table>
+
+    <h2>##empresa</h2>
+
+    <table>
+      <tr><td>##nom:</td><td>@@quadern:empresa:nom</td></tr>
+      <tr><td>##adreca:</td><td>@@quadern:empresa:adreca</td></tr>
+      <tr><td>##codi-postal:</td><td>@@quadern:empresa:codi-postal</td></tr>
+      <tr><td>##poblacio:</td><td>@@quadern:empresa:poblacio</td></tr>
+      <tr><td>##telefon:</td><td>@@quadern:empresa:telefon</td></tr>
+      <tr><td>##fax:</td><td>@@quadern:empresa:fax</td></tr>
+      <tr><td>##email:</td><td>@@quadern:empresa:email</td></tr>
+      <tr><td>##nif:</td><td>@@quadern:empresa:nif</td></tr>
+      <tr><td>##codi-agrupacio:</td><td>@@quadern:empresa:codi-agrupacio</td></tr>
+      <tr><td>##sic:</td><td>@@quadern:empresa:sic</td></tr>
+    </table>
+
+    <h3>##responsable-conveni</h3>
+
+    <table>
+      <tr><td>##nom:</td><td>@@quadern:empresa:nom-responsable</td></tr>
+      <tr><td>##cognoms:</td><td>@@quadern:empresa:cognoms-responsable</td></tr>
+      <tr><td>##dni:</td><td>@@quadern:empresa:dni-responsable</td></tr>
+      <tr><td>##carrec:</td><td>@@quadern:empresa:carrec-responsable</td></tr>
+    </table>
+
+    <h3>##tutor-empresa</h3>
+
+    <table>
+      <tr><td>##nom:</td><td>@@quadern:empresa:nom-tutor</td></tr>
+      <tr><td>##cognoms:</td><td>@@quadern:empresa:cognoms-tutor</td></tr>
+      <tr><td>##dni:</td><td>@@quadern:empresa:dni-tutor</td></tr>
+      <tr><td>##email:</td><td>@@quadern:empresa:email-tutor</td></tr>
+    </table>
+
+    <h3>##lloc-practiques</h3>
+
+    <table>
+      <tr><td>##nom:</td><td>@@quadern:empresa:nom-lloc-practiques</td></tr>
+      <tr><td>##adreca:</td><td>@@quadern:empresa:adreca-lloc-practiques</td></tr>
+      <tr><td>##codi-postal:</td><td>@@quadern:empresa:codi-postal-lloc-practiques</td></tr>
+      <tr><td>##poblacio:</td><td>@@quadern:empresa:poblacio-lloc-practiques</td></tr>
+      <tr><td>##telefon:</td><td>@@quadern:empresa:telefon-lloc-practiques</td></tr>
+    </table>
+
+    <h2>##conveni</h2>
+
+    {{ loop quadern:convenis }}
+    <table>
+      <tr><td>##codi:</td><td>@@value:codi</td></tr>
+      <tr><td>##data-inici:</td><td>@@value:data-inici|data</td></tr>
+      <tr><td>##data-final:</td><td>@@value:data-final|data</td></tr>
+    </table>
+    {{ endloop quadern:convenis }}
+
+    <table>
+      <tr><td>##prorrogues:</td><td>@@quadern:prorrogues</td></tr>
+      <tr><td>##hores-practiques:</td><td>@@quadern:hores-practiques</td></tr>
+      <tr><td>##hores-realitzades:</td><td> @@hores-realitzades</td></tr>
+      <tr><td>##hores-practiques-pendents:</td><td>@@hores-practiques-pendents</td></tr>
+    </table>
+
+    <h2>##horari-practiques</h2>
+
+    {{ loop quadern:convenis }}
+    <h3>##conveni @@value:codi</h3>
+    <table>
+      <tr><th>##dia</th><th>##de</th><th>##a</th></tr>
+      {{ loop value:horari }}
+      <tr><td>@@value:dia</td><td>@@value:hora-inici|hora</td><td>@@value:hora-final|hora</td></tr>
+      {{ endloop value:horari }}
+    </table>
+    {{ endloop quadern:convenis }}
+
+    <h2>##dades-relatives</h2>
+
+    <table>
+      <tr><td>##hores-credit:</td><td>@@quadern:hores-credit</td></tr>
+      <tr><td>##exempcio:</td><td>@@quadern:exempcio|exempcio</td></tr>
+      <tr><td>##hores-anteriors:</td><td>@@quadern:hores-anteriors</td></tr>
+      <tr><td>##hores-realitzades:</td><td>@@hores-realitzades-detall</td></tr>
+      <tr><td>##hores-pendents:</td><td>@@hores-pendents</td></tr>
+    </table>
+
+  </body>
+</html>

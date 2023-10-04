@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/fct/db" VERSION="20140214" COMMENT="FCT mod database structure "
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="fct" COMMENT="-">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" COMMENT="-"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="intro" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="objecte" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="-"/>
+        <KEY NAME="course" TYPE="foreign" FIELDS="course" REFTABLE="course" REFFIELDS="id" COMMENT="-"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="fct_cicle" COMMENT="-">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" COMMENT="-"/>
+        <FIELD NAME="fct" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="nom" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="objecte" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="-"/>
+        <KEY NAME="fct" TYPE="foreign" FIELDS="fct" REFTABLE="fct" REFFIELDS="id" COMMENT="-"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="fct_nom" UNIQUE="true" FIELDS="fct, nom" COMMENT="-"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="fct_quadern" COMMENT="-">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" COMMENT="-"/>
+        <FIELD NAME="alumne" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="tutor_centre" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="tutor_empresa" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="nom_empresa" TYPE="char" LENGTH="64" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="cicle" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="estat" TYPE="char" LENGTH="32" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="data_final" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="objecte" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="-"/>
+        <KEY NAME="alumne" TYPE="foreign" FIELDS="alumne" REFTABLE="user" REFFIELDS="id" COMMENT="-"/>
+        <KEY NAME="tutor_centre" TYPE="foreign" FIELDS="tutor_centre" REFTABLE="user" REFFIELDS="id" COMMENT="-"/>
+        <KEY NAME="tutor_empresa" TYPE="foreign" FIELDS="tutor_empresa" REFTABLE="user" REFFIELDS="id" COMMENT="-"/>
+        <KEY NAME="cicle" TYPE="foreign" FIELDS="cicle" REFTABLE="fct_cicle" REFFIELDS="id" COMMENT="-"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="estat" UNIQUE="false" FIELDS="estat"/>
+        <INDEX NAME="data_final" UNIQUE="false" FIELDS="data_final" COMMENT="-"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="fct_activitat" COMMENT="-">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" COMMENT="-"/>
+        <FIELD NAME="quadern" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="objecte" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="id" TYPE="primary" FIELDS="id" COMMENT="-"/>
+        <KEY NAME="quadern" TYPE="foreign" FIELDS="quadern" REFTABLE="fct_quadern" REFFIELDS="id" COMMENT="-"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="fct_quinzena" COMMENT="-">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" COMMENT="-"/>
+        <FIELD NAME="quadern" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="any_" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="periode" TYPE="int" LENGTH="2" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+        <FIELD NAME="objecte" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="-"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="-"/>
+        <KEY NAME="quadern" TYPE="foreign" FIELDS="quadern" REFTABLE="fct_quadern" REFFIELDS="id" COMMENT="-"/>
+        <KEY NAME="quadern_any_periode" TYPE="unique" FIELDS="quadern, any_, periode" COMMENT="-"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="fct_avis" COMMENT="-">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="quadern" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="data" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="objecte" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="quadern" TYPE="foreign" FIELDS="quadern" REFTABLE="fct_quadern" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="data" UNIQUE="false" FIELDS="data"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>
