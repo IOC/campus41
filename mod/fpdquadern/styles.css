@@ -1,0 +1,181 @@
+
+#page-mod-fpdquadern-view #region-main h2 {
+    font-size: 1.2em;
+    text-align: left;
+    padding: 0;
+    margin-bottom: 0.5em;
+}
+
+#page-mod-fpdquadern-view #region-main .singleselect {
+    text-align: left;
+}
+
+.mod-fpdquadern-icona {
+    margin-left: 0.25em;
+}
+
+.mod-fpdquadern-icona:last-child {
+    margin-right: 0.25em;
+}
+
+.mod-fpdquadern-icona > img {
+    margin: 0 !important;
+    vertical-align: baseline !important;
+}
+
+.mod-fpdquadern-alumne {
+    text-align: center;
+}
+
+.mod-fpdquadern-alumne > a {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 5px;
+}
+
+.mod-fpdquadern-alumne-exportar {
+    float: right;
+    margin: 15px;
+}
+
+.mod-fpdquadern-alumne-exportar img {
+    vertical-align: middle;
+    margin-bottom: 2px;
+}
+
+.mod-fpdquadern-columna-text {
+    max-width: 50em;
+}
+
+.mod-fpdquadern-dia-validat.hidden {
+    display: none;
+}
+
+.mod-fpdquadern-data-retard {
+    color: #d22;
+}
+
+/* Activitats */
+
+.mod-fpdquadern-activitat {
+    margin-bottom: 2em;
+}
+
+.mod-fpdquadern-activitat-mostrar {
+    display: none;
+}
+
+.mod-fpdquadern-activitat-titol {
+    font-size: 1.2em;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.mod-fpdquadern-activitat-estat {
+    font-weight: normal;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+/* Formularis */
+
+.mform.mod-fpdquadern-form {
+    margin-bottom: 2em;
+}
+
+.mform.mod-fpdquadern-form .fitem {
+    clear: none;
+    float: left;
+    width: inherit;
+    min-width: 100px;
+    margin: 0 50px 10px 0;
+}
+
+.mform.mod-fpdquadern-form .fitem.fitem_ffilepicker {
+    float: none;
+}
+
+.mform.mod-fpdquadern-form .fitem .fitemtitle {
+    float: none;
+    width: inherit;
+    text-align: left;
+    font-size: 0.9em;
+    font-weight: bold;
+    line-height: 2;
+}
+
+.mform.mod-fpdquadern-form .fitem .felement {
+    float: none;
+    width: inherit;
+    margin-left: inherit;
+    padding-left: 0;
+}
+
+.mform.mod-fpdquadern-form .fitem .fselect.felement,
+.mform.mod-fpdquadern-form .fitem .ftext.felement {
+    min-height: 2em;
+}
+
+.mform.mod-fpdquadern-form .fitem .fstatic.felement {
+    max-width: 30em;
+}
+
+.mform.mod-fpdquadern-activitats-alumne-form .fitem .fstatic.felement {
+    max-width: 60em;
+}
+
+.mform.mod-fpdquadern-form .fitem .fstatic.felement p {
+    margin: 1em 0 0 0;
+}
+
+.mform.mod-fpdquadern-form .fitem .fstatic.felement p:first-child {
+    margin: 0;
+}
+
+/* Dates al final d'un camp HTML (probablement després d'un paràgraf) */
+.mform.mod-fpdquadern-form .fitem .fstatic.felement p ~ div > .mod-fpdquadern-data {
+    display: block;
+    font-style: italic;
+    font-size: 0.9em;
+    margin-top: 0.75em;
+}
+
+.mform.mod-fpdquadern-form > fieldset {
+    margin: 0 0 10px 0;
+}
+
+.mform.mod-fpdquadern-form > fieldset > div {
+    margin: 0;
+}
+
+.mform.mod-fpdquadern-form input[type=radio] + label {
+    margin-right: 1em;
+}
+
+.mod-fpdquadern-form-editable .fitem {
+    float: none !important;
+}
+
+.mod-fpdquadern-dades-tutor-form .fitem:nth-child(5),
+.mod-fpdquadern-calendari-form .fitem:nth-child(4),
+.mod-fpdquadern-calendari-form .fitem:nth-child(5),
+.mod-fpdquadern-valoracio-form .fitem:nth-child(4),
+.mod-fpdquadern-valoracio-form .fitem:nth-child(6) {
+    clear: both !important;
+}
+
+.mod-fpdquadern-form .fitem fieldset.felement {
+    padding-left: 0;
+}
+
+.mform .mod-fpdquadern-select:first-child {
+    margin-top: 0;
+}
+
+.mform .mod-fpdquadern-avaluacio {
+    margin-top: 0.25em;
+}
+
+.mform .mod-fpdquadern-avaluacio abbr {
+    margin-right: 0.25em;
+}
