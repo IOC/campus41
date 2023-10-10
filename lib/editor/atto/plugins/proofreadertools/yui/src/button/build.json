@@ -1,0 +1,10 @@
+{
+  "name": "moodle-atto_proofreadertools-button",
+  "builds": {
+    "moodle-atto_proofreadertools-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}
