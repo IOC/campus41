@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>js/jquery.countdown.js</location>
+        <name>The Final Countdown for jQuery</name>
+        <version>2.2.0</version>
+        <license>MIT</license>
+    </library>
+</libraries>
