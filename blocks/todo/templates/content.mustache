@@ -1,0 +1,69 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template block_todo/content
+
+    My ToDo list block content template.
+
+    Renders a list of todo items.
+
+    Classes required for JS:
+    * none
+
+    Data attributes required for JS:
+    * data-region="block_todo-instance-<instanceid>" - specifies the region wrapping all the contents
+    * data-item="<id>" - specifies the wraper of a single todo item
+    * data-control="addform" - specifies the form for adding a new todo item
+    * data-control="delete" - specifies the button for deleting an item
+
+    Context variables required for this template:
+    * instanceid - block instance id
+    * items
+    ** items.id
+    ** items.todotext
+    ** items.done
+
+    Example context (json):
+    {
+        "items": [
+            { "id": "2", "todotext": "Meditate", "done": "0" }
+            { "id": "1", "todotext": "Hack", "done": "1" }
+        ]
+    }
+
+}}
+
+<div data-region="block_todo-instance-{{instanceid}}">
+    <form data-control="addform">
+        <div class="input-group control-group">
+            <input class="form-control input-block-level" type="text" placeholder="{{#str}} placeholder, block_todo {{/str}}">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    {{#str}} add {{/str}}</button>
+            </span>
+        </div>
+    </form>
+
+    <hr>
+
+    <ul class="list-group unstyled">
+        {{#items}}
+            {{>block_todo/item}}
+        {{/items}}
+    </ul>
+</div>
