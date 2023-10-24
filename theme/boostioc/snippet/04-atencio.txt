@@ -1,0 +1,1 @@
+{"name": "Atenció","key": "atencio","instructions": "Serveix per avisar l'estudiant d'algun aspecte rellevant que hagi de tenir en compte.","defaults": "","body": "<p class=\"ioc-spacer\"></p><div class=\"atencio\">Aquest és un bloc de text de mostra, el pots esborrar i enganxar aquí el teu text.</div><p><br></p>","version": "1.1.0"}

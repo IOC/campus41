@@ -1,0 +1,1 @@
+{"name": "Data de lliurament","key": "temps-previst-hora","instructions": "Informa l'estudiant de la data de lliurament.","defaults": "","body": "<p class=\"ioc-spacer\"></p><div class=\"retol\"><div class=\"data-de-lliurament\">17 de novembre</div></div>","version": "1.1.0"}

@@ -1,0 +1,1 @@
+{"name": "Temps previst (hores)","key": "temps-previst-hores","instructions": "Informa l'estudiant del temps previst per completar una determinada tasca o lectura, en hores.","defaults": "","body": "<p class=\"ioc-spacer\"></p><div class=\"retol\"><div class=\"temps-previst-hores\">2</div></div>","version": "1.1.0"}

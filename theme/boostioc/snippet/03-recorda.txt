@@ -1,0 +1,1 @@
+{"name": "Recorda","key": "recorda","instructions": "Serveix per \"refrescar\" la memòria sobre un contingut previ o que es dona per sabut.","defaults": "","body": "<p class=\"ioc-spacer\"></p><div class=\"recorda\">Aquest és un bloc de text de mostra, el pots esborrar i enganxar aquí el teu text.</div><p><br></p>","version": "1.1.0"}

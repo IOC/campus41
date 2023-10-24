@@ -1,0 +1,1 @@
+{"name": "Pes de la nota","key": "pes-de-la-nota","instructions": "Informa l'estudiant de quin pes té la nota de la present activitat respecte de la puntuació total del curs.","defaults": "","body": "<p class=\"ioc-spacer\"></p><div class=\"retol\"><div class=\"pes-de-la-nota\">10%</div></div>","version": "1.1.0"}

@@ -1,0 +1,1 @@
+{"name": "Categoria","key": "categoria","instructions": "Identifica el tipus de contingut mitjançant una etiqueta, o tag.","defaults": "","body": "<p class=\"ioc-spacer\"></p><div class=\"components-esquerra\"><div class=\"categoria\">Vocabulary</div></div><p><br></p>","version": "1.0.0"}

@@ -1,0 +1,1 @@
+{"name": "Rètol inline","key": "retol-inline","instructions": "Serveix per afegir indicacions contextuals dins mateix d'una línia o paràgraf.","defaults": "","body": "<span class=\"retol-inline\">Text</span>","version": "1.0.0"}

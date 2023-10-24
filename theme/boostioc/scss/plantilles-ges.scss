@@ -1,0 +1,1301 @@
+#ges-plantilla-portada-questionari .banner-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 48px;
+    background-color: #EFF0FF;
+    margin-top: 22px;
+    margin-bottom: 72px;
+  }
+  #ges-plantilla-portada-questionari .banner-cell {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center; 
+    flex-grow: 2;
+  }
+  #ges-plantilla-portada-questionari .banner-divider:before {
+    content: url([[pix:theme|portada-questionari-banner-divider]]);
+    max-width: 1px;
+    position: relative;
+    top: 3px;
+    left: -8px;
+  }
+  #ges-plantilla-portada-questionari .banner-cell-icona {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 100%;
+    filter: drop-shadow(0px 0px 0px transparent);
+  }
+  #ges-plantilla-portada-questionari .banner-cell-text {
+    font-size: 12px;
+    line-height: 124%;
+    color: #4A4FA4;
+    max-width: 100px;
+    font-weight: 700;
+    text-align: center;
+  }
+  #ges-plantilla-portada-questionari .banner-cell.banner-pes-nota .banner-cell-text:before {
+    content: "Pes sobre el total de la nota:"; 
+    font-weight: 400;
+  }
+  #ges-plantilla-portada-questionari .banner-cell.banner-pes-nota .banner-cell-icona:before {
+    content: url([[pix:theme|portada-questionari-pes-nota-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 0;
+    left: -13px;
+  }
+  #ges-plantilla-portada-questionari .banner-cell.banner-temps-previst .banner-cell-text::before {
+    content: "Temps previst: "; 
+    font-weight: 400;
+  }
+  #ges-plantilla-portada-questionari .banner-cell.banner-temps-previst .banner-cell-icona:before {
+    content: url([[pix:theme|portada-questionari-temps-previst-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 0;
+    left: -13px;
+  }
+  #ges-plantilla-portada-questionari .titol-seccio {
+    position: relative;
+    font-weight: bold;
+    margin-bottom: 36px;
+    font-size: 21px;
+    line-height: 25px;
+    letter-spacing: -0.3px;
+    color: #3D4D74;
+  }
+  #ges-plantilla-portada-questionari .titol-seccio:after {
+    content: url([[pix:theme|portada-questionari-titol-seccio]]);
+    position: absolute;
+    top: 14px;
+    left: 0;
+  }
+  #ges-plantilla-portada-questionari .llista-display {
+    padding-left: 0;
+    line-height: 160%;
+    list-style: none;
+  }
+  #ges-plantilla-portada-questionari .llista-display>li {
+    margin-left: 30px;
+    margin-bottom: 6px;
+  }
+  #ges-plantilla-portada-questionari .llista-display>li:before {
+    content: url([[pix:theme|portada-questionari-llista-display-item]]);
+    margin-left: -30px;
+    margin-right: 12px;
+    position: relative;
+    top: 3px;
+  }
+  #ges-plantilla-portada-questionari .llista-display>ul {
+    margin-top: 12px;
+    line-height: 160%;
+  }
+  #ges-plantilla-portada-questionari .llista-display>ul>li {
+    list-style: none;
+    margin-left: 34px;
+  }
+  #ges-plantilla-portada-questionari .llista-display>ul>li:last-of-type {
+    margin-bottom: 12px;
+  }
+  #ges-plantilla-portada-questionari .llista-display>ul>li:before {
+    content: "\2022";  
+    font-size: 14px;
+    color: #8E95F8;
+    margin-left: -14px;
+    position: relative;
+    top: -1px;
+    left: -8px;
+  }
+  #ges-plantilla-portada-questionari .imatge-portada {
+    display: block;
+    margin: -36px auto -14px auto;
+    width: 296px;
+    height: 328px;
+    position: relative;
+    transform: scale(.7);
+    left: -9px;
+  }
+  #ges-plantilla-portada-questionari .imatge-portada img {
+    width: 300px;
+    max-width: 100%;
+  }
+  #ges-plantilla-portada-questionari .perfil-imatge {
+    clip-path: url(#svgPath);
+  }
+  #ges-plantilla-portada-questionari .imatge-portada:before {
+    content: url([[pix:theme|portada-questionari-bckg-mask-img]]);
+    position: absolute;
+    top: 18px;
+    left: -8px;
+  }
+  #ges-plantilla-portada-questionari .intents {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    background-color: #fff;
+    padding: 12px;
+    box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.14);
+    margin-bottom: 48px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #ges-plantilla-portada-questionari .requadre-intents {
+    background-color: #EFF0FF;
+    min-height: 48px;
+    background-image: url([[pix:theme|portada-questionari-requadre-intents-icon]]);
+    background-repeat: no-repeat;
+    background-position: center 9px;
+    width: 48px;
+    margin: 12px auto 0 auto;
+    border-radius: 100%;
+  }
+  #ges-plantilla-portada-questionari .text-intents {
+    padding-top: 24px;
+    padding-bottom: 12px;
+  }
+  #ges-plantilla-portada-questionari .text-intents p {
+    margin-bottom: 0;
+  }
+  @media (min-width: 576px) {
+    #ges-plantilla-portada-questionari .titol-general {
+        font-size: 32px;
+    }
+    #ges-plantilla-portada-questionari .banner-divider:before {
+        top: 3px;
+    }
+    #ges-plantilla-portada-questionari .banner-cell-icona {
+        width: 64px;
+        height: 64px;
+        background-color: #FFFFFF;
+        filter: drop-shadow(0px 4px 14px rgba(82, 84, 115, 0.22));
+    }
+    #ges-plantilla-portada-questionari .banner-cell-text {
+        margin-left: 32px;
+    }
+    #ges-plantilla-portada-questionari .banner-cell.banner-pes-nota .banner-cell-icona:before {
+        top: 16px;
+        left: 16px;
+    }
+    #ges-plantilla-portada-questionari .banner-cell.banner-temps-previst .banner-cell-icona:before {
+        top: 17px;
+        left: 17px;
+    }
+    #ges-plantilla-portada-questionari .titol-seccio {
+        margin-bottom: 48px;
+        font-size: 26px;
+        line-height: 35px;
+    }
+    #ges-plantilla-portada-questionari .titol-seccio:after {
+        top: 16px;
+        transform: scale(1.9, 1.2);
+    }
+    #ges-plantilla-portada-questionari .llista-display {
+        line-height: auto;
+    }
+    #ges-plantilla-portada-questionari .llista-display>li {
+        margin-left: 42px;
+        margin-bottom: 12px;
+    }
+    #ges-plantilla-portada-questionari .llista-display>li:before {
+        margin-left: -39px;
+        margin-right: 23px;
+        top: 4px;
+        transform: scale(1.3);
+    }
+    #ges-plantilla-portada-questionari .llista-display>ul {
+        margin-top: 18px;
+        line-height: auto;
+    }
+    #ges-plantilla-portada-questionari .llista-display>ul>li {
+        margin-left: 60px;
+        margin-bottom: 6px;
+    }
+    #ges-plantilla-portada-questionari .llista-display>ul>li:last-of-type {
+        margin-bottom: 18px;
+    }
+    #ges-plantilla-portada-questionari .llista-display>ul>li:before {  
+        font-size: 16px;
+        margin-left: -16px;
+        position: relative;
+        top: -1px;
+        left: -18px;
+    }
+    #ges-plantilla-portada-questionari .imatge-portada  {
+        transform: scale(1);
+        margin: 48px auto;
+    }
+    #ges-plantilla-portada-questionari .intents {
+        flex-direction: row;
+        padding: 12px;
+        box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.14);
+        margin-bottom: 48px;
+    }
+    #ges-plantilla-portada-questionari .requadre-intents {
+        background-color: #EFF0FF;
+        min-width: 70px;
+        background-position: center;
+        width: unset;
+        margin: 0;
+        border-radius: 0;
+    }
+    #ges-plantilla-portada-questionari .text-intents {
+        margin-left: 36px;
+        margin-right: 36px;
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+  }
+  #ges-plantilla-tasca-enunciat-simple {
+    margin-top: -36px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .titol-general {
+    color: #3D4D74;
+    font-size: 24px;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 36px;
+    background-color: transparent;
+    margin-top: 72px;
+    margin-bottom: 72px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center; 
+    flex-grow: 2;
+    background-color: #EBF1FF;
+    width: 100%;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-divider {
+    visibility: hidden;
+    height: 2px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-divider:before {
+    content: url([[pix:theme|portada-questionari-banner-divider]]);
+    max-width: 1px;
+    position: relative;
+    top: 3px;
+    left: -1px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell-icona {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 100%;
+    filter: drop-shadow(0px 0px 0px transparent);
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell-text {
+    font-size: 12px;
+    line-height: 124%;
+    color: #315892;
+    max-width: none;
+    font-weight: 700;
+    text-align: center;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell:last-child .banner-cell-text {
+    margin-left: 0px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-pes-nota .banner-cell-text:before {
+    content: "Pes sobre el total de la nota:"; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-pes-nota .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-pes-de-la-nota-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 5px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-temps-previst .banner-cell-text::before {
+    content: "Temps previst:"; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-temps-previst .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-temps-previst-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 5px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-escrita .banner-cell-text::before {
+    content: "Aquesta és una tasca "; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-escrita .banner-cell-text::after {
+    content: "escrita"; 
+    font-weight: 700;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-escrita .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-tipus-escrita-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 3px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-oral .banner-cell-text::before {
+    content: "Aquesta és una tasca "; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-oral .banner-cell-text::after {
+    content: "oral"; 
+    font-weight: 700;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-oral .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-tipus-oral-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 6px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-elaboracio-fitxer .banner-cell-text::before {
+    content: "Tasca d'"; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-elaboracio-fitxer .banner-cell-text::after {
+    content: "elaboració de fitxer"; 
+    font-weight: 700;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-elaboracio-fitxer .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-tipus-elaboracio-fitxer-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 5px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-tramesa-fitxer .banner-cell-text::before {
+    content: "Això és una "; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-tramesa-fitxer .banner-cell-text::after {
+    content: "tramesa de fitxer"; 
+    font-weight: 700;
+  }
+  #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-tramesa-fitxer .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-tipus-tramesa-fitxer-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 5px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .titol-seccio {
+    position: relative;
+    font-weight: bold;
+    margin-bottom: 36px;
+    font-size: 21px;
+    line-height: 25px;
+    letter-spacing: -0.3px;
+    color: #3D4D74;
+  }
+  #ges-plantilla-tasca-enunciat-simple .titol-seccio:after {
+    content: url([[pix:theme|tasca-titol-seccio]]);
+    position: absolute;
+    top: 14px;
+    left: 0;
+  }
+  #ges-plantilla-tasca-enunciat-simple .tasca-enunciat {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    font-size: 17px;
+    padding: 36px 48px;
+    max-width: 88%;
+    margin: 74px auto 56px auto;
+    position: relative;
+  }
+  #ges-plantilla-tasca-enunciat-simple .tasca-enunciat::before {
+    content: url([[pix:theme|pestanya-tasca]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 33px;
+    left: -4px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .tasca-enunciat p:last-child{
+    margin-bottom: 0;
+  }
+  .tasca-que-he-de-fer {
+    margin-bottom: 48px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-instruccions {
+    padding-left: 0;
+    line-height: 160%;
+    list-style: none;
+    margin-bottom: 48px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-instruccions>li {
+    margin-left: 30px;
+    margin-bottom: 6px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-instruccions>li:before {
+    content: url([[pix:theme|tasca-enunciat-simple-llista-instruccions-item]]);
+    margin-left: -23px;
+    margin-right: 7px;
+    position: relative;
+    top: 0px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-instruccions>ul {
+    margin-top: 12px;
+    line-height: 160%;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-instruccions>ul>li {
+    list-style: none;
+    margin-left: 34px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-instruccions>ul>li:last-of-type {
+    margin-bottom: 12px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-instruccions>ul>li:before {
+    content: "\2022";  
+    font-size: 14px;
+    color: #85A4F1;
+    margin-left: -14px;
+    position: relative;
+    top: -1px;
+    left: -8px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-display {
+    padding-left: 0;
+    line-height: 160%;
+    list-style: none;
+    margin-bottom: 48px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-display>li {
+    margin-left: 30px;
+    margin-bottom: 6px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-display>li:before {
+    content: url([[pix:theme|tasca-llista-display-item]]);
+    margin-left: -30px;
+    margin-right: 12px;
+    position: relative;
+    top: 3px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-display>ul {
+    margin-top: 12px;
+    line-height: 160%;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-display>ul>li {
+    list-style: none;
+    margin-left: 34px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-display>ul>li:last-of-type {
+    margin-bottom: 12px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .llista-display>ul>li:before {
+    content: "\2022";  
+    font-size: 14px;
+    color: #8E95F8;
+    margin-left: -14px;
+    position: relative;
+    top: -1px;
+    left: -8px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .valoracio-professor {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    background-color: #fff;
+    padding: 12px;
+    box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.14);
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 48px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .requadre-valoracio-professor {
+    background-color: #EFF0FF;
+    min-height: 48px;
+    background-image: url([[pix:theme|tasca-valoracio-professor-icon]]);
+    background-repeat: no-repeat;
+    background-position: center 17px;
+    background-size: 28px;
+    width: 48px;
+    margin: 12px auto 0 auto;
+    border-radius: 100%;
+  }
+  #ges-plantilla-tasca-enunciat-simple .text-valoracio-professor {
+    padding-top: 24px;
+    padding-bottom: 12px;
+  }
+  #ges-plantilla-tasca-enunciat-simple .text-valoracio-professor p {
+    margin-bottom: 0;
+  }
+  @media (min-width: 576px) {
+    #ges-plantilla-tasca-enunciat-simple .titol-general {
+        font-size: 32px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-info {
+        flex-direction: row;
+        height: 48px;
+        background-color: #EBF1FF;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-divider {
+        visibility: visible;
+        height: 100%;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-divider:before {
+        top: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-cell {
+        background-color: transparent;
+        width: 100%;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-cell-icona {
+        width: 42px;
+        height: 42px;
+        background-color: transparent;
+        filter: drop-shadow(0px 4px 14px rgba(82, 84, 115, 0.18));
+        transform: scale(1.6);
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-cell-text {
+        margin-left: 0;
+        max-width: 100px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-cell:last-child .banner-cell-text {
+        margin-left: 10px;
+        max-width: 80px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-pes-nota .banner-cell-icona:before {
+        top: 11px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-temps-previst .banner-cell-icona:before {
+        top: 11px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-escrita .banner-cell-icona:before {
+        top: 10px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-oral .banner-cell-icona:before {
+        top: 12px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-elaboracio-fitxer .banner-cell-icona:before {
+        top: 11px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-tramesa-fitxer .banner-cell-icona:before {
+        top: 11px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .titol-seccio {
+        margin-bottom: 48px;
+        font-size: 24px;
+        line-height: 35px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .titol-seccio:after {
+        top: 16px;
+        transform: scale(1.8, 1.1);
+    }
+    #ges-plantilla-tasca-enunciat-simple .tasca-enunciat {
+        max-width: 96%;
+        margin: 90px auto 66px auto;
+    }
+    .tasca-que-he-de-fer {
+        margin-bottom: 72px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-instruccions {
+        line-height: auto;
+        margin-bottom: 72px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-instruccions>li {
+        margin-left: 42px;
+        margin-bottom: 12px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-instruccions>li:before {
+        margin-left: -39px;
+        margin-right: 23px;
+        top: 0px;
+        left: 10px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-instruccions>ul {
+        margin-top: 18px;
+        line-height: auto;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-instruccions>ul>li {
+        margin-left: 60px;
+        margin-bottom: 6px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-instruccions>ul>li:last-of-type {
+        margin-bottom: 18px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-instruccions>ul>li:before {  
+        font-size: 16px;
+        margin-left: -16px;
+        position: relative;
+        top: -1px;
+        left: -18px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-display {
+        line-height: auto;
+        margin-bottom: 72px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-display>li {
+        margin-left: 42px;
+        margin-bottom: 12px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-display>li:before {
+        margin-left: -39px;
+        margin-right: 23px;
+        top: 4px;
+        transform: scale(1.3);
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-display>ul {
+        margin-top: 18px;
+        line-height: auto;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-display>ul>li {
+        margin-left: 60px;
+        margin-bottom: 6px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-display>ul>li:last-of-type {
+        margin-bottom: 18px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .llista-display>ul>li:before {  
+        font-size: 16px;
+        margin-left: -16px;
+        position: relative;
+        top: -1px;
+        left: -18px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .imatge-portada  {
+        transform: scale(1);
+        margin: 48px auto;
+    }
+    #ges-plantilla-tasca-enunciat-simple .valoracio-professor {
+        flex-direction: row;
+        padding: 12px;
+        box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.14);
+        margin-bottom: 72px;
+    }
+    #ges-plantilla-tasca-enunciat-simple .requadre-valoracio-professor {
+        background-color: #EFF0FF;
+        min-width: 70px;
+        background-position: center;
+        width: unset;
+        margin: 0;
+        border-radius: 0;
+    }
+    #ges-plantilla-tasca-enunciat-simple .text-valoracio-professor {
+        margin-left: 36px;
+        margin-right: 36px;
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+  }
+  @media (min-width: 768px) {
+        #ges-plantilla-tasca-enunciat-simple .banner-cell-icona {
+            width: 42px;
+            height: 42px;
+            background-color: #FFFFFF;
+            filter: drop-shadow(0px 4px 14px rgba(82, 84, 115, 0.22));
+            transform: scale(1.6);
+        }
+        #ges-plantilla-tasca-enunciat-simple .banner-cell-text {
+            margin-left: 25px;
+        }
+        #ges-plantilla-tasca-enunciat-simple .banner-cell:last-child .banner-cell-text {
+            margin-left: 40px;
+            max-width: 80px;
+        }
+        #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-pes-nota .banner-cell-icona:before {
+            top: 11px;
+            left: 13px;
+        }
+        #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-temps-previst .banner-cell-icona:before {
+            top: 11px;
+            left: 13px;
+        }
+        #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-escrita .banner-cell-icona:before {
+            top: 10px;
+            left: 13px;
+        }
+        #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-oral .banner-cell-icona:before {
+            top: 12px;
+            left: 12px;
+        }
+        #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-elaboracio-fitxer .banner-cell-icona:before {
+            top: 11px;
+            left: 13px;
+        }
+        #ges-plantilla-tasca-enunciat-simple .banner-cell.banner-tasca-tipus-tramesa-fitxer .banner-cell-icona:before {
+            top: 11px;
+            left: 13px;
+        }
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 36px;
+    background-color: transparent;
+    margin-top: 72px;
+    margin-bottom: 72px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center; 
+    flex-grow: 2;
+    background-color: #EBF1FF;
+    width: 100%;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-divider {
+    visibility: hidden;
+    height: 2px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-divider:before {
+    content: url([[pix:theme|portada-questionari-banner-divider]]);
+    max-width: 1px;
+    position: relative;
+    top: 3px;
+    left: -1px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell-icona {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 100%;
+    filter: drop-shadow(0px 0px 0px transparent);
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell-text {
+    font-size: 12px;
+    line-height: 124%;
+    color: #315892;
+    max-width: none;
+    font-weight: 700;
+    text-align: center;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell:last-child .banner-cell-text {
+    margin-left: 0px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-pes-nota .banner-cell-text:before {
+    content: "Pes sobre el total de la nota:"; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-pes-nota .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-pes-de-la-nota-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 5px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-temps-previst .banner-cell-text::before {
+    content: "Temps previst:"; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-temps-previst .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-temps-previst-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 5px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-escrita .banner-cell-text::before {
+    content: "Aquesta és una tasca "; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-escrita .banner-cell-text::after {
+    content: "escrita"; 
+    font-weight: 700;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-escrita .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-tipus-escrita-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 3px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-oral .banner-cell-text::before {
+    content: "Aquesta és una tasca "; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-oral .banner-cell-text::after {
+    content: "oral"; 
+    font-weight: 700;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-oral .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-tipus-oral-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 6px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-elaboracio-fitxer .banner-cell-text::before {
+    content: "Tasca d'"; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-elaboracio-fitxer .banner-cell-text::after {
+    content: "elaboració de fitxer"; 
+    font-weight: 700;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-elaboracio-fitxer .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-tipus-elaboracio-fitxer-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 5px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-tramesa-fitxer .banner-cell-text::before {
+    content: "Això és una "; 
+    font-weight: 400;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-tramesa-fitxer .banner-cell-text::after {
+    content: "tramesa de fitxer"; 
+    font-weight: 700;
+  }
+  #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-tramesa-fitxer .banner-cell-icona:before {
+    content: url([[pix:theme|tasca-tipus-tramesa-fitxer-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 5px;
+    left: 4px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .tasca-enunciat {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    font-size: 17px;
+    padding: 36px 48px;
+    max-width: 88%;
+    margin: 36px auto;
+    position: relative;
+  }
+  #ges-plantilla-tasca-enunciat-complex .tasca-enunciat::before {
+    content: url([[pix:theme|pestanya-tasca]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 33px;
+    left: -4px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .tasca-enunciat p:last-child{
+    margin-bottom: 0;
+  }
+  .tasca-que-he-de-fer {
+    margin-bottom: 48px;
+    margin-top: 24px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-instruccions {
+    padding-left: 0;
+    line-height: 160%;
+    list-style: none;
+    margin-bottom: 48px;
+    margin-top: 24px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-instruccions>li {
+    margin-left: 30px;
+    margin-bottom: 6px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-instruccions>li:before {
+    content: url([[pix:theme|tasca-enunciat-simple-llista-instruccions-item]]);
+    margin-left: -23px;
+    margin-right: 7px;
+    position: relative;
+    top: 0px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-instruccions>ul {
+    margin-top: 12px;
+    line-height: 160%;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-instruccions>ul>li {
+    list-style: none;
+    margin-left: 34px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-instruccions>ul>li:last-of-type {
+    margin-bottom: 12px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-instruccions>ul>li:before {
+    content: "\2022";  
+    font-size: 14px;
+    color: #85A4F1;
+    margin-left: -14px;
+    position: relative;
+    top: -1px;
+    left: -8px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-display {
+    padding-left: 0;
+    line-height: 160%;
+    list-style: none;
+    margin-bottom: 48px;
+    margin-top: 24px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-display>li {
+    margin-left: 30px;
+    margin-bottom: 6px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-display>li:before {
+    content: url([[pix:theme|tasca-llista-display-item]]);
+    margin-left: -30px;
+    margin-right: 12px;
+    position: relative;
+    top: 3px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-display>ul {
+    margin-top: 12px;
+    line-height: 160%;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-display>ul>li {
+    list-style: none;
+    margin-left: 34px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-display>ul>li:last-of-type {
+    margin-bottom: 12px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .llista-display>ul>li:before {
+    content: "\2022";  
+    font-size: 14px;
+    color: #8E95F8;
+    margin-left: -14px;
+    position: relative;
+    top: -1px;
+    left: -8px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .valoracio-professor {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    background-color: #fff;
+    padding: 12px;
+    box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.14);
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 48px;
+    margin-top: 24px
+  }
+  #ges-plantilla-tasca-enunciat-complex .requadre-valoracio-professor {
+    background-color: #EFF0FF;
+    min-height: 48px;
+    background-image: url([[pix:theme|tasca-valoracio-professor-icon]]);
+    background-repeat: no-repeat;
+    background-position: center 17px;
+    background-size: 28px;
+    width: 48px;
+    margin: 12px auto 0 auto;
+    border-radius: 100%;
+  }
+  #ges-plantilla-tasca-enunciat-complex .text-valoracio-professor {
+    padding-top: 24px;
+    padding-bottom: 12px;
+  }
+  #ges-plantilla-tasca-enunciat-complex .text-valoracio-professor p {
+    margin-bottom: 0;
+  }
+  @media (min-width: 576px) {
+    #ges-plantilla-tasca-enunciat-complex .titol-general {
+        font-size: 32px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-info {
+        flex-direction: row;
+        height: 48px;
+        background-color: #EBF1FF;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-divider {
+        visibility: visible;
+        height: 100%;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-divider:before {
+        top: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-cell {
+        background-color: transparent;
+        width: 100%;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-cell-icona {
+        width: 42px;
+        height: 42px;
+        background-color: transparent;
+        filter: drop-shadow(0px 4px 14px rgba(82, 84, 115, 0.18));
+        transform: scale(1.6);
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-cell-text {
+        margin-left: 0;
+        max-width: 100px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-cell:last-child .banner-cell-text {
+        margin-left: 10px;
+        max-width: 80px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-pes-nota .banner-cell-icona:before {
+        top: 11px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-temps-previst .banner-cell-icona:before {
+        top: 11px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-escrita .banner-cell-icona:before {
+        top: 10px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-oral .banner-cell-icona:before {
+        top: 12px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-elaboracio-fitxer .banner-cell-icona:before {
+        top: 11px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-tramesa-fitxer .banner-cell-icona:before {
+        top: 11px;
+        left: 13px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .tasca-enunciat {
+        max-width: 96%;
+        margin: 48px auto;
+    }
+    .tasca-que-he-de-fer {
+        margin-bottom: 72px;
+        margin-top: 36px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-instruccions {
+        line-height: auto;
+        margin-bottom: 72px;
+        margin-top: 36px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-instruccions>li {
+        margin-left: 42px;
+        margin-bottom: 12px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-instruccions>li:before {
+        margin-left: -39px;
+        margin-right: 23px;
+        top: 0px;
+        left: 10px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-instruccions>ul {
+        margin-top: 18px;
+        line-height: auto;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-instruccions>ul>li {
+        margin-left: 60px;
+        margin-bottom: 6px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-instruccions>ul>li:last-of-type {
+        margin-bottom: 18px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-instruccions>ul>li:before {  
+        font-size: 16px;
+        margin-left: -16px;
+        position: relative;
+        top: -1px;
+        left: -18px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-display {
+        line-height: auto;
+        margin-bottom: 72px;
+        margin-top: 36px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-display>li {
+        margin-left: 42px;
+        margin-bottom: 12px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-display>li:before {
+        margin-left: -39px;
+        margin-right: 23px;
+        top: 4px;
+        transform: scale(1.3);
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-display>ul {
+        margin-top: 18px;
+        line-height: auto;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-display>ul>li {
+        margin-left: 60px;
+        margin-bottom: 6px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-display>ul>li:last-of-type {
+        margin-bottom: 18px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .llista-display>ul>li:before {  
+        font-size: 16px;
+        margin-left: -16px;
+        position: relative;
+        top: -1px;
+        left: -18px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .imatge-portada  {
+        transform: scale(1);
+        margin: 48px auto;
+    }
+    #ges-plantilla-tasca-enunciat-complex .valoracio-professor {
+        flex-direction: row;
+        padding: 12px;
+        box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.14);
+        margin-bottom: 72px;
+        margin-top: 36px;
+    }
+    #ges-plantilla-tasca-enunciat-complex .requadre-valoracio-professor {
+        background-color: #EFF0FF;
+        min-width: 70px;
+        background-position: center;
+        width: unset;
+        margin: 0;
+        border-radius: 0;
+    }
+    #ges-plantilla-tasca-enunciat-complex .text-valoracio-professor {
+        margin-left: 36px;
+        margin-right: 36px;
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+  }
+  @media (min-width: 768px) {
+        #ges-plantilla-tasca-enunciat-complex .banner-cell-icona {
+            width: 42px;
+            height: 42px;
+            background-color: #FFFFFF;
+            filter: drop-shadow(0px 4px 14px rgba(82, 84, 115, 0.22));
+            transform: scale(1.6);
+        }
+        #ges-plantilla-tasca-enunciat-complex .banner-cell-text {
+            margin-left: 25px;
+        }
+        #ges-plantilla-tasca-enunciat-complex .banner-cell:last-child .banner-cell-text {
+            margin-left: 40px;
+            max-width: 80px;
+        }
+        #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-pes-nota .banner-cell-icona:before {
+            top: 11px;
+            left: 13px;
+        }
+        #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-temps-previst .banner-cell-icona:before {
+            top: 11px;
+            left: 13px;
+        }
+        #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-escrita .banner-cell-icona:before {
+            top: 10px;
+            left: 13px;
+        }
+        #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-oral .banner-cell-icona:before {
+            top: 12px;
+            left: 12px;
+        }
+        #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-elaboracio-fitxer .banner-cell-icona:before {
+            top: 11px;
+            left: 13px;
+        }
+        #ges-plantilla-tasca-enunciat-complex .banner-cell.banner-tasca-tipus-tramesa-fitxer .banner-cell-icona:before {
+            top: 11px;
+            left: 13px;
+        }
+  }
+  #ges-forum-baner .banner-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 48px;
+    background-color: #E9F5FD;
+    margin-top: 22px;
+    margin-bottom: 72px;
+  }
+  #ges-forum-baner .banner-cell {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center; 
+    flex-grow: 2;
+  }
+  #ges-forum-baner .banner-divider:before {
+    content: url([[pix:theme|portada-questionari-banner-divider]]);
+    max-width: 1px;
+    position: relative;
+    top: 3px;
+    left: -8px;
+  }
+  #ges-forum-baner .banner-cell-icona {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 100%;
+    filter: drop-shadow(0px 0px 0px transparent);
+  }
+  #ges-forum-baner .banner-cell-text {
+    font-size: 12px;
+    line-height: 124%;
+    color: #4A73A4;
+    max-width: 100px;
+    font-weight: 700;
+    text-align: center;
+  }
+  #ges-forum-baner .banner-cell.banner-pes-nota .banner-cell-text:before {
+    content: "Pes sobre el total de la nota:"; 
+    font-weight: 400;
+  }
+  #ges-forum-baner .banner-cell.banner-pes-nota .banner-cell-icona:before {
+    content: url([[pix:theme|forum-baner-pes-nota-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 0;
+    left: -13px;
+  }
+  #ges-forum-baner .banner-cell.banner-temps-previst .banner-cell-text::before {
+    content: "Temps previst: "; 
+    font-weight: 400;
+  }
+  #ges-forum-baner .banner-cell.banner-temps-previst .banner-cell-icona:before {
+    content: url([[pix:theme|forum-baner-temps-previst-icon]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    top: 0px;
+    left: -13px;
+  }
+  @media (min-width: 576px) {
+    #ges-forum-baner .banner-divider:before {
+        top: 3px;
+    }
+    #ges-forum-baner .banner-cell-icona {
+        width: 64px;
+        height: 64px;
+        background-color: #FFFFFF;
+        filter: drop-shadow(0px 4px 14px rgba(82, 84, 115, 0.22));
+    }
+    #ges-forum-baner .banner-cell-text {
+        margin-left: 32px;
+    }
+    #ges-forum-baner .banner-cell.banner-pes-nota .banner-cell-icona:before {
+        top: 17px;
+        left: 17px;
+    }
+    #ges-forum-baner .banner-cell.banner-temps-previst .banner-cell-icona:before {
+        top: 17px;
+        left: 17px;
+    }
+  }

@@ -1,0 +1,226 @@
+.editing .fp-etiqueta-franja-intro { 
+    position: static;
+    top: 0;
+}
+.fp-etiqueta-franja-intro {
+    border: 6px solid #6395FC;
+    width: 100%;
+    position: absolute;
+    top: -132px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+.editing .fp-etiqueta-benvinguda { 
+    position: static;
+    top: 0;
+    font-size: 24px;
+}
+.fp-etiqueta-benvinguda { 
+    position: absolute;
+    top: -36px;
+    font-size: 24px;
+}
+.fp-etiqueta-panell-botons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    padding-top: 24px;
+    padding-bottom: 12px;
+    padding: 24px 0 0 24px;
+    @media screen and (min-width: 768px) {
+        flex-direction: row;
+        padding: 24px 12px 24px 24px;
+    }
+}
+.fp-etiqueta-panell-boto {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    width: 100%;
+    border: 1px solid #dce3f2;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    @media screen and (min-width: 768px) {
+        flex-direction: column;
+        background: #FFFFFF;
+        width: 33.33%;
+        border: 0px solid transparent;
+        margin-bottom: 0;
+        
+    }
+}
+.fp-etiqueta-panell-botons-icona {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    box-shadow: none;
+    height: 52px;
+    width: 64px;
+    @media screen and (min-width: 768px) {
+        height: 98px;
+        width: 98px; 
+        background: #FFFFFF;
+        box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.1);
+        border-radius: 100%;
+    }
+}
+.fp-etiqueta-panell-botons-icona::before {
+    content: '';
+    height: 48px;
+    width: 48px;
+    background-position: center;
+    background-size: 24px;
+    background-repeat: no-repeat;
+    @media screen and (min-width: 768px) {
+        background-size:initial;
+    }
+}
+
+
+.boto-pla-de-treball .fp-etiqueta-panell-botons-icona::before {
+    background-image: url([[pix:theme|fp-curs-pla-de-treball-icona]]);
+}
+.boto-materials .fp-etiqueta-panell-botons-icona::before {
+    background-image: url([[pix:theme|fp-curs-materials-icona]]);
+}
+.boto-recursos .fp-etiqueta-panell-botons-icona::before {
+    background-image: url([[pix:theme|fp-curs-recursos-icona]]);
+}
+.boto-info .fp-etiqueta-panell-botons-icona::before {
+    background-image: url([[pix:theme|fp-etiqueta-jornada-tecnica-info-icona]]);
+}
+.boto-eines .fp-etiqueta-panell-botons-icona::before {
+    background-image: url([[pix:theme|fp-etiqueta-jornada-tecnica-eines-icona]]);
+}
+.boto-inscripcio .fp-etiqueta-panell-botons-icona::before {
+    background-image: url([[pix:theme|fp-etiqueta-jornada-tecnica-inscripcio-icona]]);
+}
+.fp-etiqueta-panell-botons-text {
+    color: #445F82;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 0;
+    @media screen and (min-width: 768px) {
+        margin-top: 18px;
+    }
+}
+.fp-etiqueta-curs-poques-unitats-imatge {
+    height: 140px;
+    @media screen and (min-width: 576px) {
+        height: 200px;
+    }
+    @media screen and (min-width: 940px) {
+        height: 250px;
+    }
+    @media screen and (min-width: 1200px) {
+        height: 200px;
+    }
+}
+.fp-etiqueta-curs-poques-unitats-imatge img {
+    position: absolute;
+    width: 527px;
+    height: auto;
+    position: absolute;
+    left: -5px;
+    @media screen and (min-width: 576px) {
+        width: 828px;
+        height: 144px;
+        left: -22px;
+    }
+    @media screen and (min-width: 940px) {
+        width: 1005px;
+        height: auto;
+        left: -22px;
+    }
+    @media screen and (min-width: 1200px) {
+        width: 828px;
+        height: 144px;
+        left: -22px;
+    }
+}
+.editor_atto .fp-etiqueta-curs-poques-unitats-imatge img {
+    left: 20px;
+    top: 100px;
+}
+.editing .fp-etiqueta-curs-poques-unitats-imatge img {
+    top: 12px;
+}
+.fp-etiquetes-jornada-tecnica {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    overflow-y: hidden !important;
+    margin-left: 18px;
+    @media screen and (min-width: 576px) {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+.fp-etiqueta-jornada-tecnica {
+    width: 90%;
+    margin: 22px;
+    @media screen and (min-width: 576px) {
+        width: 45%;
+        margin: 28px;
+    }
+}
+.fp-etiqueta-jornada-tecnica-card-centre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    @media screen and (min-width: 576px) {
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.15);
+    }
+}
+.fp-etiqueta-jornada-tecnica-imatge-centre img {
+    max-width: 100%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.fp-etiqueta-jornada-tecnica-dades-centre {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 18px 24px;
+}
+.fp-etiqueta-jornada-tecnica-dades-centre h3 {
+    font-weight: 900;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.fp-etiqueta-jornada-tecnica-dades-centre div {
+    margin: 2px 6px;
+    font-weight: normal;
+    font-size: 13px;
+    color: #202735;
+}
+.fp-etiqueta-jornada-tecnica-lloc::before {
+    content: url([[pix:theme|fp-etiqueta-jornada-tecnica-lloc-icona]]);
+    margin-right: 6px;
+    position: relative;
+    top: 2px;
+}
+.fp-etiqueta-jornada-tecnica-data::before {
+    content: url([[pix:theme|fp-etiqueta-jornada-tecnica-data-icona]]);
+    margin-right: 6px;
+    position: relative;
+    top: 1px;
+}
+.fp-etiqueta-jornada-tecnica-horari::before {
+    content: url([[pix:theme|fp-etiqueta-jornada-tecnica-horari-icona]]);
+    margin-right: 6px;
+    position: relative;
+    top: 2px;
+}

@@ -1,0 +1,1 @@
+{"name": "Rètols agrupats","key": "retols-agrupats","instructions": "Temps previst i/o Data de lliurament i/o Pes de la nota","defaults": "","body": "<p class=\"ioc-spacer\"></p><div class=\"retols-agrupats\"><div class=\"temps-previst-minuts\">20</div><div class=\"data-de-lliurament\">17 de novembre</div><div class=\"pes-de-la-nota\">20 punts</div></div>","version": "1.1.0"}

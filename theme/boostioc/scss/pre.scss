@@ -1,0 +1,105 @@
+/* Here we can override Boost variables in boost/scss/preset/dedault.scss */
+
+$ioc-principal: #266fdc;
+$ioc-principal-hover: #035dbd;
+$ioc-principal-gris: #ecf2ff;
+$ioc-secundari-marge: $ioc-principal;
+$ioc-text: #202735;
+$ioc-titols: #525a91;
+$ioc-background: #fafbff;
+$ioc-fons-taules: #ecf2ff;
+$ioc-vores: #ccd4e6;
+$ioc-vores-formulari: #a5afc7;
+$ioc-gris-ultraclar: #f3f6fc;
+$ioc-drawer-background: #293e74;
+$ioc-info-text: #005a8e;
+$ioc-info-background: #e4f4ff; 
+$ioc-success-text: #205c00;
+$ioc-success-background: #e9fae3;
+$ioc-warning-text: #6f5700;
+$ioc-warning-background: #fff6cf;
+$ioc-danger-text: #7d1210;
+$ioc-danger-background: #fbdddd;
+
+$primary: $ioc-principal;
+$secondary: $ioc-principal-gris;
+$black: $ioc-text;
+$gray-100: $ioc-gris-ultraclar;
+$gray-300: $ioc-vores;
+$gray-500: $ioc-vores-formulari;
+$gray-600: $ioc-vores-formulari;
+$table-accent-bg: $ioc-fons-taules;
+
+/* Mod icon colours */
+$assign-icon-colour: #3BC362;
+$bbb-icon-colour: #244ABB;
+$book-icon-colour: #0BC5F8;
+$chat-icon-colour: #FFA41C;
+$choice-icon-colour: #F46338;
+$choosegroup-icon-colour: #0939E3;
+$data-icon-colour: #9D74F5;
+$feedback-icon-colour: #9EB0CB;
+$folder-icon-colour: #98C26E;
+$forum-icon-colour: #5D7FF6;
+$fpquadern-icon-colour: #65B400;
+$geogebra-icon-colour: #7D7FEF;
+$glossary-icon-colour: #80DA49;
+$h5pactivity-icon-colour: #0085FF;
+$hotpot-icon-colour: #4DA6F8;
+$hvp-icon-colour: #F01E04;
+$imscp-icon-colour: #6DB098;
+$jclic-icon-colour: #F59726;
+$jitsi-icon-colour: #205081;
+$label-icon-colour: #B30C8E;
+$lesson-icon-colour: #11D3B0;
+$lti-icon-colour: #B677DC;
+$oublog-icon-colour: #F01E04;
+$page-icon-colour: #1BA8D5;
+$questionnaire-icon-colour: #1BA8D5;
+$quiz-icon-colour: #F9B234;
+$resource-icon-colour: #FF6231;
+$scheduler-icon-colour: #F2713A;
+$scorm-icon-colour: #FF8686;
+$survey-icon-colour: #6643C9;
+$url-icon-colour: #FD4470;
+$videotime-icon-colour: #4DA6F8;
+$wiki-icon-colour: #71A4BA;
+$workshop-icon-colour: #10D6E2;
+
+
+/*
+$course-content-maxwidth: 100% !default;
+
+
+body {
+  background-color: $ioc-background !important;
+}
+ */
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #525a91;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.2px;
+}
+
+@font-face {
+  font-family: "Roboto Slab";
+  src: url([[font:theme|RobotoSlab-Regular.ttf]]) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Roboto Slab";
+  src: url([[font:theme|RobotoSlab-Bold.ttf]]) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
