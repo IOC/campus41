@@ -14809,7 +14809,7 @@ a.disabled {
   text-decoration: none;
   cursor: default;
   font-style: italic;
-  color: #808080;
+  color: #6a737b;
 }
 
 body.lockscroll {
@@ -15896,6 +15896,7 @@ blockquote {
 .activityiconcontainer .activityicon,
 .activityiconcontainer .icon {
   margin: 0;
+  font-size: 24px;
   height: 24px;
   width: 24px;
 }
@@ -18430,6 +18431,9 @@ span.editinstructions .alert-link {
 #course-category-listings .listitem[data-selected="1"] {
   border-left: calc(1px + 5px) solid #0f6cbf;
   padding-left: calc(1.25rem - 5px);
+}
+#course-category-listings .listitem:hover {
+  z-index: 2;
 }
 #course-category-listings .item-actions {
   margin-right: 1em;
