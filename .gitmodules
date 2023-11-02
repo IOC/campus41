@@ -97,3 +97,7 @@
 [submodule "admin/tool/siteperf"]
 	path = admin/tool/siteperf
 	url = https://github.com/IOC/moodle-admin_siteperf
+[submodule "local/mail"]
+	path = local/mail
+	url = https://gitlab.com/moodle-local_mail/moodle-local_mail
+	branch = v1
