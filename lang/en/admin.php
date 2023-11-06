@@ -1598,3 +1598,5 @@ $string['mediapluginswfnote'] = 'As a default security measure, normal users sho
 
 // Deprecated since Moodle 4.1.
 $string['multilangforceold'] = 'Force old multilang syntax: &lt;span&gt; without the class="multilang" and &lt;lang&gt;';
+
+$string['configforcedefaultmymoodle'] = 'configforcedefaultmymoodle';

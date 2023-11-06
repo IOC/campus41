@@ -1,0 +1,34 @@
+.block_xp-xp .sign-img {
+    max-height: 100%;
+}
+.block_xp-xp .sign-img img {
+    border: none;
+    height: 18px;
+    margin: 0 3px;
+    padding: 0;
+    vertical-align: top;
+}
+.block_xp-level-progress .sign-img img {
+    margin-top: 1px;
+}
+
+.block_xp-group-ladder .grouppic {
+    margin-right: 3px;
+}
+.dir-rtl .block_xp-group-ladder .grouppic {
+    margin-right: auto;
+    margin-left: 3px;
+}
+
+/**
+ * Course rule.
+ */
+.local_xp-course-rule-widget .course-selected {
+    display: none;
+}
+.local_xp-course-rule-widget.has-course .course-selection {
+    display: none;
+}
+.local_xp-course-rule-widget.has-course .course-selected {
+    display: inline;
+}

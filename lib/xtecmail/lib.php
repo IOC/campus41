@@ -55,7 +55,7 @@ class xtecmail {
         return $response->status == 'OK';
     }
 
-    public function send($to=array(), $cc=array(), $bcc=array(), $replyAddress, $subject='',
+    public function send($to, $cc, $bcc, $replyAddress, $subject='',
                   $bodyContent='', $bodyType='text/plain', $attachments=array()) {
         $request = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"';
         $request .= ' xmlns:cor="http://www.gencat.cat/educacio/sscc/correu">';
