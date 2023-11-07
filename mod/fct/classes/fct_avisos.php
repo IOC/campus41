@@ -54,7 +54,7 @@ class fct_avisos extends fct_base{
         return $tab;
     }
 
-    public function view($id = false, $index, $searchparams) {
+    public function view($id, $index, $searchparams) {
         global $PAGE, $USER, $OUTPUT;
 
         if (!$id) {
