@@ -1,0 +1,8 @@
+.materials_search,
+.local_materials .paging {
+    margin-bottom: 1em;
+}
+
+.materials_text_search {
+    width: 20em !important;
+}
