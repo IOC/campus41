@@ -1,0 +1,1 @@
+{"name":"Capçalera general","key":"capcalera","instructions":"Per inserir una capçalera general amb fons blau.", "defaults":"TITOL=Títol de la capçalera","body":"<table class=\"iedib-titol-general\"><tr><td class=\"iedib-titol-general-text\"><br>{{TITOL}}<br><br></td></tr></table>","version":"1.1.0"}

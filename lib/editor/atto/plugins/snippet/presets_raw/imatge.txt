@@ -1,0 +1,14 @@
+** NAME: Inserir imatge|imatge----------------------------------------------------
+
+** KEY: imatge----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+Codi per posar una imatge amb una taula i una descripció a sota. Doble click sobre la imatge per canviar-la.
+
+** DEFAULTS: -----------------------------------------------------------------
+TEXTPEU=Descripció
+
+** BODY: -----------------------------------------------------------------
+<br><table class="iedib-figura"><tr><td><img src="https://iedib.net/wordpress/wp-content/uploads/2018/12/sample-img.png" alt="Imatge per defecte" width="169" height="112" class="img-responsive atto_image_button_middle"></td></tr><tr><tr><td>{{#ifCond TEXTPEU 'neq' ''}}<p><span class="iedib-caption-counter">Figura:</span> <span class="iedib-caption-title">{{TEXTPEU}}</span></p>{{/ifCond}}</td></tr></table><br>
+
+** VERSION: 1.1.0----------------------------------------------------

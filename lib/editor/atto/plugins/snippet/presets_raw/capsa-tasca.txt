@@ -1,0 +1,21 @@
+** NAME: Capsa Tasca|capses----------------------------------------------------
+
+** KEY: capsa-tasca----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+Aquesta capsa serveix per recomanar a l'alumne la realització d'una tasca d'aprenentatge.
+
+** DEFAULTS: -----------------------------------------------------------------
+$lang=ca:Català|es:Español|en:English
+
+** BODY: -----------------------------------------------------------------
+<br><div class="iedib-capsa">
+<!-- begin capsa tasca -->
+<div class="iedib-tasca iedib-central"><span class="iedib-tasca-logo"></span>
+<h4>{{#ifCond $lang 'eq' 'ca'}}TASCA D'APRENENTATGE{{/ifCond}}{{#ifCond $lang 'eq' 'es'}}TAREA DE APRENDIZAJE{{/ifCond}}{{#ifCond $lang 'eq' 'en'}}LEARNING ASSESSMENT{{/ifCond}}:</h4>
+<p>Hem acabat la primera part del lliurament i et proposo que realitzis aquesta microtasca per practicar.</p>
+</div>
+<!-- end capsa tasca -->
+</div><br>
+
+** VERSION: 1.1.0----------------------------------------------------

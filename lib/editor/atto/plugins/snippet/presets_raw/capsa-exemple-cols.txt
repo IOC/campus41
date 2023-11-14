@@ -1,0 +1,30 @@
+** NAME: Capsa Exemple 2 Columnes|capses----------------------------------------------------
+
+** KEY: capsa-exemple-cols----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+Utilitzau aquesta capsa per mostrar un exemple amb l'enunciat i la resolució en dues columnes diferents.
+
+** DEFAULTS: -----------------------------------------------------------------
+$lang=ca:Català|es:Español|en:English
+
+** BODY: -----------------------------------------------------------------
+<br><div class="iedib-capsa iedib-capsa iedib-exemple-border">
+<!--begin: Capsa exemple 2 columnes -->
+<div class="iedib-lateral iedib-exemple">
+<p class="iedib-titolLateral">{{#ifCond $lang 'eq' 'ca'}}EXEMPLE{{/ifCond}}{{#ifCond $lang 'eq' 'es'}}EJEMPLO{{/ifCond}}{{#ifCond $lang 'eq' 'en'}}EXAMPLE{{/ifCond}}<span class="iedib-exemple-logo"></span></p>
+</div>
+<div class="row-fluid iedib-fluid">
+    <div class="span4 iedib-formulacio">
+<p>Escriviu en aquesta columna l'enunciat del problema.</p>
+</div>
+<div class="span8 iedib-resolucio">
+<div class="iedib-central">
+<p>Escriviu en aquesta altra columna la resolució del problema.</p>
+</div>
+</div>
+</div>
+<!--end: Capsa exemple 2 columnes-->
+</div><br>
+
+** VERSION: 1.1.0----------------------------------------------------

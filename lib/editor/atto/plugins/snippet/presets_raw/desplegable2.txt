@@ -1,0 +1,26 @@
+** NAME: Desplegable2|bootstrap----------------------------------------------------
+
+** KEY: desplegable2----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+Crea un desplegable. És important que escriviu una clau aleatòria que sigui diferent per a cada desplegable que creeu en una pàgina. El nombre de desplegables es defineix en camp nombre.
+
+** DEFAULTS: -----------------------------------------------------------------
+clau=$RND,nombre=3
+
+** BODY: -----------------------------------------------------------------
+<br>
+<div id="{{clau}}" class="accordion iedib-accordion">
+{{#times nombre}}<div class="accordion-group">
+<div class="accordion-heading"><a class="accordion-toggle" href="#collapse_{{../clau}}_{{@index}}" data-toggle="collapse" data-parent="#{{../clau}}"><span class="icon icon-plus-sign"></span> Desplegable {{@index}} </a></div>
+<div id="collapse_{{../clau}}_{{@index}}" class="accordion-body collapse">
+<div class="accordion-inner">
+<p>Més informació sobre l'apartat {{@index}}...</p>
+
+</div>
+</div>
+</div>{{/times}}
+</div>
+<br>
+
+** VERSION: 1.0.0----------------------------------------------------

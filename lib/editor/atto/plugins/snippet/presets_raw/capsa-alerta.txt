@@ -1,0 +1,23 @@
+** NAME: Capsa Alerta|capses----------------------------------------------------
+
+** KEY: capsa-alerta----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+Aquesta capsa serveix per informar d'una errada freqüent a tenir en compte. Triau una mida per a la capsa.
+
+** DEFAULTS: -----------------------------------------------------------------
+mida=gran|mitjana|petita,$lang=ca:Català|es:Español|en:English
+
+** BODY: -----------------------------------------------------------------
+<br><div class="iedib-capsa iedib-capsa-{{mida}} iedib-alerta-border">
+<!--begin: Capsa alerta gran -->
+<div class="iedib-lateral iedib-alerta">
+<p class="iedib-titolLateral">{{#ifCond $lang 'eq' 'en'}}CAUTION{{else}}ALERTA{{/ifCond}} <span class="iedib-alerta-logo"></span></p>
+</div>
+<div class="iedib-central">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</div>
+<!--end: Capsa alerta gran-->
+</div><br><p></p>
+
+** VERSION: 1.1.0----------------------------------------------------

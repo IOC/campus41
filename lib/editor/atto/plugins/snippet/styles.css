@@ -1,0 +1,63 @@
+
+.atto_snippet_dragdropsquare {
+    width:130px;
+    height:25px;
+    line-height: 25px;
+    text-align: center;
+    border-radius: 5px;
+    color: #73AD21;
+    border: 1px solid #73AD21;
+    padding:1px 1px 1px 1px;
+    background-color:#CBF2DC;
+    margin-top:5px;
+    float:right;
+}
+div.atto_snippet_dragging {
+   border:2px dashed #0000FF;
+}
+.atto_snippet_field{
+	width: 200px;
+}
+div.atto_snippet_buttons {
+    display: inline-block;
+    margin: 5px;
+}
+.atto_snippet_lateral{
+    display: table-cell;position:relative;width:20px;max-width:20px;height: 100px;color:white;vertical-align:bottom;
+    font-size: 80%; font-weight: bold; text-transform:uppercase;
+}
+.atto_snippet_title{
+    padding-left:5px;
+    -webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg); 
+    font-size: small;white-space: nowrap;-ms-transform: rotate(-90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    -o-transform: rotate(-90deg);
+    font-size: 12px;
+}
+.atto_snippet_btn:hover{
+    background-color: #343a40;
+    color: white;
+}
+.atto_snippet_btn{
+    width:95%;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    line-height: 1;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    color: #343a40;
+    background-color: transparent;
+    background-image: none;
+    border-color: #343a40;
+    cursor: pointer;
+    margin: 2px;
+}

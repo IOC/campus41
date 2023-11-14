@@ -1,0 +1,1 @@
+{"name":"Subsub secció","key":"subsub-seccio","instructions":"Creau una sub-sub-secció dins una pàgina del llibre moodle. El títol ha d'acabar sense punt final","defaults":"titol=Títol","body":"<br><h4 class=\"iedib-subsub\"><span class=\"iedib-square\"></span>&nbsp;{{titol}}&nbsp;</h4><br>","version":"1.1.0"}

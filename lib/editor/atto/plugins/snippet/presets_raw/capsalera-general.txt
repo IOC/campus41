@@ -1,0 +1,14 @@
+** NAME: Capçalera general----------------------------------------------------
+
+** KEY: capcalera----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+Per inserir una capçalera general amb fons blau.
+
+** DEFAULTS: -----------------------------------------------------------------
+TITOL=Títol de la capçalera
+
+** BODY: -----------------------------------------------------------------
+<table class="iedib-titol-general"><tr><td class="iedib-titol-general-text"><br>{{TITOL}}<br><br></td></tr></table>
+
+** VERSION: 1.1.0----------------------------------------------------

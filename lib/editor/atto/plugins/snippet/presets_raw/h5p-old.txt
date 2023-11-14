@@ -1,0 +1,21 @@
+** NAME: Contingut H5P (old)|video----------------------------------------------------
+
+** KEY: h5p----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+S'incrusta contingut H5P creat a l'aula virtual (activitat o vídeo) de forma responsiva. Introduïu la ID de l'activitat H5P i opcionalment un títol.
+
+** DEFAULTS: -----------------------------------------------------------------
+h5pId=1000,ampladaMax=600,titol=Títol
+
+** BODY: -----------------------------------------------------------------
+<br><div class="iedib-video-container" {{#if ampladaMax}}style="max-width:{{ampladaMax}}px"{{/if}}>
+<iframe src="https://iedib.net/avirtual/mod/hvp/embed.php?id={{h5pId}}" width="600" height="400" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+  <div class="iedib-caption">
+   <span class="iedib-caption-counter">Vídeo</span><span class="iedib-caption-title">: {{titol}}</span></div>
+</div>
+ 
+<br>
+
+
+** VERSION: 1.1.0----------------------------------------------------

@@ -1,0 +1,14 @@
+** NAME: Subsub secció----------------------------------------------------
+
+** KEY: subsub-seccio----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+Creau una sub-sub-secció dins una pàgina del llibre moodle. El títol ha d'acabar sense punt final
+
+** DEFAULTS: -----------------------------------------------------------------
+titol=Títol
+
+** BODY: -----------------------------------------------------------------
+<br><h4 class="iedib-subsub"><span class="iedib-square"></span>&nbsp;{{titol}}&nbsp;</h4><br>
+
+** VERSION: 1.1.0----------------------------------------------------

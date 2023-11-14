@@ -1,0 +1,14 @@
+** NAME: Graella d'imatges|imatge----------------------------------------------------
+
+** KEY: image-grid----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+Crea una graella n files i m columnes on col·locar imatges amb els seus corresponents títols. Doble click sobre les imatges per canviar-les.
+
+** DEFAULTS: -----------------------------------------------------------------
+files=2,columnes=2,ampladaPercent=96,amplades=fixed:Fixades|initial:Automàtiques,gruix=0,vorera=gray|black|cadetblue|white,comportament=sub:Sub imatges|mult:Imatges múltiples
+
+** BODY: -----------------------------------------------------------------
+<br><center><table class="iedib-imggrid" style="table-layout:{{amplades}};border-collapse: collapse; border-spacing: 0px;width:{{ampladaPercent}}%"><tbody>{{#times files}}<tr>{{#times columnes}}<td><p style="text-align:center;vertical-align:top">{{#ifCond comportament 'eq' 'sub'}}<span class="iedib-caption-counter" >a)</span> <span class="iedib-caption-title">Descripció</span>{{/ifCond}}</p></td>{{/times}}</tr><tr>{{#times columnes}}<td style="border: {{gruix}}px solid {{vorera}};text-align:center;"><img src="https://iedib.net/wordpress/wp-content/uploads/2018/12/sample-img.png" alt="Imatge per defecte" width="169" height="112" class="img-responsive atto_image_button_middle"></td>{{/times}}</tr><tr>{{#times columnes}}<td class="iedib-imggrid-spacing" style="height: 15px;text-align:center;vertical-align:top"><p>{{#ifCond comportament 'eq' 'sub'}}&nbsp;&nbsp;{{else}}<span class="iedib-caption-counter">Figura</span>: <span class="iedib-caption-title">Descripció.</span>{{/ifCond}}</p></td>{{/times}}</tr>{{/times}}{{#ifCond comportament 'eq' 'sub'}}<tr><td colspan="{{columnes}}"><p style="text-align: center;vertical-align:top"><span class="iedib-caption-counter">Figura</span>: <span class="iedib-caption-title">Descripció.</span></p></td></tr>{{/ifCond}}</tbody></table></center><br>
+
+** VERSION: 1.1.0----------------------------------------------------

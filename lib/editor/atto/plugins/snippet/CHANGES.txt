@@ -1,0 +1,43 @@
+Versió 1.1.0 Plugin original
+
+Versió 1.1.2 (03/12/2018) Primer lliurament del plugin modificat
+
+Versió 1.1.3 (19/12/2018):
+
+-Novetats: (nous snippets)
+  Taula predefinida: crea una taula de forma senzilla.
+  Graella d'imatges: crea una figura que contingui moltes sub-imatges distribuïdes en forma de graella.
+  Capsa introducció: introdueix una capsa destinada a introduir un lliurament o apartat del llibre de teoria.
+  Capçalera examen: crea la capçalera d'un examen model col·locar a la pàgina principal de l'aula virtual.
+-Millores: (modificacions a alguns snippets existents)
+  Inserir imatge: Ara es crea automàticament una imatge per defecte que es pot canviar fàcilment fent un doble-click sobre ella.
+  Youtube, Vimeo: Es possible escapçar una part del video mitjançant la introducció d'un temps d'inici i fi mesurat en segons. Atenció: Vimeo no permet establir un temps d'acabament.
+  Capses: Totes les capses tenen ara un paràmetre anomenat $lang (idioma). L'opció triada es desa per futurs usos de l'snippet.
+  Dues columnes: És possible canviar l'amplada relativa de cadascuna d'elles. Es pot canviar el paràmetre AMPLADA_COL1 entre 1 a 11. El valor 6 fa que les dues columnes tinguin igual amplada. Com major és AMPLADA_COL1 , major és l'amplada de la primera columna.
+Millores: (a nivell de menú d'usuari)
+  -Els botons snippet s'organitzen per categories.
+
+Versio 1.1.6 (17/07/2019):
+- Permet funcionar en mode de Desenvolupament (DEBUG) de moodle. Mostra sortida per consola.
+- Les classes css del plugin és independent del tema. Petites millores visuals.
+- Permet incloure tags <script></script> però en aquests no és possible interpolar variables.
+
+- Les classes dels fitxers d'estil en style/iedib-avirtual-stylesheet-div.css s'han fet independents de la versió de bootstrap
+
+--------------------------------------------------------------------------------------------------------------------
+
+Version 1.1.0(Build 2018041000)
+-Implemented new Moodle Privacy API
+
+Version 2017051601
+-Removed concatenation operator from lang strings so that AMOS could access it.
+
+Version 2017040101
+-Fixed bug with snippet count not being recognised
+-Fixed appearance of snippets in admin settings on Boost theme
+-Added support for picking up snippets from theme in the presets dropdown
+-Added support for automatically displaying theme snippets in atto
+-Set minimum supported Moodle version to Moodle 2.7
+
+Version 2016121401
+First release of Snippet

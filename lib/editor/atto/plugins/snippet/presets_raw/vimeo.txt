@@ -1,0 +1,21 @@
+** NAME: Vimeo|video----------------------------------------------------
+
+** KEY: vimeo----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+S'incrusta un vídeo de vimeo a la pàgina de forma responsiva. Introduïu la ID del vídeo de vimeo i opcionalment un títol. Podeu especificar l'instant d'inici del vídeo en segons
+
+** DEFAULTS: -----------------------------------------------------------------
+vimeoId=284914662,ampladaMax=500,titol=Títol,iniciSegons=0
+
+** BODY: -----------------------------------------------------------------
+<br><div class="iedib-video-container" {{#if ampladaMax}}style="max-width:{{ampladaMax}}px"{{/if}}>
+  <div class="iedib-videoWrapper">
+    <iframe src="https://player.vimeo.com/video/{{vimeoId}}{{#ifCond iniciSegons 'neq' 0}}#t={{iniciSegons}}s{{/ifCond}}" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+    
+  </div>
+    <div class="iedib-caption">
+   <span class="iedib-caption-counter">Vídeo</span><span class="iedib-caption-title">: {{titol}}</span></div>
+  </div><br>
+
+** VERSION: 1.1.0----------------------------------------------------

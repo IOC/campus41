@@ -1,0 +1,23 @@
+** NAME: Menu pestanyes|bootstrap----------------------------------------------------
+
+** KEY: menu-pestanyes2----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+Crea un menú de pestanyes. És important que escriviu una clau aleatòria que sigui diferent per a cada menú creat en la pàgina. Podeu definir el nombre de pestanyes (per defecte 2).
+
+** DEFAULTS: -----------------------------------------------------------------
+clau=$RND, pestanyes=2
+
+** BODY: -----------------------------------------------------------------
+<br><div class="tabbable iedib-tabmenu">
+<ul class="nav nav-tabs">
+{{#times pestanyes}}<li {{#if @first}} class="active" {{/if}}><a href="#{{../clau}}_{{@index}}" data-toggle="tab"><span>&nbsp;</span><span>Pestanya{{@index}}</span></a>{{/times}}</li> 
+</ul>
+<div class="tab-content">
+{{#times pestanyes}}<div class="tab-pane {{#if @first}} active {{/if}} iedib-tabpane" id="{{../clau}}_{{@index}}">
+<p>{{@index}}) Lorem  ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</div>{{/times}}
+</div>
+</div> <br>
+
+** VERSION: 1.1.0----------------------------------------------------

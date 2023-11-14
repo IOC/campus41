@@ -1,0 +1,19 @@
+** NAME: Contingut H5P|video----------------------------------------------------
+
+** KEY: h5p-new----------------------------------------------------
+
+** INSTRUCTIONS: -----------------------------------------------------------------
+S'incrusta contingut H5P creat a l'aula virtual (activitat o vídeo) de forma responsiva. Introduïu EL NOM DE l'activitat H5P.
+
+** DEFAULTS: -----------------------------------------------------------------
+nom_activitat=Activitat d'aprenentatge ...,titol=Títol
+
+** BODY: -----------------------------------------------------------------
+<br><center> {h5p: {{nom_activitat}} }
+  <div class="iedib-caption">
+ <p><span class="iedib-caption-counter">Vídeo</span><span class="iedib-caption-title">: {{titol}}</span></p></div></center>
+
+<br>
+
+
+** VERSION: 1.2.0----------------------------------------------------
