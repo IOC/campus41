@@ -101,3 +101,6 @@
 	path = local/mail
 	url = https://gitlab.com/moodle-local_mail/moodle-local_mail
 	branch = v1
+[submodule "course/format/grid"]
+	path = course/format/grid
+	url = https://github.com/gjbarnard/moodle-format_grid
