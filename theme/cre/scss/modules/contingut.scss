@@ -1,0 +1,701 @@
+@mixin lectura($device) {
+    @if $device == 'mobile' {
+        p {
+            font-family: 'Neuton', serif;
+            line-height: 20px;
+            font-size: 15px;
+            letter-spacing: 0.2px;
+            .lletra-capital {
+                float: left;
+                padding: 10px 10px 0 0;
+                font-size: 41px;
+                line-height: 0.49;
+                letter-spacing: 0.2px;
+            }
+        }
+    } @else if $device == 'tablet1' {
+    } @else if $device == 'tablet2' {
+        p {
+            line-height: 26px;
+            font-size: 19.5px;
+            .lletra-capital {
+                padding-top: 14px;
+                font-size: 55px;
+            }
+        }
+    } @else if $device == 'desktop' {
+        p {
+            line-height: 28px;
+            font-size: 21px;
+            .lletra-capital {
+                padding-top: 13px;
+                font-size: 62px;
+            }
+        }
+    }
+}
+
+/**********************
+    Llista d'ítems
+**********************/
+
+.llista-items {
+    padding-top: 10px;
+    padding-left: 0;
+    font-size: 14px;
+    margin-bottom: 22px;
+    li {
+        padding-top: 10px;
+        list-style-image: url([[pix:theme|images/img-bullet-small]]);
+        margin-left: 23px;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .llista-items {
+        padding-top: 0;
+        font-size: 16.5px;
+        margin-bottom: 32px;
+        li {
+            padding-top: 18px;
+            list-style-image: url([[pix:theme|images/img-bullet]]);
+            margin-left: 33px;
+        }
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .llista-items {
+        font-size: 17.5px;
+        margin-bottom: 34px;
+        li {
+            padding-top: 20px;
+            margin-left: 36px;
+        }
+    }
+}
+
+/**********************
+        Fitxa
+**********************/
+
+.fitxa {
+    background: $ioc-white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    p {
+        font-family: 'Arvo', serif;
+        line-height: 17px;
+        font-size: 13px;
+        text-align: center;
+        color: #2A3740;
+        padding-left: 14%;
+        padding-right: 3%;
+    }
+}
+
+.fitxa-contingut {
+    width: 90%;
+    min-width: 280px;
+    max-width: 334px;
+    padding: 6px 6px 12px 6px;
+    background: #F4F7F9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+}
+
+.fitxa-cas {
+    background-image: url([[pix:theme|images/manicula-small]]);
+    background-repeat: no-repeat;
+    background-position: 14px 22px;
+    padding-top: 10px;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .fitxa {
+        padding: 14px 0;
+        p {
+            line-height: 20px;
+            font-size: 15px;
+        }
+    }
+    .fitxa-contingut {
+        width: auto;
+        min-width: 334px;
+        padding: 10px 10px 20px 10px;
+    }
+    .fitxa-cas {
+        background-image: url([[pix:theme|images/manicula]]);
+        background-position: 14px 24px;
+        padding-top: 10px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .fitxa {
+        padding: 22px 0;
+        p {
+            line-height: 22px;
+            font-size: 16px;
+        }
+    }
+    .fitxa-contingut {
+        width: auto;
+        min-width: 420px;
+        padding: 10px 10px 20px 10px;
+    }
+    .fitxa-cas {
+        background-image: url([[pix:theme|images/manicula]]);
+        background-position: 14px 28px;
+        padding-top: 10px;
+    }
+}
+
+/**********************
+  Fitxa Invers
+*********************❄*/
+
+.fitxa-invers {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 16px 0;
+    p {
+        font-family: 'Arvo', serif;
+        line-height: 17px;
+        font-size: 13px;
+        text-align: center;
+        color: #2A3740;
+        padding-left: 14%;
+        padding-right: 3%;
+    }
+}
+
+.fitxa-invers-contingut {
+    width: 90%;
+    min-width: 280px;
+    max-width: 314px;
+    padding: 6px 6px 12px 6px;
+    background: $ioc-white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+}
+
+.fitxa-invers-cas {
+    background-image: url([[pix:theme|images/manicula-small]]);
+    background-repeat: no-repeat;
+    background-position: 14px 20px;
+    padding-top: 18px;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .fitxa-invers {
+        margin: 28px 0;
+        p {
+            line-height: 20px;
+            font-size: 15px;
+        }
+    }
+    .fitxa-invers-contingut {
+        width: auto;
+        min-width: 334px;
+        padding: 10px 10px 20px 10px;
+    }
+    .fitxa-invers-cas {
+        background-image: url([[pix:theme|images/manicula]]);
+        background-position: 14px 26px;
+        padding-top: 24px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .fitxa-invers {
+        margin: 32px 0;
+        p {
+            line-height: 22px;
+            font-size: 16px;
+        }
+    }
+    .fitxa-invers-contingut {
+        width: auto;
+        min-width: 420px;
+        padding: 10px 10px 20px 10px;
+    }
+}
+
+/**********************
+Durada activitat
+**********************/
+
+.durada-activitat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 14px;
+    p {
+        font-style: italic;
+        font-size: 12.5px;
+        color: #8597A4;
+        margin-bottom: 4px;
+        margin-top: 0px;
+    }
+    span {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 11.5px;
+        color: $ioc-btn-standard;
+        background-color: $ioc-forum-discussion;
+        border-radius: 3px;
+        padding: 4px 8px;
+        margin-left: 6px;
+        margin-bottom: 4px;
+        text-align: center;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .durada-activitat {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        p {
+            font-size: 14px;
+        }
+        span {
+            font-size: 14px;
+            color: $ioc-btn-standard;
+            margin-left: 10px;
+        }
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .durada-activitat {
+        p {
+            font-size: 15px;
+        }
+    }
+}
+
+/*************************
+  Exemple i Exemple llarg
+*************************/
+
+.exemple-boto-container,
+.exemple-llarg-boto-container {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    &:before,
+    &:after {
+        content: '';
+        background-repeat: no-repeat;
+        background-size: contain;
+        display: block;
+        width: 43px;
+        height: 51px;
+    }
+    &:before {
+        background-image: url([[pix:theme|images/exemple-button-left]]);
+        background-position: right center;
+    }
+    &:after {
+        background-image: url([[pix:theme|images/exemple-button-right]]);
+        background-position: left center;
+    }
+    @include transition(all, .1s, ease-in-out);
+    &:hover,
+    &:active,
+    &:focus {
+        -webkit-box-shadow: none;
+                box-shadow: none;
+        @include transform(scale(1.05));
+    }
+}
+
+.exemple-boto,
+.exemple-llarg-boto {
+    @include flexbox($align-items: center);
+    background-image: url([[pix:theme|images/exemple-button-central]]);
+    background-repeat: no-repeat;
+    background-size: 100.2% 100%;
+    padding-right: 18px;
+    height: 51px;
+    font-family: Pinto01, sans-serif;
+    font-size: 23px;
+    color: $ioc-white-light;
+    text-align: center;
+    text-decoration: none;
+    outline-color: transparent;
+    &:hover {
+        text-decoration: none;
+        color: $ioc-white-light;
+    }
+    &:after {
+        content: '';
+        background-image: url([[pix:theme|images/exemple-fletxa]]);
+        background-repeat: no-repeat;
+        background-position: center;
+        display: block;
+        position: absolute;
+        top: 22px;
+        right: 30px;
+        left: auto;
+        width: 15px;
+        height: 10px;
+        @include transform(rotate(0deg) translateY(0px));
+        @include transition(transform, .2s, ease-in-out);
+        transform-origin: center;
+    }
+    &[aria-expanded="true"] {
+        &:after {
+            @include transform(rotate(180deg) translateY(4px));
+            transform-origin: center;
+        }
+    }
+}
+
+.exemple-contingut,
+.exemple-llarg-contingut {
+    background-color: $ioc-quiz-bg;
+    border-radius: 8px;
+    border-color: transparent;
+    padding: 26px 4%;
+    margin-bottom: 15px;
+    img {
+        margin: 0 auto;
+    }
+}
+
+
+/**********************
+    Lectura inline
+    Lectura pop-up
+***********************/
+
+.lectura-inline,
+.lectura-inline-invers {
+    display: block;
+    margin: 33px auto;
+    box-shadow: 0 4px 4px 0 rgba(22, 30, 34, 0.07);
+    background-color: $ioc-white;
+    padding: 26px 40px calc(26px - 1rem) 34.8px;
+    @include lectura('mobile');
+}
+
+.lectura-inline-invers {
+    background-color: $ioc-lectura-invers;
+}
+
+.lectura-popup {
+    @include flexbox($flex-direction: column, $justify-content: center, $align-items: center);
+    align-content: center;
+    margin-top: 42px;
+    margin-bottom: 42px;
+    .modal {
+        padding-right: 0 !important;
+    }
+    .modal-content {
+        border-radius: 0;
+    }
+    .modal-footer {
+        border-top: none;
+    }
+    .modal-header {
+        border-bottom: none;
+    }
+    .modal-body {
+        @include lectura('mobile');
+        img {
+            width: 69px;
+            height: 67px;
+            float:left;
+            margin-top: 7px;
+            margin-right: 12px;
+        }
+        .lectura-popup-imatge {
+            width: 100%;
+            height: auto;
+        }
+    }
+    .btn:active,
+    .btn:focus,
+    .btn-primary:active,
+    .btn-primary:focus {
+       box-shadow: none !important;
+    }
+    .close {
+        &:hover,
+        &:active,
+        &:focus {
+            opacity: 1 !important;
+            outline: none !important;
+        }
+        &:active
+        &:focus {
+           box-shadow: none !important;
+        }
+        background-image: url([[pix:theme|images/component-lectura-cross]]);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 10px;
+        opacity: 1;
+    }
+}
+
+.lectura-popup-boto {
+    width: 85px;
+    height: 68px;
+    background-image: url([[pix:theme|images/llibre-boto]]);
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-color: transparent;
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: transparent !important;
+        border-color: transparent !important;
+    }
+}
+
+.lectura-popup-boto-text {
+    font-family: 'Pinto01', sans-serif;
+    font-size: 14px;
+    color: $ioc-btn-standard;
+    letter-spacing: 0.7px;
+    margin-top: 6px;
+}
+
+.modal-backdrop.show {
+  opacity: .9;
+}
+
+.modal-backdrop {
+  background-color: #1B2F3C;
+}
+
+.boto-component-lectura {
+    background-image: url([[pix:theme|images/component-lectura-enrere]]);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    width: 40px;
+    height: 41px;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    &:hover,
+    &:active {
+        background-color: transparent;
+    }
+    &:not(:disabled):not(.disabled):active {
+        background-image: url([[pix:theme|images/component-lectura-enrere]]);
+        background-color: transparent;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .lectura-inline,
+    .lectura-inline-invers {
+        max-width: 443px;
+        margin: 55px auto;
+        padding: 53px 48px calc(48px - 1rem) 44px;
+        @include lectura('tablet2');
+        /*p:first-letter {
+            padding-top: 14px;
+            font-size: 55px;
+        }*/
+    }
+    .lectura-popup {
+        .modal-body {
+            @include lectura('tablet2');
+            img {
+                width: 123px;
+                height: 116px;
+                float:left;
+                margin-top: 10px;
+                margin-right: 18px;
+            }
+        }
+        .modal-content {
+            border-radius: 0;
+            width: 443px;
+            padding-left: 30px;
+            padding-right: 30px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .close {
+            background-size: 12px;
+            margin-top: 6px;
+        }
+    }
+
+    .lectura-popup-boto {
+        height: 102px;
+        width: 130px;
+    }
+
+    .lectura-popup-boto-text {
+        font-size: 19px;
+        margin-top: 14px;
+    }
+
+    .boto-component-lectura {
+        width: 50px;
+        height: 52px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .lectura-inline,
+    .lectura-inline-invers {
+        max-width: 526px;
+        margin: 53px auto;
+        padding: 60px 57px calc(57px - 1rem) 53px;
+        @include lectura('desktop');
+        /*p:first-letter {
+            padding-top: 13px;
+            font-size: 62px;
+        }*/
+    }
+    .lectura-popup {
+        .modal-body {
+            @include lectura('desktop');
+            img {
+                width: 162px;
+                height: 151px;
+                margin-top: 15px;
+                margin-right: 18px;
+            }
+        }
+        .modal-content {
+            width: 526px;
+            padding-left: 36px;
+            padding-right: 36px;
+        }
+        .close {
+            background-size: 13px;
+            margin-top: 6px;
+        }
+    }
+
+    .boto-component-lectura {
+        width: 56px;
+        height: 58px;
+        margin-bottom: 14px;
+        margin-top: 18px;
+    }
+
+}
+
+/*************************
+  Icona i text
+*************************/
+
+.icona-text-container {
+    @include flexbox($flex-direction: column);
+    margin-bottom: 50px;
+    .icona-text-icona {
+        text-align: center;
+        margin-bottom: 18px;
+        width: 100%;
+    }
+    .icona-text-text {
+        width: 100%;
+    }
+}
+
+@media all and (min-width: 768px) {
+    .icona-text-container {
+        flex-direction: row;
+        margin-bottom: 0;
+        &:after {
+            content: '';
+            height: 1px;
+            background-color: $ioc-icona-text;
+            width: 20%;
+            margin: 50px auto;
+        }
+        .icona-text-icona {
+            text-align: left;
+            margin-bottom: 0;
+            width: 136px;
+        }
+        .icona-text-text {
+            width: 430px;
+        }
+    }
+}
+
+@media all and (min-width: 1200px) {
+    .icona-text-container {
+        .icona-text-text {
+            width: 594px;
+        }
+    }
+}
+
+/*************************
+  Ruta seda
+*************************/
+
+#ruta-anim-container {
+    height: 196px;
+    margin: 30px 0 -60px;
+}
+
+#ruta-anim {
+    background-image: url([[pix:theme|images/ruta-anim]]);
+    background-size: 280px 166px;
+    background-repeat: no-repeat;
+    display: block;
+    margin: 0 auto;
+    transform-origin: 50% 0%;
+}
+
+#seda-ruta-1 {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: offset 10s linear forwards;
+}
+
+#seda-ruta-2 {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: offset 10s linear forwards;
+}
+
+@keyframes offset {
+    100% { stroke-dashoffset: 0; }
+    }
+
+/* Medium devices (tablets, 768px and up) */
+
+@media (min-width: 576px) {
+    #ruta-anim-container {
+        height: 328px;
+        margin-bottom: -36px;
+    }
+
+    #ruta-anim {
+        @include transform(scale(1.8))
+    }
+}

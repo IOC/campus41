@@ -1,0 +1,198 @@
+#page-mod-workshop-view {
+    &.cre-module,
+    &.cre-student-view {
+        .collapsibleregioninner {
+            @include intro('mobile');
+        }
+    }
+    &.cre-student-view {
+        &.path-mod-workshop {
+            #mod_workshop-userplanheading {
+                display: none;
+            }
+            .userplan {
+                @include flexbox($flex-direction: column);
+                margin-top: 75px;
+                border: none;
+                overflow: visible;
+                counter-reset: phase;
+                dl {
+                    position: relative;
+                    counter-increment: phase;
+                    border: 1px solid $ioc-lectura-invers;
+                    border-radius: 5px;
+                    background-color: $ioc-lectura-invers;
+                    width: 100%;
+                    &:before {
+                        content: counter(phase);
+                        position: absolute;
+                        margin: 0 auto;
+                        left: 0;
+                        right: 0;
+                        top: -17.5px;
+                        height: 35px;
+                        width: 35px;
+                        color: $ioc-lectura-invers;
+                        font-family: Pinto02, serif;
+                        font-size: 20px;
+                        @include flexbox($justify-content: center, $align-items: center);
+                        background-image: url([[pix:theme|images/workshop-phase]]);
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        background-position: center;
+                    }
+                    &:nth-of-type(5n) {
+                        dd:before {
+                            background-image: url([[pix:theme|images/workshop-closed]]);
+                            height: 30px;
+                            width: 51px;
+                        }
+                    }
+                    &:nth-of-type(5n+1) {
+                        dd:before {
+                            background-image: url([[pix:theme|images/workshop-configuration]]);
+                        }
+                    }
+                    &:nth-of-type(5n+2) {
+                        dd:before {
+                            background-image: url([[pix:theme|images/workshop-submission]]);
+                        }
+                    }
+                    &:nth-of-type(5n+3) {
+                        dd:before {
+                            background-image: url([[pix:theme|images/workshop-assessment]]);
+                        }
+                    }
+                    &:nth-of-type(5n+4) {
+                        dd:before {
+                            background-image: url([[pix:theme|images/workshop-evaluation]]);
+                        }
+                    }
+                    &.active {
+                        margin-bottom: 15px;
+                    }
+                    &:not(.active) {
+                        @include transform(scale(.8));
+                        background-color: $ioc-white;
+                        border: 1px solid $ioc-icona-text;
+                        dt,
+                        dd {
+                            background-color: $ioc-white;
+                        }
+                    }
+                }
+                dt,
+                dd {
+                    background-color: $ioc-lectura-invers;
+                    border: none;
+                    width: 100%;
+                    &.active {
+                        background-color: $ioc-lectura-invers;
+                        border: none;
+                    }
+                    .phasetitle {
+                        font-family: Pinto01, sans-serif;
+                        display: block;
+                        font-size: 19px;
+                        font-weight: normal;
+                        line-height: 1.16;
+                        text-align: center;
+                        margin-top: 26.5px;
+                        color: $ioc-btn-standard;
+                    }
+                    .actions {
+                        display: none;
+                    }
+                    .tasks {
+                        font-size: 13px;
+                        color: $ioc-table-text;
+                        .completed {
+                            a {
+                                color: $ioc-workshop-completed;
+                                font-weight: bold;
+                            }
+                        }
+                    }
+                }
+                dd {
+                    position: relative;
+                    margin-top: 72px;
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        top: -50px;
+                        left: 0;
+                        right: 0;
+                        margin: 0 auto;
+                        height: 39px;
+                        width: 41px;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        background-position: center;
+                    }
+                    &.phasetasks {
+                        li {
+                            background-position-y: 3px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#page-mod-workshop-submission {
+    &.cre-student-view {
+        #page-wrapper {
+            #page {
+                .card {
+                    h2 + h3 {
+                        text-align: center;
+                        margin: 25px 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media all and (min-width: 576px) {
+    #page-mod-workshop-view {
+        &.cre-module,
+        &.cre-student-view {
+            .collapsibleregioninner {
+                @include intro('tablet1');
+            }
+        }
+        &.cre-module.cre-student-view {
+            &.path-mod-workshop {
+                .userplan {
+                    @include flexbox($flex-wrap: nowrap);
+                    dl {
+                        width: 20%;
+                        &.active {
+                            width: 25%;
+                        }
+                    }
+                    &.active {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media all and (min-width: 992px) {
+}
+
+@media all and (min-width: 1200px) {
+    #page-mod-workshop-view {
+        &.cre-module,
+        &.cre-student-view {
+            .collapsibleregioninner {
+                @include intro('desktop');
+            }
+        }
+    }
+}

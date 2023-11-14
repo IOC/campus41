@@ -1,0 +1,152 @@
+@mixin assign-summary($device) {
+    @if $device == 'mobile' {
+        margin: 0 auto;
+        h3 {
+            font-family: Pinto01;
+            font-size: 20px;
+            line-height: 1.7;
+            color: $ioc-module-h2;
+            text-align: center;
+            margin-top: 33px;
+            margin-bottom: 15px;
+        }
+        .gradingsummarytable,
+        .submissionsummarytable {
+            .generaltable {
+                border: none;
+                border-radius: 10px;
+                border-collapse: collapse;
+                overflow: hidden;
+                background-color: $ioc-quiz-summary;
+                tbody {
+                    tr {
+                        &:nth-of-type(2n+1),
+                        &:nth-of-type(2n) {
+                            background-color: transparent;
+                        }
+                        th {
+                            border: none;
+                        }
+                        td {
+                            border-bottom: 1px solid $ioc-forum-separator;
+                            font-size: 13px;
+                            color: $ioc-h3-module;
+                            padding-top: 20px;
+                            padding-bottom: 20px;
+                            &:first-child {
+                                padding-left: 25px;
+                                font-weight: 600;
+                            }
+                            &:last-child {
+                                padding-right: 25px;
+                            }
+                            &.submissionstatus,
+                            &.submissionstatusdraft,
+                            &.submissionstatussubmitted,
+                            &.submissionstatussubmitteddeleted,
+                            &.submissionlocked,
+                            &.submissionreopened,
+                            &.submissiongraded,
+                            &.submissionnotgraded,
+                            &.latesubmission,
+                            &.earlysubmission {
+                                background-color: transparent;
+                            }
+                        }
+                        &:first-child {
+                            td {
+                                padding-top: 31px;
+                                border-top: none;
+                            }
+                        }
+                        &:last-child {
+                            td {
+                                padding-bottom: 25px;
+                                border-bottom: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } @else if $device == 'tablet1' {
+        h3 {
+            font-size: 28px;
+            line-height: 1.21;
+            margin-top: 43px;
+            margin-bottom: 43px;
+        }
+        .gradingsummarytable,
+        .submissionsummarytable {
+            .generaltable {
+                tbody {
+                    tr {
+                        td {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    } @else if $device == 'tablet2' {
+    } @else if $device == 'desktop' {
+        h3 {
+            font-size: 30px;
+            line-height: 1.13;
+            margin-top: 46px;
+            margin-bottom: 53px;
+        }
+        .gradingsummarytable,
+        .submissionsummarytable {
+            .generaltable {
+                tbody {
+                    tr {
+                        td {
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#page-mod-assign-view {
+    &.cre-module,
+    &.cre-student-view {
+        .gradingsummary,
+        .submissionstatustable {
+            @include assign-summary('mobile');
+        }
+        .comment-link {
+            color: $ioc-h3-module;
+        }
+    }
+}
+
+@media all and (min-width: 576px) {
+    #page-mod-assign-view {
+        &.cre-module,
+        &.cre-student-view {
+            .gradingsummary,
+            .submissionstatustable {
+                @include assign-summary('tablet1');
+            }
+        }
+    }
+}
+
+@media all and (min-width: 992px) {
+}
+
+@media all and (min-width: 1200px) {
+    #page-mod-assign-view {
+        &.cre-module,
+        &.cre-student-view {
+            .gradingsummary,
+            .submissionstatustable {
+                @include assign-summary('desktop');
+            }
+        }
+    }
+}

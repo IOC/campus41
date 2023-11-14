@@ -1,0 +1,120 @@
+// Pre SCSS for the theme.
+//
+// Responsive: Utility classes
+// --------------------------------------------------
+
+
+// IE10 Metro responsive
+// Required for Windows 8 Metro split-screen snapping with IE10
+// Source: http://timkadlec.com/2012/10/ie10-snap-mode-and-responsive-design/
+@-ms-viewport{
+  width: device-width;
+}
+
+// Hide from screenreaders and browsers
+// Credit: HTML5 Boilerplate
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+// Visibility utilities
+
+// For desktops
+.visible-phone     { display: none !important; }
+.visible-tablet    { display: none !important; }
+.hidden-phone      { }
+.hidden-tablet     { }
+.hidden-desktop    { display: none !important; }
+.visible-desktop   { display: inherit !important; }
+
+// Tablets & small desktops only
+@media (min-width: 768px) and (max-width: 979px) {
+  // Hide everything else
+  .hidden-desktop    { display: inherit !important; }
+  .visible-desktop   { display: none !important ; }
+  // Show
+  .visible-tablet    { display: inherit !important; }
+  // Hide
+  .hidden-tablet     { display: none !important; }
+}
+
+// Phones only
+@media (max-width: 767px) {
+  // Hide everything else
+  .hidden-desktop    { display: inherit !important; }
+  .visible-desktop   { display: none !important; }
+  // Show
+  .visible-phone     { display: inherit !important; } // Use inherit to restore previous behavior
+  // Hide
+  .hidden-phone      { display: none !important; }
+}
+
+// Print utilities
+.visible-print    { display: none !important; }
+.hidden-print     { }
+
+@media print {
+  .visible-print  { display: inherit !important; }
+  .hidden-print   { display: none !important; }
+}
+
+// $ioc-header: #3c627b;
+// $ioc-footer: 178px;
+// $ioc-footer-offset: 76px;
+// $ioc-card-bacground: #88cddf;
+
+// Colors
+
+$ioc-main-bg: #89cedf;
+//$ioc-header-footer-text: #373a3c;
+$ioc-btn-text: #859cac;
+$ioc-btn-standard: #3c627b;
+$ioc-black: #000000;
+$ioc-destacat: #f5f8fa;
+$ioc-h3-module: #3d627a;
+$ioc-header-footer-text: $ioc-h3-module;
+$ioc-index-text: #304e62;
+$ioc-index-number: #7a6c5c;
+$ioc-menu-bg: #88cddf;
+$ioc-module-h2: #de7857;
+$ioc-text: #01172f;
+$ioc-white: #fff;
+$ioc-white-light: #f2feff;
+$ioc-back-to-module: #fff5dd;
+$ioc-forum-replies: #707d8b;
+$ioc-forum-header: #e7ecf1;
+$ioc-forum-discussion: #f1f5f7;
+$ioc-forum-separator: #c9cbcc;
+$ioc-forum-grade: #f7715d;
+$ioc-quiz-bg: #e8eef2;
+$ioc-quiz-bga: rgba(232, 238, 242, 0.6);
+$ioc-quiz-info: #e0e9ef;
+$ioc-quiz-info-main: #f5f9fb;
+$ioc-quiz-state: #305064;
+$ioc-quiz-summary: #f5f8fb;
+$ioc-quiz-summary-attempt: #72a4b7;
+$ioc-quiz-summary-date: #6b8291;
+$ioc-quiz-summary-review: #ddedee;
+$ioc-quiz-summary-points: rgba(60, 98, 123, 0.3);
+$ioc-quiz-ok: #56b271;
+$ioc-quiz-ko: #df5f4d;
+$ioc-quiz-okko: #ed9718;
+$ioc-drawer-element: #e0f0f1;
+$ioc-drawer-hover: #638195;
+$ioc-drawer-section: #ff9876;
+$ioc-lectura-invers: #f4f7f9;
+$ioc-icona-text: #dbe3e8;
+$ioc-table-separator: #89a8bd;
+$ioc-table-text: #161e22;
+$ioc-workshop-completed: #42cd6b;
+
+// Sizes
+
+$ioc-footer-height: 192px;
+$ioc-footer-height-mobile: 76px;
+$ioc-footer-height-tablet: 178px;
+$ioc-header-height: 363px;
+$ioc-header-height-mobile: 121px;
+$ioc-header-height-tablet: 272px;
+$ioc-header-height-index-mobile: 60px;

@@ -1,0 +1,348 @@
+.path-user {
+    &.cre-module,
+    &.cre-student-view {
+        form {
+            display: none !important;
+        }
+        .userlist {
+            margin-top: 33px;
+            .initialbar,
+            & > p {
+                display: none !important;
+            }
+            & > nav {
+                &:first-of-type {
+                    display: none;
+                }
+                .pagination {
+                    justify-content: center;
+                    .page-item {
+                        .page-link {
+                            @include flexbox($justify-content: center, $align-items: center);
+                            background-image: url([[pix:theme|images/pagination]]);
+                            background-size: 100% 100%;
+                            background-repeat: no-repeat;
+                            background-color: transparent;
+                            border: none;
+                            font-family: Pinto01, sans-serif;
+                            font-size: 20px;
+                            color: $ioc-drawer-hover;
+                            width: 40px;
+                            height: 40px;
+                            padding: 0;
+                            @include transition(transform, .1s, ease-in-out);
+                            &:hover,
+                            &:active {
+                                color: $ioc-drawer-hover;
+                                @include transform(scale(1.05));
+                            }
+                            &:focus {
+                                box-shadow: none;
+                            }
+                        }
+                        &.active {
+                            .page-link {
+                                background-image: url([[pix:theme|images/pagination-active]]);
+                                background-color: transparent;
+                                color: $ioc-quiz-bg;
+                            }
+                        }
+                        &:first-child,
+                        &:last-child {
+                            .page-link {
+                                span[aria-hidden="true"] {
+                                    display: block;
+                                    width: 100%;
+                                    height: 100%;
+                                    color: transparent;
+                                    background-image: url([[pix:theme|images/pagination-last]]);
+                                    background-repeat: no-repeat;
+                                    background-color: transparent;
+                                    background-position: center;
+                                }
+                            }
+                        }
+                        &:first-child {
+                            .page-link {
+                                span[aria-hidden="true"] {
+                                    @include transform(rotate(180deg));
+                                }
+                            }
+                        }
+                        &:last-child {
+                            .page-link {
+                                span[aria-hidden="true"] {
+                                    background-image: url([[pix:theme|images/pagination-last]]);
+                                }
+                            }
+                        }
+                    }
+                    .page-item + .page-item {
+                        margin-left: 3.5px;
+                    }
+                }
+            }
+            #showall {
+                text-align: center;
+                a {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: $ioc-drawer-hover;
+                }
+            }
+            #participants {
+                background-color: $ioc-destacat;
+                position: relative;
+                &:before,
+                &:after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    display: block;
+                    background-color: $ioc-white;
+                    background-repeat: no-repeat;
+                    width: 100%;
+                    height: 21px;
+                }
+                &:before {
+                    background-image: url([[pix:theme|images/table-up-mobile]]);
+                    background-size: 100% 100%;
+                    top: 0;
+                }
+                &:after {
+                    background-image: url([[pix:theme|images/table-down-mobile]]);
+                    background-size: 101% 100%;
+                    background-position: -2px center;
+                    top: auto;
+                    bottom: 0;
+                }
+                thead {
+                    display: none;
+                }
+                tbody {
+                    &:after {
+                        content: '';
+                        display: block;
+                        margin-bottom: 30px;
+                    }
+                    tr {
+                        background-image: url([[pix:theme|images/tr-background-mobile]]);
+                        background-repeat: no-repeat;
+                        background-size: 85% 46px;
+                        background-position: 30px center;
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr;
+                        grid-auto-columns: 15%;
+                        grid-template-rows: 1fr 1fr;
+                        margin: 10px;
+                        &.emptyrow {
+                            display: none;
+                        }
+                        &:first-child {
+                            margin-top: 30px;
+                        }
+                        &:hover {
+                            background-color: transparent;
+                        }
+                    }
+                    tr:nth-of-type(2n+1) {
+                        background-color: transparent;
+                    }
+                    td {
+                        @include flexbox($align-items: center);
+                        border-top: none;
+                        font-size: 10px;
+                        padding: 0;
+                        &.c0 {
+                            grid-column: 2 / span 2;
+                            position: relative;
+                            padding-top: 5px;
+                            a {
+                                font-size: 12px;
+                                font-weight: 500;
+                                color: $ioc-btn-standard;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                max-width: 85%;
+                            }
+                            .userpicture {
+                                position: absolute;
+                                left: -80px;
+                                top: 0;
+                                width: 50px;
+                                height: 50px;
+                            }
+                        }
+                        &.c1,
+                        &.c2 {
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            padding-bottom: 5px;
+                        }
+                        &.c1 {
+                            position: relative;
+                            grid-column-start: 2;
+                            font-size: 9px;
+                            font-weight: bold;
+                            letter-spacing: 0.7px;
+                            text-transform: uppercase;
+                            color: $ioc-module-h2;
+                            overflow: visible;
+                            &:after {
+                                content: '';
+                                position: absolute;
+                                width: 3px;
+                                height: 3px;
+                                top: auto;
+                                right: 10px;
+                                background-color: $ioc-btn-standard;
+                                border-radius: 50%;
+                            }
+                        }
+                        &.c2 {
+                            display: block;
+                            grid-column-start: 3;
+                            font-size: 10px;
+                            font-style: italic;
+                            color: $ioc-btn-standard;
+                            max-width: 75%;
+                        }
+                        &.c3 {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media all and (min-width: 576px) {
+    .path-user {
+        &.cre-module,
+        &.cre-student-view {
+            .userlist {
+                margin-top: 83px;
+                & > nav {
+                    .pagination {
+                        .page-item {
+                            .page-link {
+                                width: 30px;
+                                height: 30px;
+                                font-size: 18px;
+                            }
+                        }
+                    }
+                }
+                #showall {
+                    a {
+                        font-size: 12px;
+                    }
+                }
+                #participants {
+                    margin: 0 auto;
+                    max-width: 612px;
+                    &:before,
+                    &:after {
+                        height: 30px;
+                    }
+                    &:before {
+                        background-image: url([[pix:theme|images/table-up]]);
+                    }
+                    &:after {
+                        background-image: url([[pix:theme|images/table-down]]);
+                        background-position: -4px center;
+                    }
+                    tbody {
+                        tr {
+                            background-image: url([[pix:theme|images/tr-background]]);
+                            background-size: 95% 42px;
+                            background-position: 15px center;
+                            grid-template-columns: 2.5fr 1fr 1fr;
+                            grid-template-rows: 1fr;
+                            margin: 10px;
+                            &:first-child {
+                                margin-top: 30px;
+                            }
+                        }
+                        td {
+                            @include flexbox($align-items: center);
+                            border-top: none;
+                            padding: 0;
+                            &.c0 {
+                                grid-column: 1;
+                                position: relative;
+                                padding: 5px 0 0 15px;
+                                overflow: hidden;
+                                a {
+                                    @include flexbox($align-items: center, $flex-wrap: nowrap);
+                                    white-space: normal;
+                                    font-size: 15px;
+                                    line-height: 1.2;
+                                    max-width: 100%;
+                                }
+                                .userpicture {
+                                    position: static;
+                                    margin-right: 37px;
+                                }
+                            }
+                            &.c1,
+                            &.c2 {
+                                padding-bottom: 0;
+                            }
+                            &.c1 {
+                                font-size: 12.5px;
+                                justify-content: flex-end;
+                                padding-right: 30px;
+                                &:after {
+                                    width: 1px;
+                                    height: 15px;
+                                    right: 15px;
+                                    background-color: $ioc-table-separator;
+                                    border-radius: 0;
+                                }
+                            }
+                            &.c2 {
+                                line-height: 50px;
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media all and (min-width: 1200px) {
+    .path-user {
+        &.cre-module,
+        &.cre-student-view {
+            .userlist {
+                #participants {
+                    max-width: 719px;
+                    tbody {
+                        tr {
+                            grid-template-columns: 3fr 1fr 1fr;
+                        }
+                        td {
+                            &.c0 {
+                                a {
+                                    font-size: 16px;
+                                }
+                            }
+                            &.c1 {
+                                font-size: 13px;
+                            }
+                            &.c2 {
+                                font-size: 14.5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

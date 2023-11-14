@@ -1,0 +1,734 @@
+// Index Page
+
+@keyframes reveal {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes reveal-ship {
+    0%   {
+           @include transform(scale(1));
+           opacity: 0;
+         }
+    30%  { @include transform(scale(1.05)); }
+    60%  { @include transform(scale(0.95)); }
+    100% {
+           @include transform(scale(1));
+           opacity: 1;
+         }
+}
+
+%path-animation {
+    .baula-1,
+    .baula-2,
+    .baula-3,
+    .baula-4,
+    .baula-5,
+    .baula-6,
+    .baula-7,
+    .baula-8,
+    .baula-9,
+    .baula-10,
+    .baula-11,
+    .baula-12 {
+        opacity: 0;
+        animation: reveal .15s ease-in forwards;
+    }
+
+    .baula-2 {
+        animation-delay: .15s;
+    }
+
+    .baula-3 {
+        animation-delay: .3s;
+    }
+
+    .baula-4 {
+        animation-delay: .45s;
+    }
+
+    .baula-5 {
+        animation-delay: .6s;
+    }
+
+    .baula-6 {
+        animation-delay: .75s;
+    }
+
+    .baula-7 {
+        animation-delay: .9s;
+    }
+
+    .baula-8 {
+        animation-delay: 1.1s;
+    }
+
+    .baula-9 {
+        animation-delay: 1.25s;
+    }
+
+    .baula-10 {
+        animation-delay: 1.40s;
+    }
+
+    .baula-11 {
+        animation-delay: 1.55s;
+    }
+
+    .baula-12 {
+        animation-delay: 1.7s;
+    }
+}
+
+/*** Teacher view ***/
+#page-mod-page-view.cre-module {
+     &.cre-index {
+        #page-header {
+            margin-top: 0;
+            padding-top: 20px;
+            .card {
+                background-color: transparent;
+                a {
+                    color: $ioc-index-text;
+                    font-weight: bold;
+                }
+            }
+        }
+        .nav-buttons-cre {
+            a {
+                color: $ioc-index-text;
+            }
+            #jump-to-activity.custom-select {
+                width: 120px;
+            }
+        }
+        .action-menu {
+            a {
+                color: $ioc-index-text;
+            }
+        }
+        .region_main_settings_menu_proxy {
+            background-color: transparent;
+        }
+     }
+ }
+
+/*** Student view ***/
+
+.cre-student-view {
+     &.cre-index {
+        .navbar-expand {
+            background-image: none;
+            background-color: transparent;
+            height: $ioc-header-height-index-mobile;
+            max-height: $ioc-header-height-index-mobile;
+        }
+        #page-footer,
+        footer {
+            display: none;
+        }
+    }
+}
+
+#page-mod-page-view.cre-student-view {
+    .modified {
+        display: none;
+    }
+}
+
+/*** Student & Teacher view ***/
+#page-mod-page-view.cre-module,
+#page-mod-page-view.cre-student-view {
+    .cre-path-index,
+    .cre-transport-index {
+        display: none;
+    }
+    &.cre-index {
+        .no-overflow {
+            overflow: visible;
+        }
+        #page-wrapper {
+            background-image: url([[pix:theme|images/background-mar]]);
+            margin-bottom: 0;
+            padding-bottom: 0;
+            &:after {
+                min-height: 0;
+            }
+            #page-content {
+                .card {
+                    h2 {
+                        font-size: 28px;
+                        font-weight: normal;
+                        color: $ioc-btn-standard;
+                        margin-bottom: -webkit-calc(57px - 1rem);
+                        margin-bottom:    -moz-calc(57px - 1rem);
+                        margin-bottom:         calc(57px - 1rem);
+                    }
+                    .modified {
+                        display: none;
+                    }
+                    ol {
+                        position: relative;
+                        counter-reset: inst;
+                        @include flexbox($flex-direction: column, $align-items: center);
+                        margin-bottom: 0;
+                        padding-left: 0;
+                        & > li {
+                            counter-increment: inst;
+                            position: relative;
+                            width: 100%;
+                            max-width: 150px;
+                            margin-left: 0;
+                            color: $ioc-index-text;
+                            @include flexbox($align-items: center, $flex-wrap: nowrap);
+                            font-family: Pinto01, sans-serif;
+                            font-size: 15px;
+                            font-weight: normal;
+                            line-height: 1.13;
+                            text-align: left;
+                            margin-bottom: 53px;
+                            .cre-index-text {
+                                position: absolute;
+                                top: auto;
+                                width: 140px;
+                                right: -45px;
+                            }
+                            &:before {
+                                content: counter(inst);
+                                @include flexbox($justify-content: center, $align-items: center);
+                                flex: 0 0 auto;
+                                width: 54px;
+                                height: 48px;
+                                background-image: url([[pix:theme|images/illa-1]]);
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                background-position: center;
+                                font-family: Pinto02, serif;
+                                font-size: 18px;
+                                font-weight: normal;
+                                color: $ioc-index-number;
+                                margin-right: 10px;
+                                z-index: 1;
+                            }
+                            &:after {
+                                content: '';
+                                display: block;
+                                width: 89px;
+                                height: 75px;
+                                background-image: url([[pix:theme|images/path-curve-barco-1]]);
+                                background-size: contain;
+                                background-repeat: no-repeat;
+                                position: absolute;
+                                top: 41px;
+                                left: 29px;
+                                z-index: 0;
+                            }
+                            &:nth-child(2n) {
+                                flex-direction: row-reverse;
+                                text-align: right;
+                                &:before {
+                                    margin-left: 5px;
+                                }
+                                &:after {
+                                    background-image: url([[pix:theme|images/path-curve-barco-2]]);
+                                }
+                                .cre-index-text {
+                                    right: auto;
+                                    left: -60px;
+                                }
+                            }
+                            &:nth-child(5n+2) {
+                                &:before {
+                                    background-image: url([[pix:theme|images/illa-2]]);
+                                    padding-top: 12px;
+                                    padding-left: 7px;
+                                }
+                            }
+                            &:nth-child(5n+3) {
+                                &:before {
+                                    background-image: url([[pix:theme|images/illa-3]]);
+                                    padding-bottom: 10px;
+                                }
+                                &:after {
+                                    top: 51px;
+                                }
+                            }
+                            &:nth-child(5n+4) {
+                                &:before {
+                                    background-image: url([[pix:theme|images/illa-4]]);
+                                    padding-left: 5px;
+                                    padding-top: 4px
+                                }
+                            }
+                            &:nth-child(5n) {
+                                &:before {
+                                    background-image: url([[pix:theme|images/illa-5]]);
+                                    padding-right: 7px;
+                                }
+                            }
+                            &:nth-last-child(2) {
+                                &:after {
+                                    opacity: 0;
+                                    animation: reveal .8s ease-in forwards;
+                                    animation-delay: 1s;
+                                }
+                                .cre-path-index {
+                                    display: block;
+                                    position: absolute;
+                                    left: 25px;
+                                    bottom: -59px;
+                                    z-index: 0;
+                                    @extend %path-animation;
+                                    svg {
+                                        width: 89px;
+                                        height: 75px;
+                                    }
+                                }
+                                &:nth-child(2n) {
+                                    .cre-path-index {
+                                        bottom: -75px;
+                                    }
+                                }
+                            }
+                            &:last-child {
+                                &:after {
+                                    opacity: 0;
+                                    position: absolute;
+                                    background-image: url([[pix:theme|images/barco]]);
+                                    width: 40px;
+                                    height: 44.5px;
+                                    left: -50px;
+                                    top: 0;
+                                    animation: reveal-ship .8s ease-in-out forwards;
+                                    animation-delay: 2s;
+                                }
+                                .cre-transport-index {
+                                    display: block;
+                                    opacity: 0;
+                                    position: absolute;
+                                    left: -43px;
+                                    bottom: 8px;
+                                    animation: reveal-ship .8s ease-in-out forwards;
+                                    animation-delay: 2s;
+                                    svg {
+                                        width: 40px;
+                                        height: auto;
+                                    }
+                                }
+                                &:nth-child(2n) {
+                                    .cre-transport-index {
+                                        left: auto;
+                                        right: -30px;
+                                        bottom: 5px;
+                                    }
+                                    &:after {
+                                        left: auto;
+                                        right: -30px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .cre-transport-index {
+            /* Onada */
+            #wave {
+                animation-name: waving;
+                animation-duration: 5.6s;
+                animation-timing-function: cubic-bezier(.26,.34,.74,.64);
+                animation-iteration-count: infinite;
+            }
+
+            @keyframes waving {
+                0%  { transform: translateX(0px) }
+                50% { transform: translateX(-10px) }
+                100% { transform: translateX(0px) }
+            }
+
+            /* Vaixell */
+            #ship {
+                animation-name: ship-rocking;
+                animation-duration: 6s;
+                animation-timing-function: cubic-bezier(.51,.56,.59,.55);
+                animation-iteration-count: infinite;
+
+                -moz-transform-origin: 45% 45%;
+                -ms-transform-origin:  45% 45%;
+                -o-transform-origin: 45% 45%;
+                -webkit-transform-origin:  45% 45%;
+                transform-origin: 45% 45%;
+            }
+
+            @keyframes ship-rocking {
+                0%  { transform: rotate(0deg) translateY(-1px)}
+                25% { transform: rotate(-6deg) translateY(0px)}
+                50% { transform: rotate(0deg)translateY(2px)}
+                75% { transform: rotate(6deg) translateY(0px)}
+                100% { transform: rotate(0deg)translateY(-1px)}
+            }
+        }
+        #region-main > .card {
+            min-height: 0;
+        }
+        .cre-overflow {
+            background-color: transparent;
+        }
+        .btn-next {
+            position: relative;
+            @include transition(all, .1s, ease-in-out);
+            &:hover,
+            &:active {
+                @include transform(scale(1.05));
+            }
+            .icon {
+                height: 85px;
+                width: 97px;
+                margin: 0;
+                @include transition(none, 0s, ease-in-out);
+                &:hover,
+                &:active {
+                    @include transform(none);
+                }
+            }
+            .btn-text {
+                position: absolute;
+                top: 46px;
+                left: 0;
+                margin: 0 auto;
+                width: 100%;
+                font-family: Pinto01;
+                font-size: 18px;
+                letter-spacing: 0.9px;
+                color: $ioc-btn-standard;
+            }
+        }
+        .nav-buttons-cre {
+            margin-top: 0;
+            margin-bottom: 60px;
+        }
+        &.transport-animated {
+            #page-wrapper {
+                #page-content {
+                    .card {
+                        ol {
+                            li {
+                                &:last-child,
+                                &:nth-last-child(2) {
+                                    &:after {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &:not(.cre-index) {
+        #page-content {
+            @include intro('mobile');
+        }
+    }
+    .generalbox.center {
+        text-align: left;
+    }
+}
+
+@media all and (min-width: 576px) {
+    #page-mod-page-view.cre-module {
+        &.cre-index {
+            #page-header {
+                margin-top: -50px;
+                padding-top: 0;
+            }
+        }
+    }
+    #page-mod-page-view.cre-module,
+    #page-mod-page-view.cre-student-view {
+        &.cre-index {
+            #page-wrapper {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                &:after {
+                    min-height: 0;
+                }
+                #page-content{
+                    .card {
+                        h2 {
+                            font-size: 46px;
+                            margin-bottom: -webkit-calc(80px - 1rem);
+                            margin-bottom:    -moz-calc(80px - 1rem);
+                            margin-bottom:         calc(80px - 1rem);
+                        }
+                        ol {
+                            overflow: visible;
+                            & > li {
+                                width: 450px;
+                                margin-bottom: 89px;
+                                margin-left: 0;
+                                font-size: 23px;
+                                line-height: normal;
+                                max-width: 100%;
+                                color: $ioc-btn-standard;
+                                .cre-index-text {
+                                    width: 237px;
+                                    right: 40px;
+                                }
+                                &:before {
+                                    width: 111px;
+                                    height: 106px;
+                                    font-size: 40px;
+                                    margin-right: 20px;
+                                    margin-left: 50px;
+                                }
+                                &:after {
+                                    width: 216px;
+                                    height: 182.4px;
+                                    top: 70px;
+                                    left: 105px;
+                                }
+                                &:nth-child(2n) {
+                                    left: 20px;
+                                    .cre-index-text {
+                                        left: -40px;
+                                    }
+                                    &:before {
+                                        margin-right: 120px;
+                                        margin-left: 30px;
+                                    }
+                                    &:after {
+                                        top: 73px;
+                                        left: 83px;
+                                    }
+                                }
+                                &:nth-child(5n+2) {
+                                    &:before {
+                                        padding-top: 20px;
+                                        padding-left: 27px;
+                                    }
+                                }
+                                &:nth-child(5n+3) {
+                                    &:before {
+                                        padding-left: 10px;
+                                        padding-bottom: 25px
+                                    }
+                                }
+                                &:nth-child(5n+4) {
+                                    &:before {
+                                        margin-right: 115px;
+                                        margin-left: 30px;
+                                        padding-top: 20px;
+                                        padding-left: 27px;
+                                        padding-top: 7px;
+                                        padding-left: 10px;
+                                    }
+                                }
+                                &:nth-child(5n) {
+                                    &:before {
+                                        padding-right: 7px;
+                                    }
+                                }
+                                &:nth-last-child(2) {
+                                    .cre-path-index {
+                                        left: 102px;
+                                        bottom: -143px;
+                                        svg {
+                                            width: 216px;
+                                            height: 182.4px;
+                                        }
+                                    }
+                                    &:nth-child(2n) {
+                                        .cre-path-index {
+                                            left: 88px;
+                                            bottom: -143px;
+                                        }
+                                    }
+                                }
+                                &:last-child {
+                                    .cre-transport-index {
+                                        left: -39px;
+                                        right: auto;
+                                        bottom: 21px;
+                                        svg {
+                                            width: 84px;
+                                            height: auto;
+                                        }
+                                    }
+                                    &:after {
+                                        background-image: url([[pix:theme|images/barco]]);
+                                        width: 84px;
+                                        height: 86.68px;
+                                        left: -30px;
+                                        top: -10px;
+                                    }
+                                    &:nth-child(2n) {
+                                        .cre-transport-index {
+                                            left: auto;
+                                            right: 30px;
+                                            bottom: 21px;
+                                        }
+                                        &:after {
+                                            left: auto;
+                                            right: 45px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .nav-buttons-cre {
+                margin-bottom: 155px;
+                .btn-next {
+                    .icon {
+                        width: 143px;
+                        height: 124px;
+                    }
+                    .btn-text {
+                        font-size: 27px;
+                        top: 63px;
+                    }
+                }
+            }
+        }
+        &:not(.cre-index) {
+            #page-content {
+                @include intro('tablet1');
+            }
+        }
+    }
+}
+
+@media all and (min-width: 992px) {
+    #page-mod-page-view.cre-module,
+    #page-mod-page-view.cre-student-view {
+    }
+}
+
+@media all and (min-width: 1200px) {
+    #page-mod-page-view.cre-module,
+    #page-mod-page-view.cre-student-view {
+        &.cre-index {
+            #page-wrapper {
+                #page-content {
+                    .card {
+                        h2 {
+                            font-size: 56px;
+                        }
+                        ol {
+                            & > li {
+                                width: 450px;
+                                margin-bottom: 89px;
+                                margin-left: 0;
+                                font-size: 26px;
+                                color: $ioc-btn-standard;
+                                .cre-index-text {
+                                    width: 271px;
+                                    right: -20px;
+                                }
+                                &:before {
+                                    width: 130px;
+                                    height: 127px;
+                                    font-size: 50px;
+                                    margin-right: 20px;
+                                    margin-left: 50px;
+                                }
+                                &:after {
+                                    width: 216px;
+                                    height: 182.4px;
+                                    top: 85px;
+                                    left: 105px;
+                                }
+                                &:nth-child(2n) {
+                                    left: 20px;
+                                    .cre-index-text {
+                                        left: -100px;
+                                    }
+                                    &:before {
+                                        margin-right: 107px;
+                                        margin-left: 30px;
+                                    }
+                                    &:after {
+                                        width: 214px;
+                                        height: 181px;
+                                        top: 103px;
+                                        left: 81px;
+                                    }
+                                }
+                                &:nth-child(5n+2) {
+                                    &:before {
+                                        padding-top: 25px;
+                                        padding-left: 27px;
+                                    }
+                                }
+                                &:nth-child(5n+3) {
+                                    &:before {
+                                        padding-left: 10px;
+                                    }
+                                }
+                                &:nth-child(5n+4) {
+                                    &:before {
+                                        margin-right: 100px;
+                                        margin-left: 30px;
+                                        padding-top: 20px;
+                                        padding-left: 27px;
+                                        padding-top: 7px;
+                                        padding-left: 10px;
+                                    }
+                                }
+                                &:nth-child(5n) {
+                                    .cre-index-text {
+                                        right: -30px;
+                                    }
+                                    &:before {
+                                        padding-right: 20px;
+                                    }
+                                }
+                                &:nth-last-child(2) {
+                                    .cre-path-index {
+                                        left: 107px;
+                                    }
+                                }
+                                &:last-child {
+                                    .cre-transport-index {
+                                        left: -50px;
+                                        right: auto;
+                                        top: -10px;
+                                        svg {
+                                            width: 94px;
+                                            height: 97px;
+                                        }
+                                    }
+                                    &:after {
+                                        width: 82px;
+                                        height: 109px;
+                                        left: -50px;
+                                        top: -10px;
+                                    }
+                                    &:nth-child(2n) {
+                                        .cre-transport-index {
+                                            left: auto;
+                                            right: 0;
+                                        }
+                                        &:after {
+                                            right: 35px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &:not(.cre-index) {
+            #page-content {
+                @include intro('desktop');
+            }
+        }
+    }
+}
