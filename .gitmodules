@@ -105,3 +105,7 @@
 	path = course/format/grid
     url = https://github.com/gjbarnard/moodle-format_grid
     branch = MOODLE_401
+[submodule "plagiarism/urkund"]
+	path = plagiarism/urkund
+	url = https://github.com/danmarsden/moodle-plagiarism_urkund
+	branch = MOODLE_400_STABLE
