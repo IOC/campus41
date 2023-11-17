@@ -39,7 +39,8 @@
 	url = https://github.com/bostelm/moodle-mod_scheduler
 [submodule "mod/videotime"]
 	path = mod/videotime
-	url = https://github.com/bdecentgmbh/moodle-mod_videotime/
+    url = https://github.com/bdecentgmbh/moodle-mod_videotime/
+    branch = Branch_v1.7.0-r5
 [submodule "filter/wiris"]
 	path = filter/wiris
 	url = https://github.com/wiris/moodle-filter_wiris
