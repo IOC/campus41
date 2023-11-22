@@ -78,16 +78,14 @@ class mod_fpdquadern_renderer extends plugin_renderer_base {
 
     function calendari($fase) {
 
-        $o = $this->output->heading(
+        $o = $this->output->heading('');
+        $o .= $this->output->heading(
             "Planificació" .
             $this->icona_validat($fase->calendari_validat) .
             $this->icona_editar(
                 $this->controller->permis_editar_calendari($fase->fase),
                 $this->controller->url_fase('editar_calendari')));
-
-        $o .= $this->moodleform(
-            new mod_fpdquadern\calendari_form($this->controller, $fase)
-        );
+        $o .= $this->dades_planificacio($fase);
 
         $url_afegir = $this->controller->url_fase('afegir_seguiment');
         $o .= $this->output->heading(
@@ -198,8 +196,9 @@ class mod_fpdquadern_renderer extends plugin_renderer_base {
 
     function dades() {
         $alumne = $this->controller->alumne;
+        $o = $this->output->heading('');
 
-        $o = $this->output->heading(
+        $o .= $this->output->heading(
             "Alumne" .
             $this->icona_validat($alumne->alumne_validat) .
             $this->icona_editar(
@@ -207,13 +206,13 @@ class mod_fpdquadern_renderer extends plugin_renderer_base {
                 $this->controller->url_alumne('editar_dades_alumne')
             )
         );
-        $o .= $this->moodleform(
-            new mod_fpdquadern\dades_alumne_form($this->controller)
-        );
+        $o .= $this->dades_alumne($alumne);
+        $o .= '<br>';
+       
         $o .= $this->output->heading("Centre d'estudis");
-        $o .= $this->moodleform(
-            new mod_fpdquadern\dades_centre_estudis_form($this->controller)
-        );
+        $o .= $this->dades_centre_estudis(); 
+        $o .= '<br>';
+        
         $o .= $this->output->heading(
             "Professor de l'IOC" .
             $this->icona_editar(
@@ -221,9 +220,9 @@ class mod_fpdquadern_renderer extends plugin_renderer_base {
                 $this->controller->url_alumne('editar_dades_professor')
             )
         );
-        $o .= $this->moodleform(
-            new mod_fpdquadern\dades_professor_form($this->controller)
-        );
+        $o .= $this->dades_professor();
+        $o .= '<br>';
+        
         $o .= $this->output->heading(
             $heading = "Centre de pràctiques" .
             $this->icona_validat($alumne->centre_validat) .
@@ -232,9 +231,9 @@ class mod_fpdquadern_renderer extends plugin_renderer_base {
                 $this->controller->url_alumne('editar_dades_centre')
             )
         );
-        $o .= $this->moodleform(
-            new mod_fpdquadern\dades_centre_practiques_form($this->controller)
-        );
+        $o .= $this->dades_centre_practiques();
+        $o .= '<br>';
+        
         $o .= $this->output->heading(
             "Tutor del centre de pràctiques" .
             $this->icona_validat($alumne->tutor_validat) .
@@ -243,9 +242,7 @@ class mod_fpdquadern_renderer extends plugin_renderer_base {
                 $this->controller->url_alumne('editar_dades_tutor')
             )
         );
-        $o .= $this->moodleform(
-            new mod_fpdquadern\dades_tutor_form($this->controller)
-        );
+        $o .= $this->dades_tutor();
 
         return $this->pagina_alumne('dades', false, $o);
     }
@@ -604,6 +601,191 @@ class mod_fpdquadern_renderer extends plugin_renderer_base {
         return $this->pagina_alumne('qualificacio', false, $o);
     }
 
+    function pagina_veure_dades($alumne) {
+        $o = $this->dades_alumne($alumne);
+        $o .= $this->dades_centre_estudis();
+        $o .= $this->dades_professor();
+        $o .= $this->dades_centre_practiques();
+        $o .= $this->dades_tutor();
+
+
+        return $this->pagina_alumne('veure_dades', false, $o);
+    }
+
+    function dades_alumne($alumne) {
+        global $COURSE;
+
+        $spanNomCognom = "<span class='d-inline-block'>
+            Nom, Cognoms </span>";
+        $spanDni = "<span class='d-inline-block'>
+            DNI </span>";
+        $spanEspecialitat = "<span class='d-inline-block'>
+            Especialitat </span>";
+        $spanAdreca = "<span class='d-inline-block'>
+            Adreça </span>";
+        $spanCodiPostal = "<span class='d-inline-block'>
+            Codi postal </span>";
+        $spanPoblacio = "<span class='d-inline-block'>
+            Població </span>";              
+        $spanTelefon = "<span class='d-inline-block'>
+            Telèfon  </span>";
+        $spanEquivalent = "<span class='d-inline-block'>
+            Títol equivalent </span>";
+
+        $user = $alumne->alumne();
+        $link = '';
+        if ($user) {
+            $url = new \moodle_url('/user/view.php', array('id' => $user->id, 'course' => $COURSE->id));
+            $link = $this->output->action_link($url, fullname($user));
+        }
+        $o = "
+            <ul class='nav navbar-nav'>
+              <li>$spanNomCognom $link</li>
+              <li>$spanDni $alumne->alumne_dni</li>
+              <li>$spanEspecialitat $alumne->alumne_especialitat<li>
+              <li>$spanAdreca $alumne->alumne_adreca</li>
+              <li>$spanCodiPostal $alumne->alumne_codi_postal</li>
+              <li>$alumne->alumne_poblacio</li>
+              <li>$spanPoblacio $alumne->alumne_telefon</li>
+              <li>$spanEquivalent $alumne->alumne_titol</li>
+            </ul>";
+
+        return $o;
+    }
+
+    function dades_centre_estudis() {
+        $spanNomCentre = "<span class='d-inline-block'>
+            Nom Centre </span>";
+        $spanCodiCentre = "<span class='d-inline-block'>
+            Codi de centre </span>";
+        $spanAdrecaCentre = "<span class='d-inline-block'>
+            Adreça </span>";
+
+
+        $nomCentre = $this->controller->quadern->nom_centre_estudis;
+        $codiCentre = $this->controller->quadern->codi_centre_estudis;
+        $adrecaCentre =$this->controller->quadern->adreca_centre_estudis;
+
+        $o = "
+            <ul class='nav more-nav navbar-nav'>
+                <li>$spanNomCentre $nomCentre</li>
+                <li>$spanCodiCentre $codiCentre</li>
+                <li>$spanAdrecaCentre $adrecaCentre</li>
+            </ul>";
+        return $o;
+    }
+
+    function dades_professor() {
+        global $COURSE;
+
+        $spanNomProfessor = "<span class='d-inline-block'>
+            Nom i Cognoms</span>";
+
+
+        $user = $this->controller->alumne->professor();
+        $link = '';
+        if ($user) {
+            $url = new \moodle_url('/user/view.php', array('id' => $user->id, 'course' => $COURSE->id));
+            $link = $this->output->action_link($url, fullname($user));
+        }
+
+        $o = "
+            <ul class='nav more-nav navbar-nav'>
+                <li>$spanNomProfessor $link</li>
+            </ul> ";
+        return $o;
+    }
+
+    function dades_centre_practiques() {
+        $alumne = $this->controller->alumne;
+        $spanNomCentre = "<span class='d-inline-block'>
+            Nom </span>";
+        $spanCodiCentre = "<span class='d-inline-block'>
+            Codi de centre </span>";
+        $spanTipusCentre = "<span class='d-inline-block'>
+            Tipus de centre </span>";
+        $spanNomDirector = "<span class='d-inline-block'>
+            Nom del director </span>";
+        $spanCentreCoordinador = "<span class='d-inline-block'>
+            Nom del coordinador de pràctiques </span>";
+        $spanCentreValidat = "<span class='d-inline-block'>
+            Validat </span>";
+
+        $o = "
+            <ul class='nav more-nav navbar-nav'>
+                <li>$spanNomCentre $alumne->centre_nom</li>
+                <li>$spanCodiCentre $alumne->centre_codi</li>
+                <li>$spanTipusCentre $alumne->centre_tipus</li>
+                <li>$spanNomDirector $alumne->centre_director</li>
+                <li>$spanCentreCoordinador $alumne->centre_coordinador</li>
+                <li>$spanCentreValidat $alumne->centre_validat</li>
+            </ul> ";
+        return $o;
+    }
+
+    function dades_tutor() {
+        $alumne = $this->controller->alumne;
+        $spanNomTutor = "<span class='d-inline-block'>
+            Nom i Cognoms </span>";
+        $spanTelefon = "<span class='d-inline-block'>
+            Telèfon de contacte </span>";
+        $spanHorari = "<span class='d-inline-block'>
+            Horari de contacte </span>";
+        $spanEspecialitat = "<span class='d-inline-block'>
+            Especialitat docent </span>";
+        $spanCicles = "<span class='d-inline-block'>
+            Cicles que imparteix </span>";
+        $spanCredits = "<span class='d-inline-block'>
+            Crèdits/mòduls que imparteix </span>";
+        $spanValidat = "<span class='d-inline-block'>
+            Validat </span>";
+
+        $user = $alumne->tutor();
+        $link = '';
+        if ($user) {
+            $url = new \moodle_url('/user/view.php', array('id' => $user->id, 'course' => $COURSE->id));
+            $link = $this->output->action_link($url, fullname($user));
+        }
+
+        $o = "
+            <ul class='nav more-nav navbar-nav'>
+                <li>$spanNomTutor $link</li>
+                <li>$spanTelefon $alumne->tutor_telefon</li>
+                <li>$spanHorari $alumne->tutor_horari</li>
+                <li>$spanEspecialitat $alumne->tutor_especialitat</li>
+                <li>$spanCicles $alumne->tutor_cicles,</li>
+                <li>$spanCredits $alumne->tutor_credits</li>
+                <li>$spanValidat $alumne->tutor_validat</li>
+            </ul> ";
+        return $o;
+    }
+
+    function dades_planificacio($fase) {
+        $fasenum = $fase->fase;
+        $hores = $this->controller->quadern->{"durada_fase_$fasenum"};
+
+        $spanDurada = "<span class='d-inline-block'>
+            Durada </span>";
+        $spanDataInici = "<span class='d-inline-block'>
+            Data d'inici </span>";
+        $spanDataFinal = "<span class='d-inline-block'>
+            Data de finalització </span>";
+        $spanObservacions = "<span class='d-inline-block'>
+            Observacions </span>";
+        $spanValidat = "<span class='d-inline-block'>
+            Validat </span>";
+
+        $o = "
+            <ul class='nav more-nav navbar-nav'>
+                <li>$spanDurada $hores</li>
+                <li>$spanDataInici $fase->data_inici</li>
+                <li>$spanDataFinal $fase->data_final</li>
+                <li>$spanObservacions $fase->observacions_calendari</li>
+                <li>$spanValidat $fase->calendari_validat</li>
+            </ul> ";
+        return $o;
+    }
+
     private function activitat($activitat) {
         $valoracio = $this->controller->alumne->valoracio($activitat->id);
 
@@ -718,10 +900,12 @@ class mod_fpdquadern_renderer extends plugin_renderer_base {
     }
 
     private function pagina($content, $alumne_id=false) {
+        //print_r($content);exit;
         $this->page->requires->jquery();
         $this->page->requires->js('/mod/fpdquadern/client.js');
         $arguments = array(sesskey(), $this->page->cm->id, $alumne_id);
         $this->page->requires->js_init_call('mod_fpdquadern_init', $arguments);
+        $this->page->requires->css('/mod/fpdquadern/styles.css');
         return $this->output->header() . $content . $this->footer();
     }
 

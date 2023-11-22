@@ -970,7 +970,6 @@ class veure_dades_view extends alumne_view {
 
     function __construct() {
         parent::__construct();
-
         echo $this->output->dades();
     }
 
@@ -1569,6 +1568,21 @@ class exportar_alumne_view extends alumne_view {
 
         parent::__construct();
         new exporter($this);
+    }
+
+}
+
+class veure_dades_z_view extends alumne_view{
+    
+    public function __construct()
+    {
+        //$rol = optional_param('rol', false, PARAM_ALPHA);
+
+        parent::__construct();
+
+        $alumne = $this->alumne;
+        echo $this->output->pagina_veure_dades($alumne);
+        //echo $this->output->pagina_veure_dades(            $rol, $alumne);
     }
 
 }
