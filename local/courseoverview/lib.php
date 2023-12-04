@@ -67,7 +67,6 @@ function local_courseoverview_before_footer() {
         include_once($CFG->dirroot . '/mod/quiz/attemptlib.php');
 
         foreach ($coursesenrolled as $course) {
-
             $unreadforums = get_pending_forums($USER->id, $course);
 
             if ($unreadforums['totalunread'] > 0) {
@@ -306,14 +305,16 @@ function count_teacher_pending_quiz(stdClass $course, int $userid, array $quizze
         // Check that quiz has any question of type essay.
         $queryessay = "
                 SELECT COUNT({question}.id) AS total
-                FROM {question}
-                INNER JOIN {quiz_slots} ON ({quiz_slots}.questionid = {question}.id)
-                INNER JOIN {quiz} ON ({quiz}.id = {quiz_slots}.quizid)
-                WHERE {quiz}.course = " . $course->id . "
-                AND {quiz}.id = " . $quiz->id . "
-                AND {question}.qtype = 'essay'
+                FROM {quiz_slots}
+                LEFT JOIN {question_references} ON {question_references}.component = 'mod_quiz' 
+                    AND {question_references}.questionarea = 'slot' 
+                    AND {question_references}.itemid = {quiz_slots}.id
+                LEFT JOIN {question_bank_entries} ON {question_bank_entries}.id = {question_references}.questionbankentryid
+                LEFT JOIN {question_versions} ON {question_versions}.questionbankentryid = {question_bank_entries}.id
+                LEFT JOIN {question} ON {question}.id = {question_versions}.questionid
+                WHERE {quiz_slots}.quizid = " . $quiz->id . " and {question}.qtype = 'essay';
             ";
-
+        
         $resultessay = $DB->get_record_sql($queryessay);
 
         if ((int)$resultessay->total <= 0) {
