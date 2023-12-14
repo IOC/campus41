@@ -73,4 +73,4 @@ $THEME->scss = function ($theme) {
   return theme_boostioc_get_main_scss_content($theme);
 };
 
-$THEME->haseditswitch = false;
+$THEME->haseditswitch = true;

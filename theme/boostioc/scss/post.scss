@@ -198,47 +198,6 @@ page-mod-quiz-review .main-inner {
   background-color: $ioc-principal-gris;
 }
 
-/* Edit mode switch */
-
-.custom-control-label::before {
-  border: transparent;
-}
-
-.custom-control-input:checked ~ .custom-control-label::before {
-  color: #fff;
-  border-color: transparent;
-  background-color: #fff;
-}
-
-.custom-switch .custom-control-label::after {
-  background-color: #3f44bd;
-}
-
-.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
-  background-color: #3f44bd;
-}
-
-.custom-switch
-  .custom-control-input:disabled:checked
-  ~ .custom-control-label::before {
-  background-color: #fff;
-}
-
-.editmode-switch-form label {
-  color: #fff !important;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.editmode-switch-form .input-group {
-  align-items: center;
-}
-
-.editmode-switch-form .custom-control-label {
-  top: -2.5px;
-}
-
 #nav-notification-popover-container img {
   margin-top: 2px;
 }
@@ -249,6 +208,47 @@ page-mod-quiz-review .main-inner {
 
 .navbar .usermenu .role {
   color: #fff;
+}
+
+/* Navbar Edit mode switch */
+
+.navbar .custom-control-label::before {
+  border: transparent;
+}
+
+.navbar .custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: transparent;
+  background-color: #b4cfff;
+}
+
+.navbar .custom-switch .custom-control-label::after {
+  background-color: #3f44bd;
+}
+
+.navbar .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+  background-color: #3f44bd;
+}
+
+.navbar .custom-switch
+  .custom-control-input:disabled:checked
+  ~ .custom-control-label::before {
+  background-color: #fff;
+}
+
+.navbar .editmode-switch-form label {
+  color: #fff !important;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.navbar .editmode-switch-form .input-group {
+  align-items: center;
+}
+
+.navbar .editmode-switch-form .custom-control-label {
+  top: -2.5px;
 }
 
 /*** Sidebar left ***/
