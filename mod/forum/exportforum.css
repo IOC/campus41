@@ -1,0 +1,117 @@
+/*
+ // @PATCH IOC052 : Added css file to format forum export 
+*/
+body {
+    background-color: #fefefe;
+}
+
+.forumpost {
+    min-height:20px;
+    padding:19px;
+    padding:6px;
+    margin-bottom:20px;
+    background-color:#f5f5f5;
+    border:1px solid #e3e3e3;
+    border-color:#e3e3e3;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
+    -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,0.05)
+}
+.forumpost
+blockquote {
+    border-color:#ddd;
+    border-color:rgba(0,0,0,0.15)
+}
+.forumpost
+.header {
+    margin-bottom:3px
+}
+.forumpost .picture
+img {
+    margin:3px
+}
+.forumpost .content
+.posting.fullpost {
+    margin-top:8px
+}
+.forumpost .row .topic,.forumpost .row .content-mask,.forumpost .row
+.options {
+    margin-left:48px
+}
+.forumpost
+.row.side {
+    clear:both
+}
+.dir-rtl .forumpost .row .topic,.dir-rtl .forumpost .row .content-mask,.dir-rtl .forumpost .row
+.options {
+    margin-right:48px;
+    margin-left:0
+}
+.forumpost .row
+.left {
+    width:48px;
+    overflow: hidden;
+    float: left;
+}
+.forumpost .options
+.commands {
+    margin-left:0
+}
+.forumpost
+.subject {
+    font-weight:bold
+}
+
+.forumhidefavouritelink {
+    display: none;
+}
+
+.forumpost {
+    background-color: #fff;
+}
+
+.forumpost .header {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+}
+
+.blauioc {
+    color: #0000ff;
+}
+
+.indent {
+    margin-left: 3%;
+}
+
+.forum_index {
+    display: table;
+    counter-reset: my-index-counter;
+    margin-bottom: 2em;
+}
+
+.forum_discussion_title {
+    display: table-row;
+}
+
+.forum_discussion_title:before {
+    content: counter(my-index-counter) '.' ;
+    counter-increment: my-index-counter;
+    margin-right: 0.5em;
+    text-align: right;
+}
+
+.forum_discussion_title a,
+.forum_discussion_title span {
+    display: table-cell;
+}
+
+.forum_discussion_title span {
+    padding-left: 1em;
+}
+/*
+Fi PATCH IOC052
+*/
