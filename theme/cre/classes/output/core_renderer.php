@@ -198,7 +198,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * This renders the navbar.
      * Uses bootstrap compatible html.
      */
-    public function navbar($top = false) {
+    public function navbar($top = false): string {
         if ($this->cremodule) {
             $this->page->navbar->cremodule = true;
             $this->page->navbar->backtop = $top;
