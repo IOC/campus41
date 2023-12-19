@@ -64,3 +64,4 @@ $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
 $THEME->scss = function($theme) {
     return theme_cre_get_main_scss_content($theme);
 };
+$THEME->haseditswitch = true;
