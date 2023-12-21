@@ -698,7 +698,7 @@ class renderer extends \plugin_renderer_base {
             if ($status->submission && $status->submission->status != ASSIGN_SUBMISSION_STATUS_NEW) {
                 // @PATCH IOC027: Show a message when a student removes their own submission.
                 $deletedsubmission = $deletedclass = '';
-                $assignment = new assign($status->context, null, null);
+                $assignment = new \assign($status->context, null, null);
                 if ($status->submission->status == ASSIGN_SUBMISSION_STATUS_SUBMITTED and $assignment->submission_empty($status->submission)) {
                     $deletedsubmission = get_string('submissionstatus_submitted_deleted', 'assign');
                     $deletedclass = 'deleted';
@@ -727,7 +727,7 @@ class renderer extends \plugin_renderer_base {
                 $teamstatus = $status->teamsubmission->status;
                 // @PATCH IOC027: Show a message when a student removes their own submission.
                 $deletedsubmission = $deletedclass = '';
-                $assignment = new assign($status->context, null, null);
+                $assignment = new \assign($status->context, null, null);
                 if ($teamstatus == ASSIGN_SUBMISSION_STATUS_SUBMITTED and $assignment->submission_empty($status->teamsubmission)) {
                     $deletedsubmission = get_string('submissionstatus_submitted_deleted', 'assign');
                     $deletedclass = 'deleted';
