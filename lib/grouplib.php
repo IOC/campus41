@@ -845,7 +845,7 @@ function groups_print_activity_menu($cm, $urlroot, $return=false, $hideallpartic
         } else {
             foreach (array(1, 2) as $position) {
                 if (isset($groupsmenu[$position]) && is_array($groupsmenu[$position])) {
-                    list ($keytemp, ) = each($groupsmenu[$position]);
+                    $keytemp = array_key_first($groupsmenu[$position]);
                     foreach ($groupsmenu[$position][$keytemp] as $key => $group) {
                         if (isset($unread[$key])) {
                             if ($unread[$key]->count == 1) {
