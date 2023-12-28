@@ -260,8 +260,8 @@ class local_secretaria_operations {
         return $enrolments;
     }
 
-    public function get_user_enrolments($username) {
-        if (!$userid = $this->moodle->get_user_id($username)) {
+    public function get_user_enrolments($user) {
+        if (!$userid = $this->moodle->get_user_id($user)) {
             throw new local_secretaria_exception('Unknown user');
         }
 
