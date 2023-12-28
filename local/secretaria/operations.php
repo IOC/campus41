@@ -167,8 +167,8 @@ class local_secretaria_operations {
         return (bool) $this->moodle->get_course_id($shortname);
     }
 
-    public function get_course($shortname) {
-        if (!$record = $this->moodle->get_course($shortname)) {
+    public function get_course($course) {
+        if (!$record = $this->moodle->get_course($course)) {
             throw new local_secretaria_exception('Unknown course');
         }
 
