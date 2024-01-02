@@ -163,8 +163,8 @@ class local_secretaria_operations {
 
     /* Courses */
 
-    public function has_course($shortname) {
-        return (bool) $this->moodle->get_course_id($shortname);
+    public function has_course($course) {
+        return (bool) $this->moodle->get_course_id($course);
     }
 
     public function get_course($course) {
@@ -185,8 +185,8 @@ class local_secretaria_operations {
         );
     }
 
-    public function update_course($shortname, $properties) {
-        if (!$courseid = $this->moodle->get_course_id($shortname)) {
+    public function update_course($course, $properties) {
+        if (!$courseid = $this->moodle->get_course_id($course)) {
             throw new local_secretaria_exception('Unknown course');
         }
 
