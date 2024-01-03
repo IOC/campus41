@@ -825,7 +825,7 @@ class user extends grade_report {
                             format_text($gradegrade->feedback, $gradegrade->feedbackformat,
                                 // @PATCH IOC011: rich format grade comments.
                                 [
-                                    'context' => $grade_grade->get_context(),
+                                    'context' => $gradegrade->get_context(),
                                     'noclean' => true,
                                 ]);
                                 // Original.
@@ -842,7 +842,7 @@ class user extends grade_report {
                         $data['feedback']['content'] = format_text($gradegrade->feedback, $gradegrade->feedbackformat,
                             // @PATCH IOC011: rich format grade comments.
                             [
-                                'context' => $grade_grade->get_context(),
+                                'context' => $gradegrade->get_context(),
                                 'noclean' => true,
                             ]);
                             // Original.
