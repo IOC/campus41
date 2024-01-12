@@ -775,11 +775,14 @@ class mod_fpdquadern_renderer extends plugin_renderer_base {
         $spanValidat = "<span class='d-inline-block'>
             Validat </span>";
 
+        $data_inici = date('d-m-Y', $fase->data_inici);
+        $data_final = date('d-m-Y', $fase->data_final);
+
         $o = "
             <ul class='nav more-nav navbar-nav'>
                 <li>$spanDurada $hores</li>
-                <li>$spanDataInici $fase->data_inici</li>
-                <li>$spanDataFinal $fase->data_final</li>
+                <li>$spanDataInici $data_inici</li>
+                <li>$spanDataFinal $data_final</li>
                 <li>$spanObservacions $fase->observacions_calendari</li>
                 <li>$spanValidat $fase->calendari_validat</li>
             </ul> ";
