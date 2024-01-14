@@ -20,6 +20,7 @@
 
 {{#js}}
 
+
 require([], function () {
 
     var attrObserver = new MutationObserver((mutations, observer) => {
@@ -53,7 +54,26 @@ require([], function () {
             for (let i = 0; i < list_course.length; ++i) {
                 for (let j = 0; j < courses.length; ++j) {
                     if (list_course[i].dataset.courseId == courses[j].course_id) {
-                        list_course[i].insertAdjacentHTML('beforeend', courses[j].data);
+                        // Loading image
+                        list_course[i].insertAdjacentHTML('beforeend', '<div id="local-course-overview-container-'+list_course[i].dataset.courseId+'" class="local-course-overview-container"><img src="http://www.moodle41.local/local/courseoverview/loading.gif" width="10" height="10" id="local_courseoverview_loading" /></div>');
+
+                        // Creating Our XMLHttpRequest object 
+                        let xhr = new XMLHttpRequest();
+ 
+                        // Making our ajax connection  
+                        let url = '{{{ajax_url}}}'+list_course[i].dataset.courseId;
+                        
+                        xhr.open("GET", url, true);
+ 
+                        // function execute after request is successful 
+                        xhr.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById('local-course-overview-container-'+list_course[i].dataset.courseId).remove(); // Delete loading image
+                                list_course[i].insertAdjacentHTML('beforeend', this.responseText); // Add new code
+                            }
+                        }
+                        // Sending our request 
+                        xhr.send();
                     }
                 }
             }

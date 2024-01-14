@@ -24,6 +24,7 @@ const USERID = 'userid';
 // Load helper functions.
 require_once(dirname(__DIR__, 3) . '/mod/forum/tests/generator_trait.php');
 require_once(dirname(__DIR__, 3) . '/mod/assign/tests/generator.php');
+require_once(dirname(__DIR__, 3) . '/local/courseoverview/lib.php');
 
 /**
  * Test cases for the course overview generator.
