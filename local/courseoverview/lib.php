@@ -23,20 +23,6 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Name of module forum.
- */
-//const MODULE_FORUM_NAME = 'forum';
-
-/**
- * Name of module assign.
- */
-//const MODULE_ASSIGN_NAME = 'assign';
-
-/**
- * Name of module quiz.
- */
-//const MODULE_QUIZ_NAME = 'quiz';
 
 /**
  * Calculates the number of unread messages, pending tasks and pending
@@ -82,7 +68,7 @@ function local_courseoverview_before_footer() {
         }
 
         // Combine the data of the courses with the javascript code to generate the final script.
-        $javascript = $OUTPUT->render_from_template('local_courseoverview/js', ['courses' => $jscourses, 'ajax_url' => $CFG->wwwroot.'/local/courseoverview/ajax.php?courseid=']);
+        $javascript = $OUTPUT->render_from_template('local_courseoverview/js', ['courses' => $jscourses, 'ajax_url' => $CFG->wwwroot.'/local/courseoverview/ajax.php?courseid=', 'loading_src' => $CFG->wwwroot.'/local/courseoverview/loading.gif']);
 
         // Add the javascript script to the page.ajax_url
         $PAGE->requires->js_init_code($javascript, true);

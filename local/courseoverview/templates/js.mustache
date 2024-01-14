@@ -55,7 +55,7 @@ require([], function () {
                 for (let j = 0; j < courses.length; ++j) {
                     if (list_course[i].dataset.courseId == courses[j].course_id) {
                         // Loading image
-                        list_course[i].insertAdjacentHTML('beforeend', '<div id="local-course-overview-container-'+list_course[i].dataset.courseId+'" class="local-course-overview-container"><img src="http://www.moodle41.local/local/courseoverview/loading.gif" width="10" height="10" id="local_courseoverview_loading" /></div>');
+                        list_course[i].insertAdjacentHTML('beforeend', '<div id="local-course-overview-container-'+list_course[i].dataset.courseId+'" class="local-course-overview-container"><img src="{{{loading_src}}}" width="10" height="10" id="local_courseoverview_loading" /></div>');
 
                         // Creating Our XMLHttpRequest object 
                         let xhr = new XMLHttpRequest();
