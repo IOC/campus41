@@ -1,6 +1,13 @@
 # Modificacions en els desplegaments del campus de l'IOC
+
+### IOC_CAMPUS_V6.0.1
+  * fix ajax calls in my page (1148-2024-0001)
+  * unix date to human readable date (1148-2024-0005)
+  * Fixed patch IOC011: Add idnumber column in gradebook
+
 ### IOC_CAMPUS_V6.0.0 
   * Upgrade campus version 4.1.6
+
 ### IOC_CAMPUS_V5.1.12 (26/07/2023)
   * NEW PATCH IOC051: Esborra preguntes aleatòries òrfenes en finalitzar un restore
 
