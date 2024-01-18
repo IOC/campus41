@@ -26,8 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_courseoverview';
-$plugin->release = '1.0.0';
-$plugin->version = 2022031100;
+$plugin->release = '1.0.1';
+$plugin->version = 2024011400;
 $plugin->requires = 2020110900; // Moodle 3.10.
 $plugin->maturity = MATURITY_BETA;
 $plugin->dependencies = [

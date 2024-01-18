@@ -20,19 +20,15 @@
 
 {{#js}}
 
+
 require([], function () {
 
     var attrObserver = new MutationObserver((mutations, observer) => {
 
         mutations.forEach((mu) => {
 
-            // Ignore changes that don't involve adding content.
-            if (mu.addedNodes.length == 0) {
-                return;
-            }
-
             // Avoid duplicated content.
-            let courses_overview_container = document.querySelectorAll('.local-course-overview-container');
+            let courses_overview_container = document.querySelectorAll(".paged-content-page-container [data-region='paged-content-page']:not(.hidden) .local-course-overview-container[data-loaded='true']");
             if (courses_overview_container.length > 0) {
                 return;
             }
@@ -52,8 +48,30 @@ require([], function () {
             // Inject data into each course. This is done by matching all the divs in the page with the list of courses.
             for (let i = 0; i < list_course.length; ++i) {
                 for (let j = 0; j < courses.length; ++j) {
+                    if (list_course[i].querySelector('.local-course-overview-container') && list_course[i].querySelector('.local-course-overview-container').dataset.loaded) {
+                        continue;
+                    }
                     if (list_course[i].dataset.courseId == courses[j].course_id) {
-                        list_course[i].insertAdjacentHTML('beforeend', courses[j].data);
+                        // Loading image
+                        list_course[i].insertAdjacentHTML('beforeend', '<div id="local-course-overview-container-'+list_course[i].dataset.courseId+'" class="local-course-overview-container" data-loaded="false"><img src="{{{loading_src}}}" width="10" height="10" id="local_courseoverview_loading" /></div>');
+
+                        // Creating Our XMLHttpRequest object 
+                        let xhr = new XMLHttpRequest();
+ 
+                        // Making our ajax connection  
+                        let url = '{{{ajax_url}}}'+list_course[i].dataset.courseId;
+                        
+                        xhr.open("GET", url, true);
+ 
+                        // function execute after request is successful 
+                        xhr.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById('local-course-overview-container-'+list_course[i].dataset.courseId).remove(); // Delete loading image
+                                list_course[i].insertAdjacentHTML('beforeend', this.responseText); // Add new code
+                            }
+                        }
+                        // Sending our request 
+                        xhr.send();
                     }
                 }
             }
