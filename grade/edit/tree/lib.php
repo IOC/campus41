@@ -70,6 +70,10 @@ class grade_edit_tree {
 
         $this->columns = array(grade_edit_tree_column::factory('name', array('deepest_level' => $this->deepest_level)));
 
+        // @PATCH IOC011: grade tree improvements (adding idnumber column)
+        $this->columns[] = grade_edit_tree_column::factory('idnumber');
+        // fi
+
         if ($this->uses_weight) {
             $this->columns[] = grade_edit_tree_column::factory('weight', array('adv' => 'weight'));
         }
@@ -1090,3 +1094,43 @@ class grade_edit_tree_column_select extends grade_edit_tree_column {
         return $togglegroup;
     }
 }
+
+// @PATCH IOC011
+/**
+ * Class grade_edit_tree_column_idnumber
+ *
+ * @package   core_grades
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class grade_edit_tree_column_idnumber extends grade_edit_tree_column {
+
+    public function __construct($params) {
+        parent::__construct();
+    }
+
+    public function get_header_cell() {
+        $headercell = clone($this->headercell);
+        $headercell->text = get_string('idnumber');
+        return $headercell;
+    }
+
+    public function get_category_cell($category, $levelclass, $params) {
+
+        if (empty($params['actions'])) {
+            throw new Exception('Array key (actions) missing from 3rd param of grade_edit_tree_column_idnumber::get_category_actions($category, $levelclass, $params)');
+        }
+
+        $categorycell = parent::get_category_cell($category, $levelclass, $params);
+        return $categorycell;
+    }
+
+    public function get_item_cell($item, $params) {
+        if (empty($params['actions'])) {
+            throw new Exception('Array key (actions) missing from 2nd param of grade_edit_tree_column_idnumber::get_item_cell($item, $params)');
+        }
+        $itemcell = parent::get_item_cell($item, $params);
+        $itemcell->text = $item->idnumber;
+        return $itemcell;
+    }
+}
+// Fi.
