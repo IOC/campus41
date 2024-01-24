@@ -397,10 +397,6 @@ page-mod-quiz-review .main-inner {
 
 /*** Mod ***/
 
-[id^="page-mod-"][id$="-view"] #region-main h2:first-of-type {
-  display: none;
-}
-
 .activity-information {
   margin-right: 0;
 }
@@ -465,29 +461,6 @@ body.admin {
   box-shadow: none;
 }
 
-/*
-
-Admin background light gray
-
-.admin .drawers .main-inner {
-  background-color: transparent;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-.admin #page.drawers .main-inner {
-  background-color: transparent;
-}
-
-.admin .secondary-navigation .navigation,
-.admin .moremenu .nav-tabs {
-  background-color: transparent;
-}
-
-#region-main {
-  background-color: transparent;
-}
-*/
 
 /*** Blocks ***/
 
