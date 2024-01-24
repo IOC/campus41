@@ -91,6 +91,15 @@ require([], function () {
         });
     });
 
+    window.toggleVisibility = function(courseid) {
+      let item = document.getElementById("local-course-overview-forum-"+courseid);
+      if (item.style.display === "none") {
+          item.style.display = "block";
+      } else {
+          item.style.display = "none";
+      }
+    }
+
     // Program initial change, which involves adding the courses information.
     let courses_view = document.querySelectorAll('.block_myoverview [data-region="courses-view"]');
 

@@ -23,17 +23,7 @@
     <div id="local-course-overview-container-{{course_id}}" class="local-course-overview-container" data-loaded="true">
         {{#is_unread_forums}}
             <span id="local-course-overview-item-{{course_id}}" class="local-course-overview-item"
-                  onclick=\'
-                      function toggleVisibility{{course_id}}() {
-                          let item = document.getElementById("local-course-overview-forum-{{course_id}}");
-                          if (item.style.display === "none") {
-                              item.style.display = "block";
-                          } else {
-                              item.style.display = "none";
-                          }
-                      }
-                      toggleVisibility{{course_id}}();
-                      \'>
+                  onclick="toggleVisibility({{course_id}})">
                 {{#pix}} icon, mod_forum, {{#str}}unreadposts, mod_forum{{/str}} {{/pix}}
                 <span class="local-course-overview-item-forum">{{unread_forums}}</span>
             </span>
