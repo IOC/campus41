@@ -1,5 +1,10 @@
 # Modificacions en els desplegaments del campus de l'IOC
 
+### IOC_CAMPUS_V6.0.2
+  * Changes in css styles in boostioc thme (1148-2024-0051)
+  * Added mass action plugin (1148-2024-0052)
+  * Fix local/courseoverview: Change function toggleVisibility (1148-2024-0054)
+
 ### IOC_CAMPUS_V6.0.1
   * fix ajax calls in my page (1148-2024-0001)
   * unix date to human readable date (1148-2024-0005)
