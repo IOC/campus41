@@ -1,7 +1,10 @@
 # Modificacions en els desplegaments del campus de l'IOC
 
+### IOC_CAMPUS_V6.0.3
+  * Added filter codes pluggin (1148-2024-0052)
+
 ### IOC_CAMPUS_V6.0.2
-  * Changes in css styles in boostioc thme (1148-2024-0051)
+  * Changes in css styles in boostioc theme (1148-2024-0051)
   * Added mass action plugin (1148-2024-0052)
   * Fix local/courseoverview: Change function toggleVisibility (1148-2024-0054)
 
