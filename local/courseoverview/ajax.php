@@ -273,7 +273,7 @@ function format_unreadforums(array $unreadforums): string {
             $content .= '<li><strong>' . $value['count'] . '</strong>'
                 . ' ' . $unreadtext . ' '
                 . '<a href="' . $CFG->wwwroot . '/mod/forum/view.php?id=' . $value['id'] . '" target="_blank">'
-                . addslashes($value['name'])
+                . strip_tags($value['name'])
                 . '</a></li>';
         }
     }
