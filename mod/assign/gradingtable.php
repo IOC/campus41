@@ -324,13 +324,6 @@ class assign_grading_table extends table_sql implements renderable {
 
             } else if ($filter == ASSIGN_FILTER_GRANTED_EXTENSION) {
                 $where .= ' AND uf.extensionduedate > 0 ';
-
-            // @PATCH IOC029: Filtre d'esborranys a la llista d'enviaments.
-            } else if ($filter == ASSIGN_FILTER_DRAFTS) {
-                $where .= ' AND s.status = :draft';
-                $params['draft'] = ASSIGN_SUBMISSION_STATUS_DRAFT;
-            // Fi.
-
             } else if (strpos($filter, ASSIGN_FILTER_SINGLE_USER) === 0) {
                 $userfilter = (int) array_pop(explode('=', $filter));
                 $where .= ' AND (u.id = :userid)';
