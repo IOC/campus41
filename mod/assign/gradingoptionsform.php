@@ -71,15 +71,8 @@ class mod_assign_grading_options_form extends moodleform {
                          ASSIGN_FILTER_DRAFT => get_string('filterdraft', 'assign'),
                          ASSIGN_FILTER_SUBMITTED => get_string('filtersubmitted', 'assign'),
                          ASSIGN_FILTER_REQUIRE_GRADING => get_string('filterrequiregrading', 'assign'),
-
-        // @PATCH IOC029: Filtre d'esborranys a la llista d'enviaments.
-                         ASSIGN_FILTER_GRANTED_EXTENSION => get_string('filtergrantedextension', 'assign'),
-                         ASSIGN_FILTER_DRAFTS => get_string('numberofdraftsubmissions', 'assign'));
-        // Original.
-        /*
                          ASSIGN_FILTER_GRANTED_EXTENSION => get_string('filtergrantedextension', 'assign'));
-        */
-        // Fi.
+                         
         if ($instance['submissionsenabled']) {
             $mform->addElement('select', 'filter', get_string('filter', 'assign'), $options);
         }
