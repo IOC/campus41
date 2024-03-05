@@ -301,6 +301,8 @@ global $CFG;
       'staticacceleration' => true,
       'component' => 'core',
       'area' => 'coursesectionspreferences',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
     'core/coursecontacts' => 
     array (
@@ -320,6 +322,8 @@ global $CFG;
       'simpledata' => true,
       'component' => 'core',
       'area' => 'courseeditorstate',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
     'core/repositories' => 
     array (
@@ -725,6 +729,8 @@ global $CFG;
       ),
       'component' => 'core',
       'area' => 'contentbank_allowed_categories',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
     'core/contentbank_allowed_courses' => 
     array (
@@ -739,6 +745,8 @@ global $CFG;
       ),
       'component' => 'core',
       'area' => 'contentbank_allowed_courses',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
     'core/reportbuilder_allowed_reports' => 
     array (
@@ -749,6 +757,8 @@ global $CFG;
       'ttl' => 1800,
       'component' => 'core',
       'area' => 'reportbuilder_allowed_reports',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
     'core/file_imageinfo' => 
     array (
@@ -760,6 +770,8 @@ global $CFG;
       'staticaccelerationsize' => 100,
       'component' => 'core',
       'area' => 'file_imageinfo',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
     'availability_completion/previous_cache' => 
     array (
@@ -821,6 +833,8 @@ global $CFG;
       ),
       'component' => 'mod_bigbluebuttonbn',
       'area' => 'serverinfo',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
     'mod_bigbluebuttonbn/validatedurls' => 
     array (
@@ -828,6 +842,8 @@ global $CFG;
       'simpledata' => true,
       'component' => 'mod_bigbluebuttonbn',
       'area' => 'validatedurls',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
     'mod_bigbluebuttonbn/recordings' => 
     array (
@@ -840,12 +856,16 @@ global $CFG;
       'ttl' => 300,
       'component' => 'mod_bigbluebuttonbn',
       'area' => 'recordings',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
     'mod_bigbluebuttonbn/currentfetch' => 
     array (
       'mode' => 4,
       'component' => 'mod_bigbluebuttonbn',
       'area' => 'currentfetch',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
     'mod_forum/forum_is_tracked' => 
     array (
@@ -1077,6 +1097,48 @@ global $CFG;
       'selectedsharingoption' => 2,
       'userinputsharingkey' => '',
     ),
+    'local_mail/courses' => 
+    array (
+      'mode' => 4,
+      'simplekeys' => true,
+      'component' => 'local_mail',
+      'area' => 'courses',
+    ),
+    'local_mail/labels' => 
+    array (
+      'mode' => 4,
+      'simplekeys' => true,
+      'component' => 'local_mail',
+      'area' => 'labels',
+    ),
+    'local_mail/messages' => 
+    array (
+      'mode' => 4,
+      'simplekeys' => true,
+      'component' => 'local_mail',
+      'area' => 'messages',
+    ),
+    'local_mail/usercourseids' => 
+    array (
+      'mode' => 4,
+      'simplekeys' => true,
+      'component' => 'local_mail',
+      'area' => 'usercourseids',
+    ),
+    'local_mail/userlabelids' => 
+    array (
+      'mode' => 4,
+      'simplekeys' => true,
+      'component' => 'local_mail',
+      'area' => 'userlabelids',
+    ),
+    'local_mail/users' => 
+    array (
+      'mode' => 4,
+      'simplekeys' => true,
+      'component' => 'local_mail',
+      'area' => 'users',
+    ),
     'quizaccess_seb/quizsettings' => 
     array (
       'mode' => 1,
@@ -1117,6 +1179,8 @@ global $CFG;
       'ttl' => 3600,
       'component' => 'videotimetab_chat',
       'area' => 'comments',
+      'selectedsharingoption' => 2,
+      'userinputsharingkey' => '',
     ),
   ),
   'definitionmappings' => 
