@@ -511,7 +511,7 @@ class gradingform_erubric_controller extends gradingform_controller {
     public function get_options() {
         $options = self::get_default_options();
         if (!empty($this->definition->options)) {
-            $thisoptions = json_decode($this->definition->options);
+            $thisoptions = json_decode($this->definition->options, true);
             foreach ($thisoptions as $option => $value) {
                 $options[$option] = $value;
             }
