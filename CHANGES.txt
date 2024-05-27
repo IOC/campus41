@@ -1,4 +1,35 @@
 # Modificacions en els desplegaments del campus de l'IOC
+### IOC_CAMPUS_V6.0.8
+  * Fix 1148-2024-0186
+  * Fix 1148-2024-0272
+  * blocks/completion_progress: Pluggin upgraded
+  * blocks/dedication: Pluggin upgraded
+  * blocks/filtered_course_list: Pluggin upgraded
+  * blocks/xp: Pluggin upgraded
+  * Add blocks/timestat
+  * course/format/grid: Pluggin upgraded
+  * filter/wiris: Pluggin upgraded
+  * lib/editor/atto/plugins/fullscreen: Pluggin upgraded
+  * lib/editor/atto/plugins/wiris: Pluggin upgraded
+  * lib/editor/tinymce/plugins/tiny_mce_wiris: Pluggin upgraded
+  * local/mail: Pluggin upgraded
+  * local/redislock: Pluggin upgraded
+  * mod/geogebra: Pluggin upgraded
+  * mod/hotpot: Pluggin upgraded
+  * mod/hvp (new commits, modified content)
+  * mod/journal: Pluggin upgraded
+  * mod/oublog: Pluggin upgraded
+  * mod/scheduler: Pluggin upgraded
+  * question/behaviour/adaptive_adapted_for_coderunner: Pluggin upgraded
+  * question/type/coderunner: Pluggin upgraded
+  * question/type/essaywiris: Pluggin upgraded
+  * question/type/matchwiris: Pluggin upgraded
+  * question/type/multianswerwiris: Pluggin upgraded
+  * question/type/multichoicewiris: Pluggin upgraded
+  * question/type/shortanswerwiris: Pluggin upgraded
+  * question/type/truefalsewiris: Pluggin upgraded
+  * question/type/wq: Pluggin upgraded
+
 ### IOC_CAMPUS_V6.0.7
   * local/mail: Pluggin upgraded 
 

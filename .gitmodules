@@ -113,3 +113,6 @@
 [submodule "report/editdates"]
 	path = report/editdates
 	url = https://github.com/moodleou/moodle-report_editdates
+[submodule "blocks/timestat"]
+	path = blocks/timestat
+	url = https://github.com/jcorel/moodle-block_timestat
