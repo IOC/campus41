@@ -18,7 +18,7 @@
  * Main filter code for FilterCodes.
  *
  * @package    filter_filtercodes
- * @copyright  2017-2023 TNG Consulting Inc. - www.tngconsulting.ca
+ * @copyright  2017-2024 TNG Consulting Inc. - www.tngconsulting.ca
  * @author     Michael Milette
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -36,7 +36,7 @@ require_once($CFG->dirroot . '/course/renderer.php');
 /**
  * Extends the moodle_text_filter class to provide plain text support for new tags.
  *
- * @copyright  2017-2023 TNG Consulting Inc. - www.tngconsulting.ca
+ * @copyright  2017-2024 TNG Consulting Inc. - www.tngconsulting.ca
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class filter_filtercodes extends moodle_text_filter {
@@ -260,7 +260,7 @@ class filter_filtercodes extends moodle_text_filter {
         if ($CFG->branch >= 28) {
             $ishttps = is_https(); // Available as of Moodle 2.8.
         } else {
-            $ishttps = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443);
+            $ishttps = (filter_input(INPUT_SERVER, 'HTTPS') === 'on');
         }
         return $ishttps;
     }
@@ -273,7 +273,7 @@ class filter_filtercodes extends moodle_text_filter {
     private function iswebservice() {
         global $ME;
         // If this is a web service or the Moodle mobile app...
-        $isws = (WS_SERVER || (strpos($ME, "webservice/") !== false && optional_param('token', '', PARAM_ALPHANUM)));
+        $isws = (WS_SERVER || (strstr($ME, "webservice/") !== false && optional_param('token', '', PARAM_ALPHANUM)));
         return $isws;
     }
 
@@ -737,159 +737,255 @@ class filter_filtercodes extends moodle_text_filter {
 
         $replace = []; // Array of key/value filterobjects.
 
-        // Tag: {menuadmin}.
-        // Description: Displays a menu of useful links for site administrators when added to the custom menu.
-        // Parameters: None.
-        if (stripos($text, '{menuadmin}') !== false) {
-            $theme = $PAGE->theme->name;
-            $menu = '';
-            if ($this->hasminarchetype('editingteacher')) {
-                $menu .= '{fa fa-wrench} {getstring}admin{/getstring}' . PHP_EOL;
-            }
-            if ($this->hasminarchetype('coursecreator')) { // If a course creator or above.
-                $menu .= '-{getstring}administrationsite{/getstring}|/admin/search.php' . PHP_EOL;
-                $menu .= '-{toggleeditingmenu}' . PHP_EOL;
-                $menu .= '-Moodle Academy|https://moodle.academy/' . PHP_EOL;
-                $menu .= '-###' . PHP_EOL;
-            }
-            if ($this->hasminarchetype('manager')) { // If a manager or above.
-                $menu .= '-{getstring}user{/getstring}: {getstring:admin}usermanagement{/getstring}|/admin/user.php' . PHP_EOL;
-                $menu .= '{ifminsitemanager}' . PHP_EOL;
-                $menu .= '-{getstring}user{/getstring}: {getstring:mnet}profilefields{/getstring}|/user/profile/index.php' .
-                        PHP_EOL;
-                $menu .= '-###' . PHP_EOL;
-                $menu .= '{/ifminsitemanager}' . PHP_EOL;
-                $menu .= '-{getstring}course{/getstring}: {getstring:admin}coursemgmt{/getstring}|/course/management.php' .
-                        '?categoryid={categoryid}' . PHP_EOL;
-                $menu .= '-{getstring}course{/getstring}: {getstring}new{/getstring}|/course/edit.php' .
-                        '?category={categoryid}&returnto=topcat' . PHP_EOL;
-                $menu .= '-{getstring}course{/getstring}: {getstring}searchcourses{/getstring}|/course/search.php' . PHP_EOL;
-            }
-            if ($this->hasminarchetype('editingteacher')) {
-                $menu .= '-{getstring}course{/getstring}: {getstring}restore{/getstring}|/backup/restorefile.php' .
-                    '?contextid={coursecontextid}' . PHP_EOL;
-                $menu .= '{ifincourse}' . PHP_EOL;
-                $menu .= '-{getstring}course{/getstring}: {getstring}backup{/getstring}|/backup/backup.php?id={courseid}' .
-                        PHP_EOL;
-                $menu .= '-{getstring}course{/getstring}: {getstring}participants{/getstring}|/user/index.php?id={courseid}' .
-                        PHP_EOL;
-                $menu .= '-{getstring}course{/getstring}: {getstring:badges}badges{/getstring}|/badges/index.php' .
-                        '?type={courseid}' . PHP_EOL;
-                $menu .= '-{getstring}course{/getstring}: {getstring}reports{/getstring}|/course/admin.php' .
-                        '?courseid={courseid}#linkcoursereports' . PHP_EOL;
-                $menu .= '-{getstring}course{/getstring}: {getstring:enrol}enrolmentinstances{/getstring}|/enrol/instances.php' .
-                        '?id={courseid}' . PHP_EOL;
-                $menu .= '-{getstring}course{/getstring}: {getstring}reset{/getstring}|/course/reset.php?id={courseid}' . PHP_EOL;
-                $menu .= '-Course: Layoutit|https://www.layoutit.com/build" target="popup" ' .
+        // If there are {menu...} tags.
+        if (stripos($text, '{menu') !== false) {
+            // Tag: {menuadmin}.
+            // Description: Displays a menu of useful links for site administrators when added to the custom menu.
+            // Parameters: None.
+            if (stripos($text, '{menuadmin}') !== false) {
+                $theme = $PAGE->theme->name;
+                $menu = '';
+                if ($this->hasminarchetype('editingteacher')) {
+                    $menu .= '{fa fa-wrench} {getstring}admin{/getstring}' . PHP_EOL;
+                }
+                if ($this->hasminarchetype('coursecreator')) { // If a course creator or above.
+                    $menu .= '-{getstring}administrationsite{/getstring}|/admin/search.php' . PHP_EOL;
+                    $menu .= '-{toggleeditingmenu}' . PHP_EOL;
+                    $menu .= '-Moodle Academy|https://moodle.academy/' . PHP_EOL;
+                    $menu .= '-###' . PHP_EOL;
+                }
+                if ($this->hasminarchetype('manager')) { // If a manager or above.
+                    $menu .= '-{getstring}user{/getstring}: {getstring:admin}usermanagement{/getstring}|/admin/user.php' . PHP_EOL;
+                    $menu .= '{ifminsitemanager}' . PHP_EOL;
+                    $menu .= '-{getstring}user{/getstring}: {getstring:mnet}profilefields{/getstring}|/user/profile/index.php' .
+                            PHP_EOL;
+                    $menu .= '-###' . PHP_EOL;
+                    $menu .= '{/ifminsitemanager}' . PHP_EOL;
+                    $menu .= '-{getstring}course{/getstring}: {getstring:admin}coursemgmt{/getstring}|/course/management.php' .
+                            '?categoryid={categoryid}' . PHP_EOL;
+                    $menu .= '-{getstring}course{/getstring}: {getstring}new{/getstring}|/course/edit.php' .
+                            '?category={categoryid}&returnto=topcat' . PHP_EOL;
+                    $menu .= '-{getstring}course{/getstring}: {getstring}searchcourses{/getstring}|/course/search.php' . PHP_EOL;
+                }
+                if ($this->hasminarchetype('editingteacher')) {
+                    $menu .= '-{getstring}course{/getstring}: {getstring}restore{/getstring}|/backup/restorefile.php' .
+                        '?contextid={coursecontextid}' . PHP_EOL;
+                    $menu .= '{ifincourse}' . PHP_EOL;
+                    $menu .= '-{getstring}course{/getstring}: {getstring}backup{/getstring}|/backup/backup.php?id={courseid}' .
+                            PHP_EOL;
+                    if (stripos($text, '{menucoursemore}') === false) {
+                        $menu .= '-{getstring}course{/getstring}: {getstring}participants{/getstring}|/user/index.php?id={courseid}'
+                            . PHP_EOL;
+                        $menu .= '-{getstring}course{/getstring}: {getstring:badges}badges{/getstring}|/badges/view.php' .
+                            '?type=2&id={courseid}' . PHP_EOL;
+                        $menu .= '-{getstring}course{/getstring}: {getstring}reports{/getstring}|/course/admin.php' .
+                            '?courseid={courseid}#linkcoursereports' . PHP_EOL;
+                    }
+                    $menu .= '-{getstring}course{/getstring}: {getstring:enrol}enrolmentinstances{/getstring}|/enrol/instances.php'
+                        . '?id={courseid}' . PHP_EOL;
+                    $menu .= '-{getstring}course{/getstring}: {getstring}reset{/getstring}|/course/reset.php?id={courseid}'
+                        . PHP_EOL;
+                    $menu .= '-Course: Layoutit|https://www.layoutit.com/build" target="popup" ' .
                         'onclick="window.open(\'https://www.layoutit.com/build\',\'popup\',\'width=1340,height=700\');' .
                         ' return false;|Bootstrap Page Builder' . PHP_EOL;
-                $menu .= '{/ifincourse}' . PHP_EOL;
-                $menu .= '-###' . PHP_EOL;
-            }
-            if ($this->hasminarchetype('manager')) { // If a manager or above.
-                $menu .= '-{getstring}site{/getstring}: {getstring}reports{/getstring}|/admin/category.php?category=reports' .
-                        PHP_EOL;
-            }
-            if (is_siteadmin() && !is_role_switched($PAGE->course->id)) { // If an administrator.
-                $menu .= '-{getstring}site{/getstring}: {getstring:admin}additionalhtml{/getstring}|/admin/settings.php' .
-                        '?section=additionalhtml' . PHP_EOL;
-                $menu .= '-{getstring}site{/getstring}: {getstring:admin}frontpage{/getstring}|/admin/settings.php' .
-                        '?section=frontpagesettings|Including site name' . PHP_EOL;
-                $menu .= '-{getstring}site{/getstring}: {getstring:admin}plugins{/getstring}|/admin/search.php#linkmodules' .
-                        PHP_EOL;
-                $menu .= '-{getstring}site{/getstring}: {getstring:admin}supportcontact{/getstring}|/admin/settings.php' .
-                        '?section=supportcontact' . PHP_EOL;
-                $menu .= '-{getstring}site{/getstring}: {getstring:admin}themesettings{/getstring}|/admin/settings.php' .
-                        '?section=themesettings|Including custom menus, designer mode, theme in URL' . PHP_EOL;
-                if (file_exists($CFG->dirroot . '/theme/' . $theme . '/settings.php')) {
-                    $menu .= '-{getstring}site{/getstring}: {getstring:admin}currenttheme{/getstring}|/admin/settings.php' .
-                            '?section=themesetting' . $theme . PHP_EOL;
+                    $menu .= '{/ifincourse}' . PHP_EOL;
+                    $menu .= '-###' . PHP_EOL;
                 }
-                $menu .= '-{getstring}site{/getstring}: {getstring}notifications{/getstring} ({getstring}admin{/getstring})' .
-                        '|/admin/index.php' . PHP_EOL;
-            }
-            $replace['/\{menuadmin\}/i'] = $menu;
-        }
+                if ($this->hasminarchetype('manager')) { // If a manager or above.
+                    $menu .= '-{getstring}site{/getstring}: {getstring}reports{/getstring}|/admin/category.php?category=reports' .
+                        PHP_EOL;
+                }
+                if (is_siteadmin() && !is_role_switched($PAGE->course->id)) { // If an administrator.
+                    $menu .= '-{getstring}site{/getstring}: {getstring:admin}additionalhtml{/getstring}|/admin/settings.php' .
+                            '?section=additionalhtml' . PHP_EOL;
+                    $menu .= '-{getstring}site{/getstring}: {getstring:admin}frontpage{/getstring}|/admin/settings.php' .
+                            '?section=frontpagesettings|Including site name' . PHP_EOL;
+                    $menu .= '-{getstring}site{/getstring}: {getstring:admin}plugins{/getstring}|/admin/search.php#linkmodules' .
+                            PHP_EOL;
+                    $menu .= '-{getstring}site{/getstring}: {getstring:admin}supportcontact{/getstring}|/admin/settings.php' .
+                            '?section=supportcontact' . PHP_EOL;
 
-        // Tag: {menudev}.
-        // Description: Displays a menu of useful links for site administrators when added to the custom menu.
-        // Parameters: None.
-        if (stripos($text, '{menudev}') !== false) {
-            $menu = '';
-            if (is_siteadmin() && !is_role_switched($PAGE->course->id)) { // If a site administrator.
-                $menu .= '-{getstring:tool_installaddon}installaddons{/getstring}|/admin/tool/installaddon' . PHP_EOL;
-                $menu .= '-###' . PHP_EOL;
-                $menu .= '-{getstring:admin}debugging{/getstring}|/admin/settings.php?section=debugging' . PHP_EOL;
-                $menu .= '-{getstring:admin}purgecachespage{/getstring}|/admin/purgecaches.php' . PHP_EOL;
-                $menu .= '-###' . PHP_EOL;
-                if (file_exists(dirname(__FILE__) . '/../../local/adminer/index.php')) {
-                    $menu .= '-{getstring:local_adminer}pluginname{/getstring}|/local/adminer' . PHP_EOL;
+                    if ($CFG->branch >= 404) {
+                        $label = 'themesettingsadvanced';
+                        $section = 'themesettingsadvanced';
+                    } else {
+                        $label = 'themesettings';
+                        $section = 'themesettings';
+                    }
+                    $menu .= '-{getstring}site{/getstring}: {getstring:admin}' . $label . '{/getstring}|/admin/settings.php' .
+                        '?section=' . $section . '|Including custom menus, designer mode, theme in URL' . PHP_EOL;
+
+                    if (file_exists($CFG->dirroot . '/theme/' . $theme . '/settings.php')) {
+                        require_once($CFG->libdir . '/adminlib.php');
+                        if (admin_get_root()->locate('theme_' . $theme)) {
+                            // Settings use categories interface URL.
+                            $url = '/admin/category.php?category=theme_' . $theme . PHP_EOL;
+                        } else {
+                            // Settings use tabs interface URL.
+                            $url = '/admin/settings.php?section=themesetting' . $theme . PHP_EOL;
+                        }
+                        $menu .= '-{getstring}site{/getstring}: {getstring:admin}currenttheme{/getstring}|' . $url;
+                    }
+                    $menu .= '-{getstring}site{/getstring}: {getstring}notifications{/getstring} ({getstring}admin{/getstring})' .
+                            '|/admin/index.php' . PHP_EOL;
                 }
-                if (file_exists(dirname(__FILE__) . '/../../local/codechecker/index.php')) {
-                    $menu .= '-{getstring:local_codechecker}pluginname{/getstring}|/local/codechecker' . PHP_EOL;
+                $replace['/\{menuadmin\}/i'] = $menu;
+            }
+
+            // Tag: {menucoursemore}.
+            // Description: Show a "More" menu containing most of 4.x secondary menu. Useful if theme with pre-4.x style navigation.
+            // Parameters: None.
+            if (stripos($text, '{menucoursemore}') !== false) {
+                $menu = '';
+                $menu .= '{ifincourse}' . PHP_EOL;
+                if ($CFG->branch >= 400) {
+                    $menu .= '{getstring}moremenu{/getstring}' . PHP_EOL;
+                } else {
+                    $menu .= '{getstring:filter_filtercodes}moremenu{/getstring}' . PHP_EOL;
                 }
-                if (file_exists(dirname(__FILE__) . '/../../local/moodlecheck/index.php')) {
-                    $menu .= '-{getstring:local_moodlecheck}pluginname{/getstring}|/local/moodlecheck' . PHP_EOL;
+                $menu .= '-{getstring}course{/getstring}|/course/view.php?id={courseid}' . PHP_EOL;
+                if ($this->hasminarchetype('editingteacher')) {
+                    $menu .= '-{getstring}settings{/getstring}|/course/edit.php?id={courseid}' . PHP_EOL;
                 }
-                if (file_exists(dirname(__FILE__) . '/../../admin/tool/pluginskel/index.php')) {
-                    $menu .= '-{getstring:tool_pluginskel}pluginname{/getstring}|/admin/tool/pluginskel' . PHP_EOL;
+                $menu .= '-{getstring}participants{/getstring}|/user/index.php?id={courseid}' . PHP_EOL;
+                $menu .= '-{getstring}grades{/getstring}|/grade/report/index.php?id={courseid}' . PHP_EOL;
+                if ($this->hasminarchetype('editingteacher')) {
+                    $menu .= '-{getstring}reports{/getstring}|/report/view.php?courseid={courseid}' . PHP_EOL;
+                    $menu .= '-###' . PHP_EOL;
+                    $menu .= '-{getstring:question}questionbank{/getstring}|/question/edit.php?courseid={courseid}' . PHP_EOL;
+                    if ($CFG->branch >= 39) {
+                        $menu .= '-{getstring}contentbank{/getstring}|/contentbank/index.php?contextid={coursecontextid}' . PHP_EOL;
+                    }
+                    $menu .= '-{getstring:completion}coursecompletion{/getstring}|/course/completion.php?id={courseid}' . PHP_EOL;
+                    $menu .= '-{getstring:badges}badges{/getstring}|/badges/view.php?type=2&amp;id={courseid}' . PHP_EOL;
                 }
-                if (file_exists(dirname(__FILE__) . '/../../local/tinyfilemanager/index.php')) {
-                    $menu .= '-{getstring:local_tinyfilemanager}pluginname{/getstring}|/local/tinyfilemanager' . PHP_EOL;
+                $pluginame = '{getstring:competency}competencies{/getstring}';
+                $menu .= '-' . $pluginame . '|/admin/tool/lp/coursecompetencies.php?courseid={courseid}' . PHP_EOL;
+                if ($this->hasminarchetype('editingteacher')) {
+                    $menu .= '-{getstring:admin}filters{/getstring}|/filter/manage.php?contextid={coursecontextid}' . PHP_EOL;
                 }
-                $menu .= '-{getstring}phpinfo{/getstring}|/admin/phpinfo.php' . PHP_EOL;
-                $menu .= '-###' . PHP_EOL;
-                $menu .= '-{getstring:filter_filtercodes}pagebuilder{/getstring}|'
+                if ($CFG->branch >= 402) {
+                    $menu .= '-{getstring:enrol}unenrolme{/getstring}|{courseunenrolurl}' . PHP_EOL;
+                } else {
+                    $menu .= '-{getstring:filter_filtercodes}unenrolme{/getstring}|{courseunenrolurl}' . PHP_EOL;
+                }
+                if ($this->hasminarchetype('editingteacher')) {
+                    $menu .= '-{getstring:mod_lti}courseexternaltools{/getstring}|/mod/lti/coursetools.php?id={courseid}' . PHP_EOL;
+                    if ($CFG->branch >= 311) {
+                        $pluginame = '{getstring:tool_brickfield}pluginname{/getstring}';
+                        $menu .= '-' . $pluginame . '|/admin/tool/brickfield/index.php?courseid={courseid}' . PHP_EOL;
+                    }
+                    $menu .= '-{getstring}coursereuse{/getstring}|/backup/import.php?id={courseid}' . PHP_EOL;
+                }
+                $menu .= '{/ifincourse}' . PHP_EOL;
+                $replace['/\{menucoursemore\}/i'] = $menu;
+            }
+
+            // Tag: {menudev}.
+            // Description: Displays a menu of useful links for site administrators when added to the custom menu.
+            // Parameters: None.
+            if (stripos($text, '{menudev}') !== false) {
+                $menu = '';
+                if (is_siteadmin() && !is_role_switched($PAGE->course->id)) { // If a site administrator.
+                    $menu .= '-{getstring:tool_installaddon}installaddons{/getstring}|/admin/tool/installaddon' . PHP_EOL;
+                    $menu .= '-###' . PHP_EOL;
+                    $menu .= '-{getstring:admin}debugging{/getstring}|/admin/settings.php?section=debugging' . PHP_EOL;
+                    $menu .= '-{getstring:admin}purgecachespage{/getstring}|/admin/purgecaches.php' . PHP_EOL;
+                    $menu .= '-###' . PHP_EOL;
+                    if (file_exists(dirname(__FILE__) . '/../../local/adminer/index.php')) {
+                        $menu .= '-{getstring:local_adminer}pluginname{/getstring}|/local/adminer' . PHP_EOL;
+                    }
+                    if (file_exists(dirname(__FILE__) . '/../../local/codechecker/index.php')) {
+                        $menu .= '-{getstring:local_codechecker}pluginname{/getstring}|/local/codechecker' . PHP_EOL;
+                    }
+                    if (file_exists(dirname(__FILE__) . '/../../local/moodlecheck/index.php')) {
+                        $menu .= '-{getstring:local_moodlecheck}pluginname{/getstring}|/local/moodlecheck' . PHP_EOL;
+                    }
+                    if (file_exists(dirname(__FILE__) . '/../../admin/tool/pluginskel/index.php')) {
+                        $menu .= '-{getstring:tool_pluginskel}pluginname{/getstring}|/admin/tool/pluginskel' . PHP_EOL;
+                    }
+                    if (file_exists(dirname(__FILE__) . '/../../local/tinyfilemanager/index.php')) {
+                        $menu .= '-{getstring:local_tinyfilemanager}pluginname{/getstring}|/local/tinyfilemanager' . PHP_EOL;
+                    }
+                    $menu .= '-{getstring}phpinfo{/getstring}|/admin/phpinfo.php' . PHP_EOL;
+                    $menu .= '-###' . PHP_EOL;
+                    $menu .= '-{getstring:filter_filtercodes}pagebuilder{/getstring}|'
                         . '{getstring:filter_filtercodes}pagebuilderlink{/getstring}"'
                         . ' target="popup" onclick="window.open(\'{getstring:filter_filtercodes}pagebuilderlink{/getstring}\''
                         . ',\'popup\',\'width=1340,height=700\'); return false;' . PHP_EOL;
-                $menu .= '-{getstring:filter_filtercodes}photoeditor{/getstring}|'
+                    $menu .= '-{getstring:filter_filtercodes}photoeditor{/getstring}|'
                         . '{getstring:filter_filtercodes}photoeditorlink{/getstring}"'
                         . ' target="popup" onclick="window.open(\'{getstring:filter_filtercodes}photoeditorlink{/getstring}\''
                         . ',\'popup\',\'width=1340,height=700\'); return false;' . PHP_EOL;
-                $menu .= '-{getstring:filter_filtercodes}screenrec{/getstring}|'
+                    $menu .= '-{getstring:filter_filtercodes}screenrec{/getstring}|'
                         . '{getstring:filter_filtercodes}screenreclink{/getstring}"'
                         . ' target="popup" onclick="window.open(\'{getstring:filter_filtercodes}screenreclink{/getstring}\''
                         . ',\'popup\',\'width=1340,height=700\'); return false;' . PHP_EOL;
-                $menu .= '-###' . PHP_EOL;
-                $menu .= '-Dev docs|https://moodle.org/development|Moodle.org ({getstring}english{/getstring})' . PHP_EOL;
-                $menu .= '-Dev forum|https://moodle.org/mod/forum/view.php?id=55|Moodle.org ({getstring}english{/getstring})' .
-                        PHP_EOL;
-                $menu .= '-Tracker|https://tracker.moodle.org/|Moodle.org ({getstring}english{/getstring})' . PHP_EOL;
-                $menu .= '-AMOS|https://lang.moodle.org/|Moodle.org ({getstring}english{/getstring})' . PHP_EOL;
-                $menu .= '-WCAG 2.1|https://www.w3.org/WAI/WCAG21/quickref/|W3C ({getstring}english{/getstring})' . PHP_EOL;
-                $menu .= '-###' . PHP_EOL;
-                $menu .= '-DevTuts|https://www.youtube.com/watch?v=UY_pcs4HdDM|{getstring}english{/getstring}' . PHP_EOL;
-                $menu .= '-Moodle Development School|https://moodledev.moodle.school/|{getstring}english{/getstring}' . PHP_EOL;
-                $menu .= '-Moodle Dev Academy|https://moodle.academy/course/index.php?categoryid=4|{getstring}english{/getstring}' .
-                        PHP_EOL;
+                    $menu .= '-###' . PHP_EOL;
+                    $menu .= '-Dev docs|https://moodle.org/development|Moodle.org ({getstring}english{/getstring})' . PHP_EOL;
+                    $menu .= '-Dev forum|https://moodle.org/mod/forum/view.php?id=55|Moodle.org ({getstring}english{/getstring})' .
+                            PHP_EOL;
+                    $menu .= '-Tracker|https://tracker.moodle.org/|Moodle.org ({getstring}english{/getstring})' . PHP_EOL;
+                    $menu .= '-AMOS|https://lang.moodle.org/|Moodle.org ({getstring}english{/getstring})' . PHP_EOL;
+                    $menu .= '-WCAG 2.1|https://www.w3.org/WAI/WCAG21/quickref/|W3C ({getstring}english{/getstring})' . PHP_EOL;
+                    $menu .= '-###' . PHP_EOL;
+                    $menu .= '-DevTuts|https://www.youtube.com/watch?v=UY_pcs4HdDM|{getstring}english{/getstring}' . PHP_EOL;
+                    $menu .= '-Moodle Development School|https://moodledev.moodle.school/|{getstring}english{/getstring}' . PHP_EOL;
+                    $menuurl = 'https://moodle.academy/course/index.php?categoryid=4';
+                    $menu .= '-Moodle Dev Academy|' . $menuurl . '|{getstring}english{/getstring}' . PHP_EOL;
+                }
+                $replace['/\{menudev\}/i'] = $menu;
             }
-            $replace['/\{menudev\}/i'] = $menu;
-        }
 
-        // Tag: {menuthemes}.
-        // Description: Theme switcher for custom menu. Only for administrators. Not available after POST.
-        // Parameters: None.
-        // Allow Theme Changes on URL must be enabled for this to have any effect.
-        if (stripos($text, '{menuthemes}') !== false) {
-            $menu = '';
-            if (is_siteadmin() && empty($_POST)) { // If a site administrator.
-                if (get_config('core', 'allowthemechangeonurl')) {
-                    $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")
-                        . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-                    $url .= (strpos($url, '?') ? '&' : '?');
-                    $themeslist = core_component::get_plugin_list('theme');
-                    $menu = '';
-                    foreach ($themeslist as $theme => $themedir) {
-                        $themename = ucfirst(get_string('pluginname', 'theme_' . $theme));
-                        $menu .= '-' . $themename . '|' . $url . 'theme=' . $theme . PHP_EOL;
-                    }
-                    if (!empty($menu)) {
-                        $menu = 'Themes' . PHP_EOL . $menu;
+            // Tag: {menuthemes}.
+            // Description: Theme switcher for custom menu. Only for administrators. Not available after POST.
+            // Parameters: None.
+            // Allow Theme Changes on URL must be enabled for this to have any effect.
+            if (stripos($text, '{menuthemes}') !== false) {
+                $menu = '';
+                if (is_siteadmin() && empty($_POST)) { // If a site administrator.
+                    if (get_config('core', 'allowthemechangeonurl')) {
+                        $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")
+                            . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+                        $url .= (strpos($url, '?') ? '&' : '?');
+                        $themeslist = core_component::get_plugin_list('theme');
+                        $menu = '';
+                        foreach ($themeslist as $theme => $themedir) {
+                            $themename = ucfirst(get_string('pluginname', 'theme_' . $theme));
+                            $menu .= '-' . $themename . '|' . $url . 'theme=' . $theme . PHP_EOL;
+                        }
+
+                        // If an administrator, add links to Advanced Theme Settings and to Current theme settings.
+                        if (is_siteadmin() && !is_role_switched($PAGE->course->id)) {
+                            $theme = $PAGE->theme->name;
+                            $menu = 'Themes' . PHP_EOL . $menu;
+                            if ($CFG->branch >= 404) {
+                                $label = 'themesettingsadvanced';
+                                $section = 'themesettingsadvanced';
+                            } else {
+                                $label = 'themesettings';
+                                $section = 'themesettings';
+                            }
+
+                            $menu .= '-###' . PHP_EOL;
+                            $menu .= '-{getstring:admin}' . $label . '{/getstring}|/admin/settings.php' .
+                                '?section=' . $section . '|Including custom menus, designer mode, theme in URL' . PHP_EOL;
+                            if (file_exists($CFG->dirroot . '/theme/' . $theme . '/settings.php')) {
+                                require_once($CFG->libdir . '/adminlib.php');
+                                if (admin_get_root()->locate('theme_' . $theme)) {
+                                    // Settings using categories interface URL.
+                                    $url = '/admin/category.php?category=theme_' . $theme . PHP_EOL;
+                                } else {
+                                    // Settings using tabs interface URL.
+                                    $url = '/admin/settings.php?section=themesetting' . $theme . PHP_EOL;
+                                }
+                                $menu .= '-{getstring:admin}currenttheme{/getstring}|' . $url;
+                            }
+                        }
                     }
                 }
+                $replace['/\{menuthemes\}/i'] = $menu;
             }
-            $replace['/\{menuthemes\}/i'] = $menu;
         }
 
         // Check if any {course*} or %7Bcourse*%7D tags. Note: There is another course tags section further down.
@@ -1145,6 +1241,60 @@ class filter_filtercodes extends moodle_text_filter {
             }
         }
 
+        if (stripos($text, '{dashboard_siteinfo}') !== false) {
+            if (is_siteadmin() && !is_role_switched($PAGE->course->id)) { // If an administrator.
+                $appbytes = @disk_free_space('.');
+                $databytes = @disk_free_space($CFG->dataroot);
+                $disktxt = $this->humanbytes($databytes);
+                if ($appbytes != $databytes) {
+                    $disktxt = 'app: ' . $disktxt . ' | data: ' . $this->humanbytes($databytes);
+                }
+
+                $cards = [];
+                $cards[] = [
+                    'icon' => 'fa-database',
+                    'label' => 'Available disk space',
+                    'info' => $disktxt,
+                ];
+                $cards[] = [
+                    'icon' => 'fa-graduation-cap',
+                    'label' => get_string('courses'),
+                    'info' => get_string('total') . ' {coursecount}',
+                ];
+                $cards[] = [
+                    'icon' => 'fa-users',
+                    'label' => get_string('users'),
+                    'info' => get_string('active') . ' {usersonline} | ' . get_string('total') . ' {usersactive}',
+                ];
+                $totalcards = count($cards);
+
+                $content = '
+                    <div class="fcdashboard-siteinfo container-fluid">
+                        <h3 class="sr-only">Site info dashboard</h2>
+                        <div class="row">
+                ';
+                for ($card = 0; $card < $totalcards; $card++) {
+                    $content .= '
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <div class="card-body">
+                                    <i class="fa fa-3x ' . $cards[$card]['icon'] . ' float-left pr-3"></i>
+                                    <h3 class="h5 pt-1">' . $cards[$card]['label'] . '</h3>
+                                    <p>' . $cards[$card]['info'] . '</p>
+                                </div>
+                            </div>
+                    ';
+                }
+                $content .= '
+                        </div>
+                    </div>
+                ';
+                $coursecontext = context_course::instance($PAGE->course->id);
+                $replace['/\{dashboard_siteinfo\}/i'] = format_text($content, FORMAT_HTML, ['context' => $coursecontext]);
+            } else {
+                $replace['/\{dashboard_siteinfo\}/i'] = '';
+            }
+        }
+
         /* ---------------- Apply all of the filtercodes so far. ---------------*/
 
         return $this->replacetags($text, $replace);
@@ -1156,44 +1306,56 @@ class filter_filtercodes extends moodle_text_filter {
      * @param string $text Content to be processed.
      * @return string Processed text.
      *
-     * Note: First time this function is called, it will mark all tags that should not be processed.
+     * Note: First time this function is called, it will escape all tags that should not be processed.
      *       The second time it is called, it will turn escaped tags back into unprocessed plain text tags.
      */
     private function escapedtags($text) {
         static $escapedtags;
         static $escapedtagsenc;
+        static $escapebraces;
 
-        if (!isset($escapedtags)) {
-            // First time, escape tags.
-            if (!empty(get_config('filter_filtercodes', 'escapebraces'))) {
-                // Temporarily escaped tags these with non-printable character. Will be re-adjusted after processing tags.
-                $escapedtags = (strpos($text, '[{') !== false && strpos($text, '}]') !== false);
-                if ($escapedtags) {
-                    $text = str_replace('[{', chr(2), $text);
-                    $text = str_replace('}]', chr(3), $text);
-                }
-                // Temporarily escaped tags these with non-printable character. Will be re-adjusted after processing tags.
-                $escapedtagsenc = (strpos($text, '[%7B') !== false && strpos($text, '%7D]') !== false);
-                if ($escapedtagsenc) {
-                    $text = str_replace('[%7B', chr(4), $text);
-                    $text = str_replace('%7D]', chr(5), $text);
-                }
-            } else {
-                $escapedtags = false;
-                $escapedtagsenc = false;
+        // Don't process if this feature is disabled.
+        if (!isset($escapebraces)) {
+            $escapebraces = !empty(get_config('filter_filtercodes', 'escapebraces'));
+            if (!$escapebraces) {
+                return $text;
+            }
+        }
+
+        if (!isset($escapedtags) || !isset($escapedtagsenc)) {
+            // First time called, temporarily replace the escaped tags so they will not be processed by FilterCodes.
+
+            // Regular tags.
+            $escapedtags = (strpos($text, '[{') !== false && strpos($text, '}]') !== false);
+            if ($escapedtags) {
+                $text = str_replace('[{', chr(2), $text);
+                $text = str_replace('}]', chr(3), $text);
+            }
+
+            // Encoded tags.
+            $escapedtagsenc = (strpos($text, '[%7B') !== false && strpos($text, '%7D]') !== false);
+            if ($escapedtagsenc) {
+                $text = str_replace('[%7B', chr(4), $text);
+                $text = str_replace('%7D]', chr(5), $text);
             }
         } else {
-            // Complete the process of replacing escaped tags with single braces.
+            // Second time called, complete the process of putting back the tags, but not escaped.
+
+            // Regular tags.
             if ($escapedtags) {
                 $text = str_replace(chr(2), '{', $text);
                 $text = str_replace(chr(3), '}', $text);
             }
-            // Complete the process of replacing escaped tags with single escaped braces.
+            $escapedtags = null;
+
+            // Encoded tags.
             if ($escapedtagsenc) {
                 $text = str_replace(chr(4), '%7B', $text);
                 $text = str_replace(chr(5), '%7D', $text);
             }
+            $escapedtagsenc = null;
         }
+
         return $text;
     }
 
@@ -1212,8 +1374,6 @@ class filter_filtercodes extends moodle_text_filter {
             if (!is_null($newtext)) {
                 $text = $newtext;
                 if (strpos($text, '{') === false && strpos($text, '%7B') === false) {
-                    // No more tags? Put back the escaped tags, if any and return false.
-                    $text = $this->escapedtags($text);
                     $moretags = false;
                 }
             }
@@ -1262,7 +1422,7 @@ class filter_filtercodes extends moodle_text_filter {
         // We can now process all other tags including ones added by the code above.
 
         // ...===================================================================================================================.
-        // Tags that may be used as parameters by other tags shoud be processed before the tags that may include them.
+        // Tags that may be used as parameters by other tags should be processed before the tags that may include them.
         // ...===================================================================================================================.
 
         // Tag: {lang}.
@@ -1542,8 +1702,11 @@ class filter_filtercodes extends moodle_text_filter {
             // Replace {getstring:} tag and parameters with retrieved content.
             $newtext = preg_replace_callback(
                 '/\{getstring:?(\w*)\}(\w+)\{\/getstring\}/isuU',
-                function ($matches) {
-                    if (get_string_manager()->string_exists($matches[2], $matches[1])) {
+                function ($matches) use ($CFG) {
+                    if ($strexists = get_string_manager()->string_exists($matches[2], $matches[1]) && $CFG->branch >= 28) {
+                        $strexists = !get_string_manager()->string_deprecated($matches[2], $matches[1]);
+                    }
+                    if ($strexists) {
                         return get_string($matches[2], $matches[1]);
                     } else {
                         return "{getstring" . (!empty($matches[1]) ? ":$matches[1]" : '') . "}$matches[2]{/getstring}";
@@ -1600,7 +1763,7 @@ class filter_filtercodes extends moodle_text_filter {
             $regex .= 'sl|-sharp\s+fa-light|';
             $regex .= 'st|-sharp\s+fa-thin|';
             $regex .= 'sd|-sharp\s+fa-duotone';
-            $regex .= '){0,1}\s+fa-(.*)\}/isuU';
+            $regex .= '){0,1}\s+fa-([a-z0-9 -]+)\}/isuU';
             $newtext = preg_replace_callback(
                 $regex,
                 function ($matches) {
@@ -1621,7 +1784,7 @@ class filter_filtercodes extends moodle_text_filter {
         if (stripos($text, '{glyphicon ') !== false) {
             // Replace {glyphicon glyphicon-...} tag and parameters with Glyphicons HTML.
             $newtext = preg_replace_callback(
-                '/\{glyphicon\sglyphicon-(.*)\}/isuU',
+                '/\{glyphicon\sglyphicon-([a-z0-9 -]+)\}/isuU',
                 function ($matches) {
                     $matches[0] = $matches[0] == null ? '' : $matches[0];
                     return '<span class="' . substr($matches[0], 1, -1) . '" aria-hidden="true"></span>';
@@ -1642,13 +1805,379 @@ class filter_filtercodes extends moodle_text_filter {
         // For more information on the Multi-Language Content filter see https://docs.moodle.org/en/Multi-language_content_filter.
         if (stripos($text, '{/multilang}') !== false) {
             // This is specifically to make it easier to use Moodle's own multi-language filter.
-            $replace['/\{multilang\s+(.*)\}(.*)\{\/multilang\}/isuU'] = '<span lang="$1" class="multilang">$2</span>';
+            $replace['/\{multilang\s+([a-z-]+)\}(.*)\{\/multilang\}/isuU'] = '<span lang="$1" class="multilang">$2</span>';
+        }
+
+        // Tag: {firstaccessdate} or {firstaccessdate dateTimeFormat}.
+        // Description: Date that the user first accessed the site.
+        // Optional parameters: dateTimeFormat - either one of Moodle's built-in data/time formats or php's strftime.
+        if (stripos($text, '{firstaccessdate') !== false) {
+            if (isloggedin() && !isguestuser() && !empty($USER->firstaccess)) {
+                // Replace {firstaccessdate} tag with formatted date.
+                if (stripos($text, '{firstaccessdate}') !== false) {
+                    $replace['/\{firstaccessdate\}/i'] = userdate($USER->firstaccess, get_string('strftimedatefullshort'));
+                }
+                // Replace {firstaccessdate dateTimeFormat} tag and parameters with formatted date.
+                if (stripos($text, '{firstaccessdate ') !== false) {
+                    $newtext = preg_replace_callback(
+                        '/\{firstaccessdate\s+(.+)\}/isuU',
+                        function ($matches) use ($USER) {
+                            // Check if this is a built-in Moodle date/time format.
+                            if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
+                                // It is! Get the strftime string.
+                                $matches[1] = get_string($matches[1], 'langconfig');
+                            }
+                            return userdate($USER->firstaccess, $matches[1]);
+                        },
+                        $text
+                    );
+                    if ($newtext !== false) {
+                        $text = $newtext;
+                    }
+                }
+            } else {
+                $replace['/\{firstaccessdate(.*)\}/i'] = get_string('never');
+            }
+        }
+
+        // Tag: {lastlogin} or {lastlogin dateTimeFormat}.
+        // Description: Date that the user last logged in to the site.
+        // Optional parameters: dateTimeFormat - either one of Moodle's built-in data/time formats or php's strftime.
+        if (stripos($text, '{lastlogin') !== false) {
+            if (isloggedin() && !isguestuser() && !empty($USER->lastlogin)) {
+                // Replace {lastlogin} tag with formatted date.
+                if (stripos($text, '{lastlogin}') !== false) {
+                    $replace['/\{lastlogin\}/i'] = userdate($USER->lastlogin, get_string('strftimedatetimeshort'));
+                }
+                // Replace {lastlogin dateTimeFormat} tag and parameters with formatted date.
+                if (stripos($text, '{lastlogin ') !== false) {
+                    $newtext = preg_replace_callback(
+                        '/\{lastlogin\s+(.+)\}/isuU',
+                        function ($matches) use ($USER) {
+                            // Check if this is a built-in Moodle date/time format.
+                            if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
+                                // It is! Get the strftime string.
+                                $matches[1] = get_string($matches[1], 'langconfig');
+                            }
+                            return userdate($USER->lastlogin, $matches[1]);
+                        },
+                        $text
+                    );
+                    if ($newtext !== false) {
+                        $text = $newtext;
+                    }
+                }
+            } else {
+                $replace['/\{lastlogin(.*)\}/i'] = get_string('never');
+            }
+        }
+
+        // Tag: {coursestartdate} or {coursestartdate dateTimeFormat courseid}.
+        // Description: The course start date.
+        // Optional Parameters: dateTimeFormat - either in a Moodle datetime format or a PHP strftime format.
+        // Optional Parameters: id - id of a course.
+        if (stripos($text, '{coursestartdate') !== false) {
+            // Replace {coursestartdate} tag with formatted date.
+            if (stripos($text, '{coursestartdate}') !== false) {
+                if (!empty($PAGE->course->startdate)) {
+                    $startdate = $PAGE->course->startdate;
+                } else {
+                    $startdate = $DB->get_field_select('course', 'startdate', 'id = :id', ['id' => $PAGE->course->id]);
+                }
+                if (!empty($startdate)) {
+                    $replace['/\{coursestartdate\}/i'] = userdate($startdate, get_string('strftimedatefullshort'));
+                } else {
+                    $replace['/\{coursestartdate(.*)\}/isuU'] = get_string('notyetstarted', 'completion');
+                }
+            }
+
+            // Replace {coursestartdate dateTimeFormat} tag and parameters with formatted date.
+            if (stripos($text, '{coursestartdate ') !== false) {
+                $newtext = preg_replace_callback(
+                    '/\{coursestartdate\s(.*)(\s\d+)?\}/isuU',
+                    function ($matches) use ($PAGE, $DB) {
+
+                        // Optional date/time format.
+                        if (is_numeric($matches[1])) {
+                            // Only the course ID was specified.
+                            $matches[2] = trim($matches[1]); // Course ID.
+                            $matches[1] = ''; // Date/time format.
+                        } else {
+                            $matches[2] = empty($matches[2]) ? $PAGE->course->id : trim($matches[2]); // Course ID.
+                            $matches[1] = trim($matches[1]);
+                        }
+
+                        // Optional course ID.
+                        if (empty($matches[2])) { // No course ID, use current course.
+                            if (!empty($PAGE->course->startdate)) {
+                                $startdate = $PAGE->course->startdate;
+                            } else {
+                                $startdate = $DB->get_field_select(
+                                    'course',
+                                    'startdate',
+                                    'id = :id',
+                                    ['id' => $PAGE->course->id]
+                                );
+                            }
+                        } else { // Course ID was specifed.
+                            $course = $DB->get_record('course', ['id' => $matches[2]]);
+                            if (!empty($course)) {
+                                $startdate = $course->startdate;
+                                if (!empty($course->startdate)) {
+                                    $startdate = $course->startdate;
+                                } else {
+                                    $startdate = $DB->get_field_select(
+                                        'course',
+                                        'startdate',
+                                        'id = :id',
+                                        ['id' => $course->id]
+                                    );
+                                }
+                            } else {
+                                // Should only happen if course does not exist.
+                                $startdate = 1; // December 31, 1969.
+                            }
+                        }
+
+                        // Check if this is a built-in Moodle date/time format.
+                        if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
+                            // It is! Get the strftime string.
+                            $matches[1] = get_string($matches[1], 'langconfig');
+                        }
+
+                        // Format the date.
+                        if (!empty($startdate)) {
+                            $startdate = userdate($startdate, $matches[1]);
+                        } else {
+                            $startdate = get_string('notyetstarted', 'completion');
+                        }
+
+                        return $startdate;
+                    },
+                    $text
+                );
+                if ($newtext !== false) {
+                    $text = $newtext;
+                }
+            } else {
+                $replace['/\{coursestartdate(.*)\}/isuU'] = get_string('notyetstarted', 'completion');
+            }
+        }
+
+        // Tag: {courseenddate} or {coursesenddate dateTimeFormat courseid}.
+        // Description: The course end date.
+        // Optional Parameters: dateTimeFormat - either in a Moodle datetime format or a PHP strftime format.
+        // Optional Parameters: id - id of a course.
+        if (stripos($text, '{courseenddate') !== false) {
+            // Replace {courseenddate} tag with formatted date.
+            if (stripos($text, '{courseenddate}') !== false) {
+                if (empty($PAGE->course->enddate)) {
+                    $enddate = $PAGE->course->enddate;
+                } else {
+                    $enddate = $DB->get_field_select('course', 'enddate', 'id = :id', ['id' => $PAGE->course->id]);
+                }
+                if (!empty($enddate)) {
+                    $replace['/\{courseenddate\}/i'] = userdate($enddate, get_string('strftimedatefullshort'));
+                } else {
+                    $replace['/\{courseenddate(.*)\}/isuU'] = get_string('none');
+                }
+            }
+
+            // Replace {courseenddate dateTimeFormat} tag and parameters with formatted date.
+            if (stripos($text, '{courseenddate ') !== false) {
+                $newtext = preg_replace_callback(
+                    '/\{courseenddate\s(.*)(\s\d+)?\}/isuU',
+                    function ($matches) use ($PAGE, $DB) {
+
+                        // Optional date/time format.
+                        if (is_numeric($matches[1])) {
+                            // Only the course ID was specified.
+                            $matches[2] = trim($matches[1]); // Course ID.
+                            $matches[1] = ''; // Date/time format.
+                        } else {
+                            $matches[2] = empty($matches[2]) ? $PAGE->course->id : trim($matches[2]); // Course ID.
+                            $matches[1] = trim($matches[1]);
+                        }
+
+                        // Optional course ID.
+                        if (empty($matches[2])) { // No course ID, use current course.
+                            if (!empty($PAGE->course->enddate)) {
+                                $enddate = $PAGE->course->enddate;
+                            } else {
+                                $enddate = $DB->get_field_select(
+                                    'course',
+                                    'enddate',
+                                    'id = :id',
+                                    ['id' => $PAGE->course->id]
+                                );
+                            }
+                        } else { // Course ID was specifed.
+                            $course = $DB->get_record('course', ['id' => $matches[2]]);
+                            if (!empty($course)) {
+                                $enddate = $course->enddate;
+                                if (!empty($course->enddate)) {
+                                    $enddate = $course->enddate;
+                                } else {
+                                    $enddate = $DB->get_field_select(
+                                        'course',
+                                        'enddate',
+                                        'id = :id',
+                                        ['id' => $course->id]
+                                    );
+                                }
+                            } else {
+                                // Should only happen if course does not exist.
+                                $enddate = 1; // December 31, 1969.
+                            }
+                        }
+
+                        // Check if this is a built-in Moodle date/time format.
+                        if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
+                            // It is! Get the strftime string.
+                            $matches[1] = get_string($matches[1], 'langconfig');
+                        }
+
+                        // Format the date.
+                        if (!empty($enddate)) {
+                            $enddate = userdate($enddate, $matches[1]);
+                        } else {
+                            $enddate = get_string('none');
+                        }
+
+                        return $enddate;
+                    },
+                    $text
+                );
+                if ($newtext !== false) {
+                    $text = $newtext;
+                }
+            } else {
+                $replace['/\{courseenddate(.*)\}/isuU'] = get_string('none');
+            }
+        }
+
+        // Tag: {coursecompletiondate} or {coursecompletiondate dateTimeFormat}.
+        // Description: The course completion date.
+        // Optional Parameters: dateTimeFormat - either in a Moodle datetime format or a PHP strftime format.
+        if (stripos($text, '{coursecompletiondate') !== false) {
+            if (
+                $PAGE->course
+                && isset($CFG->enablecompletion)
+                && $CFG->enablecompletion == 1 // COMPLETION_ENABLED.
+                && $PAGE->course->enablecompletion
+            ) {
+                $ccompletion = new completion_completion(['userid' => $USER->id, 'course' => $PAGE->course->id]);
+                $incomplete = get_string('notcompleted', 'completion');
+            } else { // Completion not enabled.
+                $incomplete = get_string('completionnotenabled', 'completion');
+            }
+            if (!empty($ccompletion->timecompleted)) {
+                // Replace {coursecompletiondate} tag with formatted date.
+                if (stripos($text, '{coursecompletiondate}') !== false) {
+                    $replace['/\{coursecompletiondate\}/i'] = userdate(
+                        $ccompletion->timecompleted,
+                        get_string('strftimedatefullshort')
+                    );
+                }
+                // Replace {coursecompletiondate dateTimeFormat} tag and parameters with formatted date.
+                if (stripos($text, '{coursecompletiondate ') !== false) {
+                    $newtext = preg_replace_callback(
+                        '/\{coursecompletiondate\s+(.+)\}/isuU',
+                        function ($matches) use ($ccompletion) {
+                            // Check if this is a built-in Moodle date/time format.
+                            if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
+                                // It is! Get the strftime string.
+                                $matches[1] = get_string($matches[1], 'langconfig');
+                            }
+                            return userdate($ccompletion->timecompleted, $matches[1]);
+                        },
+                        $text
+                    );
+                    if ($newtext !== false) {
+                        $text = $newtext;
+                    }
+                }
+            } else {
+                $replace['/\{coursecompletiondate(.*)\}/isuU'] = $incomplete;
+            }
+        }
+
+        // Tag: {courseenrolmentdate} or {courseenrolmentdate dateTimeFormat}.
+        // Description: The course enrolment date.
+        // Optional Parameters: dateTimeFormat - either in a Moodle datetime format or a PHP strftime format.
+        if (stripos($text, '{courseenrolmentdate') !== false) {
+            $sql = '
+                SELECT ue.timecreated
+                FROM {user} u
+                JOIN {user_enrolments} ue ON ue.userid = u.id
+                JOIN {enrol} e ON ue.enrolid = e.id
+                WHERE ue.userid = :userid AND e.courseid = :courseid
+            ';
+            $thisuser = $DB->get_records_sql($sql, ['userid' => $USER->id, 'courseid' => $PAGE->course->id]);
+            if (count($thisuser)) {
+                $datecreated = array_key_first($thisuser);
+                // Replace {courseenrolmentdate} tag with formatted date.
+                if (stripos($text, '{courseenrolmentdate}') !== false) {
+                    $replace['/\{courseenrolmentdate\}/i'] = userdate($datecreated, get_string('strftimedatefullshort'));
+                }
+                // Replace {courseenrolmentdate dateTimeFormat} tag and parameters with formatted date.
+                if (stripos($text, '{courseenrolmentdate ') !== false) {
+                    $newtext = preg_replace_callback(
+                        '/\{courseenrolmentdate\s+(.+)\}/isuU',
+                        function ($matches) use ($datecreated) {
+                            // Check if this is a built-in Moodle date/time format.
+                            if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
+                                // It is! Get the strftime string.
+                                $matches[1] = get_string($matches[1], 'langconfig');
+                            }
+                            return userdate($datecreated, $matches[1]);
+                        },
+                        $text
+                    );
+                    if ($newtext !== false) {
+                        $text = $newtext;
+                    }
+                }
+            } else {
+                $replace['/\{courseenrolmentdate(.*)\}/isuU'] = '';
+            }
+        }
+
+        // Tag: {now} or {now dateTimeFormat}.
+        // Description: Current year, 4 digits.
+        // Optional parameter: dateTimeFormat - either one of Moodle's built-in data/time formats or php's strftime.
+        if (stripos($text, '{now') !== false) {
+            // Replace {now} tag with formatted date.
+            $now = time();
+            if (stripos($text, '{now}') !== false) {
+                $replace['/\{now\}/i'] = userdate($now, get_string('strftimedatefullshort'));
+            }
+            // Replace {now dateTimeFormat} tag and parameters with formatted date.
+            if (stripos($text, '{now ') !== false) {
+                $newtext = preg_replace_callback(
+                    '/\{now\s+(.+)\}/isuU',
+                    function ($matches) use ($now) {
+                        // Check if this is a built-in Moodle date/time format.
+                        if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
+                            // It is! Get the strftime string.
+                            $matches[1] = get_string($matches[1], 'langconfig');
+                        }
+                        return userdate($now, $matches[1]);
+                    },
+                    $text
+                );
+                if ($newtext !== false) {
+                    $text = $newtext;
+                }
+            }
+            unset($now);
         }
 
         /* ---------------- Apply all of the filtercodes so far. ---------------*/
 
         if ($this->replacetags($text, $replace) == false) {
-            // Go no further if there are no more tags.
+            // No more tags? Put back the escaped tags, if any, and return the string.
+            $text = $this->escapedtags($text);
             return $text;
         }
 
@@ -1862,7 +2391,8 @@ class filter_filtercodes extends moodle_text_filter {
         /* ---------------- Apply all of the filtercodes so far. ---------------*/
 
         if ($this->replacetags($text, $replace) == false) {
-            // Go no further if there are no more tags.
+            // No more tags? Put back the escaped tags, if any, and return the string.
+            $text = $this->escapedtags($text);
             return $text;
         }
 
@@ -1926,70 +2456,6 @@ class filter_filtercodes extends moodle_text_filter {
                 }
                 $replace['/\{profilefullname\}/i'] = $fullname;
                 unset($fullname);
-            }
-        }
-
-        // Tag: {firstaccessdate} or {firstaccessdate dateTimeFormat}.
-        // Description: Date that the user first accessed the site.
-        // Optional parameters: dateTimeFormat - either one of Moodle's built-in data/time formats or php's strftime.
-        if (stripos($text, '{firstaccessdate') !== false) {
-            if (isloggedin() && !isguestuser() && !empty($USER->firstaccess)) {
-                // Replace {firstaccessdate} tag with formatted date.
-                if (stripos($text, '{firstaccessdate}') !== false) {
-                    $replace['/\{firstaccessdate\}/i'] = userdate($USER->firstaccess, get_string('strftimedatefullshort'));
-                }
-                // Replace {firstaccessdate dateTimeFormat} tag and parameters with formatted date.
-                if (stripos($text, '{firstaccessdate ') !== false) {
-                    $newtext = preg_replace_callback(
-                        '/\{firstaccessdate\s+(.+)\}/isuU',
-                        function ($matches) use ($USER) {
-                            // Check if this is a built-in Moodle date/time format.
-                            if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
-                                // It is! Get the strftime string.
-                                $matches[1] = get_string($matches[1], 'langconfig');
-                            }
-                            return userdate($USER->firstaccess, $matches[1]);
-                        },
-                        $text
-                    );
-                    if ($newtext !== false) {
-                        $text = $newtext;
-                    }
-                }
-            } else {
-                $replace['/\{firstaccessdate(.*)\}/i'] = get_string('never');
-            }
-        }
-
-        // Tag: {lastlogin} or {lastlogin dateTimeFormat}.
-        // Description: Date that the user last logged in to the site.
-        // Optional parameters: dateTimeFormat - either one of Moodle's built-in data/time formats or php's strftime.
-        if (stripos($text, '{lastlogin') !== false) {
-            if (isloggedin() && !isguestuser() && !empty($USER->lastlogin)) {
-                // Replace {lastlogin} tag with formatted date.
-                if (stripos($text, '{lastlogin}') !== false) {
-                    $replace['/\{lastlogin\}/i'] = userdate($USER->lastlogin, get_string('strftimedatetimeshort'));
-                }
-                // Replace {lastlogin dateTimeFormat} tag and parameters with formatted date.
-                if (stripos($text, '{lastlogin ') !== false) {
-                    $newtext = preg_replace_callback(
-                        '/\{lastlogin\s+(.+)\}/isuU',
-                        function ($matches) use ($USER) {
-                            // Check if this is a built-in Moodle date/time format.
-                            if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
-                                // It is! Get the strftime string.
-                                $matches[1] = get_string($matches[1], 'langconfig');
-                            }
-                            return userdate($USER->lastlogin, $matches[1]);
-                        },
-                        $text
-                    );
-                    if ($newtext !== false) {
-                        $text = $newtext;
-                    }
-                }
-            } else {
-                $replace['/\{lastlogin(.*)\}/i'] = get_string('never');
             }
         }
 
@@ -2401,277 +2867,6 @@ class filter_filtercodes extends moodle_text_filter {
                 }
             }
 
-            // Tag: {coursestartdate} or {coursestartdate dateTimeFormat courseid}.
-            // Description: The course start date.
-            // Optional Parameters: dateTimeFormat - either in a Moodle datetime format or a PHP strftime format.
-            // Optional Parameters: id - id of a course.
-            if (stripos($text, '{coursestartdate') !== false) {
-                // Replace {coursestartdate} tag with formatted date.
-                if (stripos($text, '{coursestartdate}') !== false) {
-                    if (!empty($PAGE->course->startdate)) {
-                        $startdate = $PAGE->course->startdate;
-                    } else {
-                        $startdate = $DB->get_field_select('course', 'startdate', 'id = :id', ['id' => $PAGE->course->id]);
-                    }
-                    if (!empty($startdate)) {
-                        $replace['/\{coursestartdate\}/i'] = userdate($startdate, get_string('strftimedatefullshort'));
-                    } else {
-                        $replace['/\{coursestartdate(.*)\}/isuU'] = get_string('notyetstarted', 'completion');
-                    }
-                }
-
-                // Replace {coursestartdate dateTimeFormat} tag and parameters with formatted date.
-                if (stripos($text, '{coursestartdate ') !== false) {
-                    $newtext = preg_replace_callback(
-                        '/\{coursestartdate\s(.*)(\s\d+)?\}/isuU',
-                        function ($matches) use ($PAGE, $DB) {
-
-                            // Optional date/time format.
-                            if (is_numeric($matches[1])) {
-                                // Only the course ID was specified.
-                                $matches[2] = trim($matches[1]); // Course ID.
-                                $matches[1] = ''; // Date/time format.
-                            } else {
-                                $matches[2] = empty($matches[2]) ? $PAGE->course->id : trim($matches[2]); // Course ID.
-                                $matches[1] = trim($matches[1]);
-                            }
-
-                            // Optional course ID.
-                            if (empty($matches[2])) { // No course ID, use current course.
-                                if (!empty($PAGE->course->startdate)) {
-                                    $startdate = $PAGE->course->startdate;
-                                } else {
-                                    $startdate = $DB->get_field_select(
-                                        'course',
-                                        'startdate',
-                                        'id = :id',
-                                        ['id' => $PAGE->course->id]
-                                    );
-                                }
-                            } else { // Course ID was specifed.
-                                $course = $DB->get_record('course', ['id' => $matches[2]]);
-                                if (!empty($course)) {
-                                    $startdate = $course->startdate;
-                                    if (!empty($course->startdate)) {
-                                        $startdate = $course->startdate;
-                                    } else {
-                                        $startdate = $DB->get_field_select(
-                                            'course',
-                                            'startdate',
-                                            'id = :id',
-                                            ['id' => $course->id]
-                                        );
-                                    }
-                                } else {
-                                    // Should only happen if course does not exist.
-                                    $startdate = 1; // December 31, 1969.
-                                }
-                            }
-
-                            // Check if this is a built-in Moodle date/time format.
-                            if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
-                                // It is! Get the strftime string.
-                                $matches[1] = get_string($matches[1], 'langconfig');
-                            }
-
-                            // Format the date.
-                            if (!empty($startdate)) {
-                                $startdate = userdate($startdate, $matches[1]);
-                            } else {
-                                $startdate = get_string('notyetstarted', 'completion');
-                            }
-
-                            return $startdate;
-                        },
-                        $text
-                    );
-                    if ($newtext !== false) {
-                        $text = $newtext;
-                    }
-                } else {
-                    $replace['/\{coursestartdate(.*)\}/isuU'] = get_string('notyetstarted', 'completion');
-                }
-            }
-
-            // Tag: {courseenddate} or {coursesenddate dateTimeFormat courseid}.
-            // Description: The course end date.
-            // Optional Parameters: dateTimeFormat - either in a Moodle datetime format or a PHP strftime format.
-            // Optional Parameters: id - id of a course.
-            if (stripos($text, '{courseenddate') !== false) {
-                // Replace {courseenddate} tag with formatted date.
-                if (stripos($text, '{courseenddate}') !== false) {
-                    if (empty($PAGE->course->enddate)) {
-                        $enddate = $PAGE->course->enddate;
-                    } else {
-                        $enddate = $DB->get_field_select('course', 'enddate', 'id = :id', ['id' => $PAGE->course->id]);
-                    }
-                    if (!empty($enddate)) {
-                        $replace['/\{courseenddate\}/i'] = userdate($startdate, get_string('strftimedatefullshort'));
-                    } else {
-                        $replace['/\{courseenddate(.*)\}/isuU'] = get_string('none');
-                    }
-                }
-
-                // Replace {courseenddate dateTimeFormat} tag and parameters with formatted date.
-                if (stripos($text, '{courseenddate ') !== false) {
-                    $newtext = preg_replace_callback(
-                        '/\{courseenddate\s(.*)(\s\d+)?\}/isuU',
-                        function ($matches) use ($PAGE, $DB) {
-
-                            // Optional date/time format.
-                            if (is_numeric($matches[1])) {
-                                // Only the course ID was specified.
-                                $matches[2] = trim($matches[1]); // Course ID.
-                                $matches[1] = ''; // Date/time format.
-                            } else {
-                                $matches[2] = empty($matches[2]) ? $PAGE->course->id : trim($matches[2]); // Course ID.
-                                $matches[1] = trim($matches[1]);
-                            }
-
-                            // Optional course ID.
-                            if (empty($matches[2])) { // No course ID, use current course.
-                                if (!empty($PAGE->course->enddate)) {
-                                    $enddate = $PAGE->course->enddate;
-                                } else {
-                                    $enddate = $DB->get_field_select(
-                                        'course',
-                                        'enddate',
-                                        'id = :id',
-                                        ['id' => $PAGE->course->id]
-                                    );
-                                }
-                            } else { // Course ID was specifed.
-                                $course = $DB->get_record('course', ['id' => $matches[2]]);
-                                if (!empty($course)) {
-                                    $enddate = $course->enddate;
-                                    if (!empty($course->enddate)) {
-                                        $enddate = $course->enddate;
-                                    } else {
-                                        $enddate = $DB->get_field_select(
-                                            'course',
-                                            'enddate',
-                                            'id = :id',
-                                            ['id' => $course->id]
-                                        );
-                                    }
-                                } else {
-                                    // Should only happen if course does not exist.
-                                    $enddate = 1; // December 31, 1969.
-                                }
-                            }
-
-                            // Check if this is a built-in Moodle date/time format.
-                            if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
-                                // It is! Get the strftime string.
-                                $matches[1] = get_string($matches[1], 'langconfig');
-                            }
-
-                            // Format the date.
-                            if (!empty($enddate)) {
-                                $enddate = userdate($enddate, $matches[1]);
-                            } else {
-                                $enddate = get_string('none');
-                            }
-
-                            return $enddate;
-                        },
-                        $text
-                    );
-                    if ($newtext !== false) {
-                        $text = $newtext;
-                    }
-                } else {
-                    $replace['/\{courseenddate(.*)\}/isuU'] = get_string('none');
-                }
-            }
-
-            // Tag: {coursecompletiondate} or {coursecompletiondate dateTimeFormat}.
-            // Description: The course completion date.
-            // Optional Parameters: dateTimeFormat - either in a Moodle datetime format or a PHP strftime format.
-            if (stripos($text, '{coursecompletiondate') !== false) {
-                if (
-                    $PAGE->course
-                    && isset($CFG->enablecompletion)
-                    && $CFG->enablecompletion == 1 // COMPLETION_ENABLED.
-                    && $PAGE->course->enablecompletion
-                ) {
-                    $ccompletion = new completion_completion(['userid' => $USER->id, 'course' => $PAGE->course->id]);
-                    $incomplete = get_string('notcompleted', 'completion');
-                } else { // Completion not enabled.
-                    $incomplete = get_string('completionnotenabled', 'completion');
-                }
-                if (!empty($ccompletion->timecompleted)) {
-                    // Replace {coursecompletiondate} tag with formatted date.
-                    if (stripos($text, '{coursecompletiondate}') !== false) {
-                        $replace['/\{coursecompletiondate\}/i'] = userdate(
-                            $ccompletion->timecompleted,
-                            get_string('strftimedatefullshort')
-                        );
-                    }
-                    // Replace {coursecompletiondate dateTimeFormat} tag and parameters with formatted date.
-                    if (stripos($text, '{coursecompletiondate ') !== false) {
-                        $newtext = preg_replace_callback(
-                            '/\{coursecompletiondate\s+(.+)\}/isuU',
-                            function ($matches) use ($ccompletion) {
-                                // Check if this is a built-in Moodle date/time format.
-                                if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
-                                    // It is! Get the strftime string.
-                                    $matches[1] = get_string($matches[1], 'langconfig');
-                                }
-                                return userdate($ccompletion->timecompleted, $matches[1]);
-                            },
-                            $text
-                        );
-                        if ($newtext !== false) {
-                            $text = $newtext;
-                        }
-                    }
-                } else {
-                    $replace['/\{coursecompletiondate(.*)\}/isuU'] = $incomplete;
-                }
-            }
-
-            // Tag: {courseenrolmentdate} or {courseenrolmentdate dateTimeFormat}.
-            // Description: The course enrolment date.
-            // Optional Parameters: dateTimeFormat - either in a Moodle datetime format or a PHP strftime format.
-            if (stripos($text, '{courseenrolmentdate') !== false) {
-                $sql = '
-                    SELECT ue.timecreated
-                    FROM {user} u
-                    JOIN {user_enrolments} ue ON ue.userid = u.id
-                    JOIN {enrol} e ON ue.enrolid = e.id
-                    WHERE ue.userid = :userid AND e.courseid = :courseid
-                ';
-                $thisuser = $DB->get_records_sql($sql, ['userid' => $USER->id, 'courseid' => $PAGE->course->id]);
-                if (count($thisuser)) {
-                    $datecreated = array_key_first($thisuser);
-                    // Replace {courseenrolmentdate} tag with formatted date.
-                    if (stripos($text, '{courseenrolmentdate}') !== false) {
-                        $replace['/\{courseenrolmentdate\}/i'] = userdate($datecreated, get_string('strftimedatefullshort'));
-                    }
-                    // Replace {courseenrolmentdate dateTimeFormat} tag and parameters with formatted date.
-                    if (stripos($text, '{courseenrolmentdate ') !== false) {
-                        $newtext = preg_replace_callback(
-                            '/\{courseenrolmentdate\s+(.+)\}/isuU',
-                            function ($matches) use ($datecreated) {
-                                // Check if this is a built-in Moodle date/time format.
-                                if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
-                                    // It is! Get the strftime string.
-                                    $matches[1] = get_string($matches[1], 'langconfig');
-                                }
-                                return userdate($datecreated, $matches[1]);
-                            },
-                            $text
-                        );
-                        if ($newtext !== false) {
-                            $text = $newtext;
-                        }
-                    }
-                } else {
-                    $replace['/\{courseenrolmentdate(.*)\}/isuU'] = '';
-                }
-            }
-
             // Tag: {coursecount}.
             // Description: The total number of courses.
             // Parameters:  None.
@@ -3038,36 +3233,6 @@ class filter_filtercodes extends moodle_text_filter {
                 $replace['/\{mycoursesmenu\}/i'] = '-' . get_string('loggedinnot') . PHP_EOL;
                 $replace['/\{mycoursescards[^}]*\}/i'] = '<p>' . get_string('loggedinnot') . '</p>';
             }
-        }
-
-        // Tag: {now} or {now dateTimeFormat}.
-        // Description: Current year, 4 digits.
-        // Optional parameter: dateTimeFormat - either one of Moodle's built-in data/time formats or php's strftime.
-        if (stripos($text, '{now') !== false) {
-            // Replace {now} tag with formatted date.
-            $now = time();
-            if (stripos($text, '{now}') !== false) {
-                $replace['/\{now\}/i'] = userdate($now, get_string('strftimedatefullshort'));
-            }
-            // Replace {now dateTimeFormat} tag and parameters with formatted date.
-            if (stripos($text, '{now ') !== false) {
-                $newtext = preg_replace_callback(
-                    '/\{now\s+(.+)\}/isuU',
-                    function ($matches) use ($now) {
-                        // Check if this is a built-in Moodle date/time format.
-                        if (!empty($matches[1]) && get_string_manager()->string_exists($matches[1], 'langconfig')) {
-                            // It is! Get the strftime string.
-                            $matches[1] = get_string($matches[1], 'langconfig');
-                        }
-                        return userdate($now, $matches[1]);
-                    },
-                    $text
-                );
-                if ($newtext !== false) {
-                    $text = $newtext;
-                }
-            }
-            unset($now);
         }
 
         // Tag: {editingtoggle}.
@@ -3486,7 +3651,7 @@ class filter_filtercodes extends moodle_text_filter {
         // Parameters: None.
         // Requires content between tags.
         if (stripos($text, '{langx ') !== false) {
-            $replace['/\{langx\s+(.*)\}(.*)\{\/langx\}/isuU'] = '<span lang="$1">$2</span>';
+            $replace['/\{langx\s+([a-z-]+)\}(.*)\{\/langx\}/isuU'] = '<span lang="$1">$2</span>';
         }
 
         // Tag: {note}...{/note}
@@ -3552,25 +3717,37 @@ class filter_filtercodes extends moodle_text_filter {
             // Requires content between tags.
             if (stripos($text, '{/ifactivitycompleted}') !== false) {
                 $completion = new completion_info($PAGE->course);
+
                 if ($completion->is_enabled_for_site() && $completion->is_enabled() == COMPLETION_ENABLED) {
                     // Get a list of the the instances of this tag.
                     $re = '/{ifactivitycompleted\s+([0-9]+)\}(.*)\{\/ifactivitycompleted\}/isuU';
                     $found = preg_match_all($re, $text, $matches);
+
                     if ($found > 0) {
                         // Check if the activity is in the list.
                         foreach ($matches[1] as $cmid) {
-                            if (($cm = get_coursemodule_from_id('', $cmid, 0)) !== false) { // Only process valid IDs.
-                                // Get the completion data for this activity.
-                                $data = $completion->get_data($cm, true, $USER->id);
-                                // If the activity has been completed, remove just the tags. Otherwise remove tags and content.
-                                $key = '/{ifactivitycompleted\s+' . $cmid . '\}(.*)\{\/ifactivitycompleted\}/isuU';
-                                if ($data->completionstate == COMPLETION_COMPLETE) {
-                                    // Completed. Keep the text and remove the tags.
-                                    $replace[$key] = "$1";
-                                } else {
-                                    // Activity not completed. Remove tags and content.
-                                    $replace[$key] = '';
+                            $iscompleted = false;
+
+                            // Only process valid IDs.
+                            if (($cm = get_coursemodule_from_id('', $cmid, 0)) !== false) {
+                                // Get the completion data for this activity if it exists.
+                                try {
+                                    $data = $completion->get_data($cm, true, $USER->id);
+                                    $iscompleted = ($data->completionstate == COMPLETION_COMPLETE);
+                                } catch (Exception $e) {
+                                    unset($e);
+                                    continue;
                                 }
+                            }
+
+                            // If the activity has been completed, remove just the tags. Otherwise remove tags and content.
+                            $key = '/{ifactivitycompleted\s+' . $cmid . '\}(.*)\{\/ifactivitycompleted\}/isuU';
+                            if ($iscompleted) {
+                                // Completed. Keep the text and remove the tags.
+                                $replace[$key] = "$1";
+                            } else {
+                                // Activity not completed. Remove tags and content.
+                                $replace[$key] = '';
                             }
                         }
                     }
@@ -3583,25 +3760,37 @@ class filter_filtercodes extends moodle_text_filter {
             // Requires content between tags.
             if (stripos($text, '{/ifnotactivitycompleted}') !== false) {
                 $completion = new completion_info($PAGE->course);
+
                 if ($completion->is_enabled_for_site() && $completion->is_enabled() == COMPLETION_ENABLED) {
                     // Get a list of the the instances of this tag.
                     $re = '/{ifnotactivitycompleted\s+([0-9]+)\}(.*)\{\/ifnotactivitycompleted\}/isuU';
                     $found = preg_match_all($re, $text, $matches);
+
                     if ($found > 0) {
                         // Check if the activity is in the list.
                         foreach ($matches[1] as $cmid) {
-                            if (($cm = get_coursemodule_from_id('', $cmid, 0)) !== false) { // Only process valid IDs.
+                            $iscompleted = false;
+
+                            // Only process valid IDs.
+                            if (($cm = get_coursemodule_from_id('', $cmid, 0)) !== false) {
                                 // Get the completion data for this activity.
-                                $data = $completion->get_data($cm, true, $USER->id);
-                                // If the activity has been completed, remove just the tags. Otherwise remove tags and content.
-                                $key = '/{ifnotactivitycompleted\s+' . $cmid . '\}(.*)\{\/ifnotactivitycompleted\}/isuU';
-                                if ($data->completionstate != COMPLETION_COMPLETE) {
-                                    // Completed. Keep the text and remove the tags.
-                                    $replace[$key] = "$1";
-                                } else {
-                                    // Activity not completed. Remove tags and content.
-                                    $replace[$key] = '';
+                                try {
+                                    $data = $completion->get_data($cm, true, $USER->id);
+                                    $iscompleted = ($data->completionstate == COMPLETION_COMPLETE);
+                                } catch (Exception $e) {
+                                    unset($e);
+                                    continue;
                                 }
+                            }
+
+                            // If the activity has been completed, remove just the tags. Otherwise remove tags and content.
+                            $key = '/{ifnotactivitycompleted\s+' . $cmid . '\}(.*)\{\/ifnotactivitycompleted\}/isuU';
+                            if (!$iscompleted) {
+                                // Completed. Keep the text and remove the tags.
+                                $replace[$key] = "$1";
+                            } else {
+                                // Activity not completed. Remove tags and content.
+                                $replace[$key] = '';
                             }
                         }
                     }
@@ -4405,6 +4594,50 @@ class filter_filtercodes extends moodle_text_filter {
                 }
             }
 
+            // Tag: {iftheme themename}...{/iftheme}.
+            // Description: Display content only if the current theme matches the one specified.
+            // Parameters: The name of the directory in which the theme is located.
+            // Requires content between tags.
+            if (stripos($text, '{/iftheme') !== false) {
+                $theme = strtolower($PAGE->theme->name);
+                $re = '/{iftheme\s+(.*)\}(.*)\{\/iftheme\}/isuU';
+                $found = preg_match_all($re, $text, $matches);
+                if ($found > 0) {
+                    foreach ($matches[1] as $themename) {
+                        $key = '/{iftheme\s+' . $themename . '\}(.*)\{\/iftheme\}/isuU';
+                        if (strtolower($theme == strtolower($themename))) {
+                            // Just remove the tags.
+                            $replace[$key] = '$1';
+                        } else {
+                            // Remove the iftheme strings.
+                            $replace[$key] = '';
+                        }
+                    }
+                }
+            }
+
+            // Tag: {ifnottheme themename}...{/ifnottheme}.
+            // Description: Display content only if the current theme does not match the one specified.
+            // Parameters: The name of the directory in which the theme is located.
+            // Requires content between tags.
+            if (stripos($text, '{ifnottheme ') !== false) {
+                $theme = strtolower($PAGE->theme->name);
+                $re = '/{ifnottheme\s+(.*)\}(.*)\{\/ifnottheme\}/isuU';
+                $found = preg_match_all($re, $text, $matches);
+                if ($found > 0) {
+                    foreach ($matches[1] as $themename) {
+                        $key = '/{ifnottheme\s+' . $themename . '\}(.*)\{\/ifnottheme\}/isuU';
+                        if (strtolower($theme) != strtolower($themename)) {
+                            // Just remove the tags.
+                            $replace[$key] = '$1';
+                        } else {
+                            // Remove the ifnottheme strings.
+                            $replace[$key] = '';
+                        }
+                    }
+                }
+            }
+
             if (strpos($text, '{ifmin') !== false) { // If there are conditional ifmin tags.
                 // Tag: {ifminassistant}...{/ifminassistant}.
                 // Description: Display content only if user has the role of a non-editing teacher or higher.
@@ -4647,8 +4880,8 @@ class filter_filtercodes extends moodle_text_filter {
                 function ($matches) {
                     // If alert <style> parameter is not included, default to alert-warning.
                     $matches[1] = trim($matches[1]);
-                    $matches[1] = empty($matches[1]) ? 'warning' : $matches[1];
-                    return '<div class="alert alert-' . $matches[1] . '" role="alert"><p>' . $matches[2] . '</p></div>';
+                    $matches[1] = empty($matches[1]) || $matches[1] == 'border' ? 'border' : 'alert-' . $matches[1];
+                    return '<div class="alert ' . $matches[1] . '" role="alert"><p>' . $matches[2] . '</p></div>';
                 },
                 $text
             );
@@ -4733,7 +4966,8 @@ class filter_filtercodes extends moodle_text_filter {
         /* ---------------- Apply all of the filtercodes so far. ---------------*/
 
         if ($this->replacetags($text, $replace) == false) {
-            // Go no further if there are no more tags.
+            // No more tags? Put back the escaped tags, if any, and return the string.
+            $text = $this->escapedtags($text);
             return $text;
         }
 
@@ -4760,7 +4994,8 @@ class filter_filtercodes extends moodle_text_filter {
         /* ---------------- Apply the rest of the FilterCodes tags. ---------------*/
 
         $this->replacetags($text, $replace);
-
+        // Put back the escaped tags.
+        $text = $this->escapedtags($text);
         return $text;
     }
 }

@@ -17,7 +17,7 @@
 /**
  * Workshop allocator class.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopallocation_live
  */
@@ -29,12 +29,11 @@ require_once($CFG->dirroot . '/mod/workshop/allocation/lib.php');
 /**
  * Workshop allocator class.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopallocation_live
  */
 class workshop_live_allocator implements workshop_allocator {
-
     /** @var workshop $workshop */
     protected $workshop;
 
@@ -62,7 +61,7 @@ class workshop_live_allocator implements workshop_allocator {
 
         $record = $DB->get_record('workshopallocation_live', ['workshopid' => $this->workshop->id]);
         if (!$record) {
-            $record = new stdClass;
+            $record = new stdClass();
             $record->workshopid = $this->workshop->id;
             $record->enabled = false;
             $record->settings = '{}';
@@ -73,7 +72,6 @@ class workshop_live_allocator implements workshop_allocator {
 
         if ($this->mform->is_cancelled()) {
             redirect($this->workshop->view_url());
-
         } else if ($data = $this->mform->get_data()) {
             $record->enabled = !empty($data->enabled);
             $record->settings = json_encode([
@@ -93,7 +91,6 @@ class workshop_live_allocator implements workshop_allocator {
                 $msg = get_string('resultdisabled', 'workshopallocation_live');
             }
             $result->set_status(workshop_allocation_result::STATUS_CONFIGURED, $msg);
-
         } else {
             $data = json_decode($record->settings);
             $data->enabled = $record->enabled;

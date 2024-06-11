@@ -2,8 +2,8 @@
 
 FilterCodes filter plugin for Moodle
 ====================================
-![PHP](https://img.shields.io/badge/PHP-v5.6%20%2F%20v7.0%20%2F%20v7.1%20%2F%20v7.2%20%2F%20v7.3%20%2F%20v7.4%20%2F%20v8.0%20%2F%20v8.1%20%2F%20v8.2-blue.svg)
-![Moodle](https://img.shields.io/badge/Moodle-v2.7%20to%20v4.3-orange.svg)
+![PHP](https://img.shields.io/badge/PHP-v5.6%20to%20v8.3-blue.svg)
+![Moodle](https://img.shields.io/badge/Moodle-v2.7%20to%20v4.4-orange.svg)
 [![GitHub Issues](https://img.shields.io/github/issues/michael-milette/moodle-filter_filtercodes.svg)](https://github.com/michael-milette/moodle-filter_filtercodes/issues)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-green.svg)](#contributing)
 [![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](#license)
@@ -61,7 +61,7 @@ This plugin requires Moodle 2.7+ from https://moodle.org/ . Note that some tags 
 The most recent STABLE release of FilterCodes for Moodle is available from:
 https://moodle.org/plugins/filter_filtercodes
 
-The most recent DEVELOPMENT release can be found at:
+The most recent development release can be found at:
 https://github.com/michael-milette/moodle-filter_filtercodes
 
 [(Back to top)](#table-of-contents)
@@ -160,6 +160,7 @@ FilterCodes are meant to be entered as regular text in the Moodle WYSIWYG editor
 * (ALPHA) {chart progresspie x --size:150px --border:20px --color:purple --bgcolor:#f0f0f0 --title:caption text}Create a (circle / doughnut) progress chart giving it a value of x between 0 and 100. You can specify the height/width (size) and the thickness (border) of the line in* **px** as well as the color and background color by name or by RGB value. You can also specify a caption. Note that all parameters that begin with two dashes (--) are optional. (Requires PHP 7.0+ and Moodle 3.2+)
 * {showmore}{/showmore} : Toggle showing content between opening and closing more tags. Limitations: Can only be used inline with text. Must now weave into other opening and closing tags.
 * {qrcode}{/qrcode} : Generate and display a QR Code for the content between the tags.
+* (ALPHA) {dashboard_siteinfo} : Only displays for admins - Use this on your dashboard to see system information like available disk space, number of courses, total number of users and users currently online (in the last 5 minutes). This is an early alpha release and will likely change in the future.
 
 ### For use in courses
 
@@ -218,6 +219,7 @@ Also, see Courses section below.
 * {menuadmin} : Useful dynamic menu for Moodle teachers, managers and administrators.
 * {menudev} : Useful dynamic menu for Moodle developers. Only visible when debugging is set to DEVELOPER mode.
 * {menuthemes} : Theme switcher. Only for administrators. Not available after POST. Allow Theme Changes on URL must be enabled. Will be visible even when Administrator is using the **Log In As** feature to log in as a different user.
+* {menucoursemore} : Adds the content of the secondary menu to a menu called "More". Useful for themes with pre-4.x style navigation.
 
 ### URL
 
@@ -238,7 +240,7 @@ Also, see Courses section below.
 * {note}content{/note} : Enables you to include a note which will not be displayed.
 * {help}content{/help} : Enables you to create popup help icons just like Moodle does.
 * {info}content{/info} : Enables you to create popup help icons just like the popup Help icons but with an "i" information icon.
-* (ALPHA) {alert style}content{/alert} : Creates an alert box containing the specified content. You can change the style by specifying an optional parameter. Example: **{alert primary}** or **{alert success}**. [List of styles](https://getbootstrap.com/docs/4.0/components/alerts/)
+* (ALPHA) {alert style}content{/alert} : Creates an alert box containing the specified content. You can change the style by specifying an optional parameter. Example: **{alert primary}** or **{alert success}**. [List of styles](https://getbootstrap.com/docs/4.0/components/alerts/). In addition, you can also specify **{alert border}** which will simply put a border around your content. This cannot be combined with other styles.
 * {highlight}{/highlight} : Highlight text like a highlighter in bright yellow. NOTE: Must only be used within a paragraph.
 * {marktext}{/marktext} : Highlight text using HTML5's mark tag. You can style this tag using CSS in your theme using a fc-marktext class.
 * {markborder}{/markborder} : Surrounds text with a red dashed border. You can style this tag using CSS in your theme using a fc-markborder class (border and padding with !important to override).
@@ -325,6 +327,8 @@ Note: {if*rolename*} and {ifmin*rolename*} type tags are based on role archetype
 * {ifcourserequests}{/ifcourserequests} : Will display enclosed contents only if the Request a Course feature is enabled.
 * {ifeditmode}{/ifeditmode} : Will display the enclosed content only if editing mode is turned on.
 * {ifprofile_field_shortname}{/ifprofile_field_shortname} : Will display the enclosed content if the custom user profile field is not blank/zero.
+* {iftheme themename}{/iftheme} : Will display enclosed content if the theme specified (theme's directory name) is the one currently used to render the page.
+* {ifnottheme themename}{/ifnottheme} : Will display enclosed content if the theme specified (theme's directory name) is NOT the one currently used to render the page.
 
 If the condition is not met in the particular context, the specified tag and its content will be removed.
 
@@ -397,69 +401,81 @@ Some themes may not support horizontal menu separators. Again, contact the devel
 
 This will add a Home link, a listing of top-level categories, a listing of courses in which you are currently enrolled, and a Logout link, but only if you are currently logged in.
 
-    {fa fa-home} {getstring}home{/getstring}|/{ifloggedin}?redirect=0{/ifloggedin}
-    {fa fa-th} {mlang en}Course catalogue{mlang}{mlang fr}Répertoire des cours{mlang}
-    {categories0menu}
-        -###
-        -{getstring}fulllistofcourses{/getstring}|/course/
-    {ifloggedin}
-    {fa fa-tachometer} {getstring}myhome{/getstring}|/my/
-    {fa fa-graduation-cap} {getstring}mycourses{/getstring}
-    {mycoursesmenu}
-    {courserequestmenu}
-    {getstring}logout{/getstring}|/login/logout.php?sesskey={sesskey}
-    {/ifloggedin}
-    {fa fa-question} {getstring}help{/getstring}|/mod/page/view.php?id=275
+```
+{fa fa-home} {getstring}home{/getstring}|/{ifloggedin}?redirect=0{/ifloggedin}
+{fa fa-th} {mlang en}Course catalogue{mlang}{mlang fr}Répertoire des cours{mlang}
+{categories0menu}
+    -###
+    -{getstring}fulllistofcourses{/getstring}|/course/
+{ifloggedin}
+{fa fa-tachometer} {getstring}myhome{/getstring}|/my/
+{fa fa-graduation-cap} {getstring}mycourses{/getstring}
+{mycoursesmenu}
+{courserequestmenu}
+{getstring}logout{/getstring}|/login/logout.php?sesskey={sesskey}
+{/ifloggedin}
+{fa fa-question} {getstring}help{/getstring}|/mod/page/view.php?id=275
+```
 
 ### Admin menu
 
-Parts of this menu will only appear for Moodle administrators, managers, course creators and teachers depending on the user's role within the current context. For example:
+Parts of this menu will only appear for Moodle administrators, managers, course creators and teachers depending on the user's role within the current context.
+
+For example:
 
 - {ifincourse} menu items will only appear in a course.
 - Category Course Creators will only see the Admin menu within categories where they have that role.
 - Teachers will only see the Admin menu within the course where they are a teacher.
 
-    {ifminteacher}
-    {fa fa-wrench} {getstring}admin{/getstring}
-    {/ifminteacher}
-    {ifmincreator}
-    -{getstring}administrationsite{/getstring}|/admin/search.php
-    -{toggleeditingmenu}
-    -Moodle Admin Basics course|https://learn.moodle.org/course/view.php?id=23353|Learn.Moodle.org
-    -###
-    {/ifmincreator}
-    {ifminmanager}
-    -{getstring}user{/getstring}: {mlang en}Management{mlang}{mlang fr}Gestion{mlang}|/admin/user.php
-    {ifminsitemanager}
-    -{getstring}user{/getstring}: {getstring:mnet}profilefields{/getstring}|/user/profile/index.php
-    -###
-    {/ifminsitemanager}
-    -{getstring}course{/getstring}: {mlang en}Management{mlang}{mlang fr}Gestion{mlang}|/course/management.php
-    -{getstring}course{/getstring}: {getstring}new{/getstring}|/course/edit.php?category={coursecategoryid}&returnto=topcat
-    {/ifminmanager}
-    {ifminteacher}
-    -{getstring}course{/getstring}: {getstring}restore{/getstring}|/backup/restorefile.php?contextid={coursecontextid}
-    {ifincourse}
-    -{getstring}course{/getstring}: {getstring}backup{/getstring}|/backup/backup.php?id={courseid}
-    -{getstring}course{/getstring}: {getstring}participants{/getstring}|/user/index.php?id={courseid}
-    -{getstring}course{/getstring}: {getstring:badges}badges{/getstring}|/badges/index.php?type={courseid}
-    -{getstring}course{/getstring}: {getstring}reset{/getstring}|/course/reset.php?id={courseid}
-    -Course: Layoutit|https://www.layoutit.com/build" target="popup" onclick="window.open('https://www.layoutit.com/build','popup','width=1340,height=700'); return false;|Bootstrap Page Builder
-    {/ifincourse}
-    -###
-    {/ifminteacher}
-    {ifminmanager}
-    -{getstring}site{/getstring}: System reports|/admin/category.php?category=reports
-    {/ifminmanager}
-    {ifadmin}
-    -{getstring}site{/getstring}: {getstring:admin}additionalhtml{/getstring}|/admin/settings.php?section=additionalhtml
-    -{getstring}site{/getstring}: {getstring:admin}frontpage{/getstring}|/admin/settings.php?section=frontpagesettings|Including site name
-    -{getstring}site{/getstring}: {getstring:admin}plugins{/getstring}|/admin/search.php#linkmodules
-    -{getstring}site{/getstring}: {getstring:admin}supportcontact{/getstring}|/admin/settings.php?section=supportcontact
-    -{getstring}site{/getstring}: {getstring:admin}themesettings{/getstring}|/admin/settings.php?section=themesettings|Including custom menus, designer mode, theme in URL
-    -{getstring}site{/getstring}: Boost|/admin/settings.php?section=themesettingboost
-    -{getstring}site{/getstring}: {getstring}notifications{/getstring} ({getstring}admin{/getstring})|/admin/index.php
-    {/ifadmin}
+```
+{ifminteacher}
+{fa fa-wrench} {getstring}admin{/getstring}
+{/ifminteacher}
+{ifmincreator}
+-{getstring}administrationsite{/getstring}|/admin/search.php
+-{toggleeditingmenu}
+-Moodle Admin Basics course|https://learn.moodle.org/course/view.php?id=23353|Learn.Moodle.org
+-###
+{/ifmincreator}
+{ifminmanager}
+-{getstring}user{/getstring}: {mlang en}Management{mlang}{mlang fr}Gestion{mlang}|/admin/user.php
+{ifminsitemanager}
+-{getstring}user{/getstring}: {getstring:mnet}profilefields{/getstring}|/user/profile/index.php
+-###
+{/ifminsitemanager}
+-{getstring}course{/getstring}: {mlang en}Management{mlang}{mlang fr}Gestion{mlang}|/course/management.php
+-{getstring}course{/getstring}: {getstring}new{/getstring}|/course/edit.php?category={coursecategoryid}&returnto=topcat
+{/ifminmanager}
+{ifminteacher}
+-{getstring}course{/getstring}: {getstring}restore{/getstring}|/backup/restorefile.php?contextid={coursecontextid}
+{ifincourse}
+-{getstring}course{/getstring}: {getstring}backup{/getstring}|/backup/backup.php?id={courseid}
+-{getstring}course{/getstring}: {getstring}participants{/getstring}|/user/index.php?id={courseid}
+-{getstring}course{/getstring}: {getstring:badges}badges{/getstring}|/badges/index.php?type={courseid}
+-{getstring}course{/getstring}: {getstring}reset{/getstring}|/course/reset.php?id={courseid}
+-Course: Layoutit|https://www.layoutit.com/build" target="popup" onclick="window.open('https://www.layoutit.com/build','popup','width=1340,height=700'); return false;|Bootstrap Page Builder
+{/ifincourse}
+-###
+{/ifminteacher}
+{ifminmanager}
+-{getstring}site{/getstring}: System reports|/admin/category.php?category=reports
+{/ifminmanager}
+{ifadmin}
+-{getstring}site{/getstring}: {getstring:admin}additionalhtml{/getstring}|/admin/settings.php?section=additionalhtml
+-{getstring}site{/getstring}: {getstring:admin}frontpage{/getstring}|/admin/settings.php?section=frontpagesettings|Including site name
+-{getstring}site{/getstring}: {getstring:admin}plugins{/getstring}|/admin/search.php#linkmodules
+-{getstring}site{/getstring}: {getstring:admin}supportcontact{/getstring}|/admin/settings.php?section=supportcontact
+-{getstring}site{/getstring}: {getstring:admin}themesettingsadvanced{/getstring}|/admin/settings.php?section=themesettingsadvanced|Including custom menus, designer mode, theme in URL
+-{getstring}site{/getstring}: Boost|/admin/settings.php?section=themesettingboost
+-{getstring}site{/getstring}: {getstring}notifications{/getstring} ({getstring}admin{/getstring})|/admin/index.php
+{/ifadmin}
+```
+
+Note: Previous to Moodle 4.4, the line for Theme Settings was:
+
+```
+-{getstring}site{/getstring}: {getstring:admin}themesettings{/getstring}|/admin/settings.php?section=themesettings|Including custom menus, designer mode, theme in URL
+```
 
 Tips: If you are not using the Boost theme, customize the link in the 3rd to last line to your theme's settings page.
 
@@ -502,7 +518,7 @@ Even better, try out the dynamic **{menudev}** tag. It includes all of the above
 
 ## FilterCodes in custom menus
 
-Note: The source code in this section was last updated in April 2022 for Moodle 4.0 and last tested in May 2023 for Moodle 4.2 compatibility.
+Note: The source code in this section was last updated in April 2022 for Moodle 4.0 and last tested in January 2024 for Moodle 4.3 and 4.4 (ALPHA) compatibility.
 
 FilterCodes can work in custom menus but, unfortunately, only if the theme supports it or you patched Moodle. If it does not work for you, contact the theme's developer and request that they add support for Moodle filters. See the instructions included below.
 
@@ -527,6 +543,7 @@ To patch Moodle to handle this properly for most Moodle themes, cherry-pick the 
 * Moodle 4.1: https://github.com/michael-milette/moodle/tree/MDL-63219-M401
 * Moodle 4.2: https://github.com/michael-milette/moodle/tree/MDL-63219-M402
 * Moodle 4.3: https://github.com/michael-milette/moodle/tree/MDL-63219-M403
+* Moodle 4.4: https://github.com/michael-milette/moodle/tree/MDL-63219-M404
 * Moodle master: https://github.com/michael-milette/moodle/tree/MDL-63219-master
 
 Example: To apply the patch for Moodle using git (change the "M403" for other versions):
@@ -675,7 +692,7 @@ Add the following code to core_renderer section of your theme for Moodle 2.7 to 
         /**
          * Applies Moodle filters to the custom menu and custom user menu.
          *
-         * Copyright: 2017-2023 TNG Consulting Inc.
+         * Copyright: 2017-2024 TNG Consulting Inc.
          * License:   GNU GPL v3+.
          *
          * @param string $custommenuitems Current custom menu object.
@@ -1060,6 +1077,8 @@ Create a Page on your Moodle site, preferably in a course, so that those tags wo
 * Team cards Our faculty team [{teamcards}]: Our faculty team<br>{teamcards}
 * (ALPHA) Category cards [{categorycards}]: {categorycards}
 * (ALPHA) Category 1 cards [{categorycards 1}]: Sub-categories of Miscellaneous category include {categorycards 1}
+* (ALPHA) Dashboard site information [{dashboard_siteinfo}]:
+{dashboard_siteinfo}
 * Total courses [{coursecount}]: {coursecount}
 * Institution [{institution}]: {institution}
 * Department [{department}]: {department}
@@ -1093,6 +1112,7 @@ Create a Page on your Moodle site, preferably in a course, so that those tags wo
 * Moodle Admin custom menu items [{menuadmin}]: <br><pre>{menuadmin}</pre>
 * Moodle Dev custom menu items [{menudev}]: <br><pre>{menudev}</pre>
 * Moodle Admin theme switcher [{menuthemes}]: <br><pre>{menuthemes}</pre>
+* Secondary menu for pre-4.x themes [{menucoursemore}]: <br><pre>{menucoursemore}</pre>
 * Course's category ID (0 if not in a course or category list of course) [{categoryid}]: {categoryid}
 * Course's category name (blank if not in a course) [{categoryname}]: {categoryname}
 * Course's category number (blank if not in a course) [{categorynumber}]: {categorynumber}
@@ -1176,6 +1196,8 @@ Create a Page on your Moodle site, preferably in a course, so that those tags wo
 * If Developer [{ifdev}]You are an administrator with debugging set to developer mode.[{/ifdev}]: {ifdev}You are an administrator with debugging set to developer mode.{/ifdev}
 * If user has a parent custom role [{ifcustomrole parent}]You have a parent custom role in this context[{/ifcustomrole}]: {ifcustomrole parent}You have a parent custom role in this context{/ifcustomrole}.
 * If user does not have a parent custom role [{ifnotcustomrole parent}]You do not have a parent custom role in this context[{/ifnotcustomrole}]: {ifnotcustomrole parent}You do not have a parent custom role in this context{/ifnotcustomrole}.
+* The current theme is [{iftheme boost}]Boost[{/iftheme}][{iftheme classic}]Classic[{/iftheme}]: {iftheme boost}Boost{/iftheme}{iftheme classic}Classic{/iftheme}
+* The current theme is [{ifnottheme boost}]NOT [{/ifnottheme}]Boost: {ifnottheme boost}NOT {/ifnottheme} Boost.
 * If on Home page [{ifhome}]You are on the Home Frontpage.[{/ifhome}]: {ifhome}You are on the Home Frontpage.{/ifhome}
 * If not on the Home page [{ifnothome}]You are NOT on the Home Frontpage.[{/ifnothome}]: {ifnothome}You are NOT on the Home Frontpage.{/ifnothome}
 * If on Dashboard [{ifdashboard}]You are on the Dashboard page.[{/ifdashboard}]: {ifdashboard}You are on the Dashboard page.{/ifdashboard}
@@ -1375,7 +1397,7 @@ https://github.com/michael-milette/moodle-filter_filtercodes
 
 # License
 
-Copyright © 2017-2023 TNG Consulting Inc. - https://www.tngconsulting.ca/
+Copyright © 2017-2024 TNG Consulting Inc. - https://www.tngconsulting.ca/
 
 This file is part of FilterCodes for Moodle - https://moodle.org/
 

@@ -41,7 +41,7 @@ class qbehaviour_regexpadaptivewithhelpnopenalty extends qbehaviour_regexpadapti
      * description
      */
     public static function get_required_behaviours() {
-        return array('regexpadaptivewithhelp');
+        return ['regexpadaptivewithhelp'];
     }
     /**
      * description

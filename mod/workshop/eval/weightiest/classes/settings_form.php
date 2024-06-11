@@ -17,24 +17,21 @@
 /**
  * Settings form.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopeval_weightiest
  */
 
 namespace workshopeval_weightiest;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Settings form.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopeval_weightiest
  */
 class settings_form extends \workshop_evaluation_settings_form {
-
     /**
      * Definition of evaluation settings.
      */
@@ -42,7 +39,7 @@ class settings_form extends \workshop_evaluation_settings_form {
         $mform = $this->_form;
         $current = $this->_customdata['current'];
 
-        $options = array();
+        $options = [];
         for ($i = 0; $i <= 9; $i++) {
             $options[$i] = get_string('comparisonlevel' . $i, 'workshopeval_weightiest');
         }

@@ -825,7 +825,7 @@ class qtype_formulas extends question_type {
                 'tags', 'oldparent', 'context', '_qf__qtype_formulas_edit_form', 'numdataset', 'multiplier', 'import_process',
                 'inpopup', 'cmid', 'courseid', 'returnurl', 'scrollpos', 'appendqnumstring', 'usecase', 'export_process',
                 'makecopy', 'submitbutton', 'status', 'shownumcorrect', 'correctness_simple_mode', 'mdlscrollto', 'image',
-                'coursetags', 'answernotunique'];
+                'coursetags', 'answernotunique', 'updatebutton'];
         foreach ($form as $key => $value) {
             if (in_array($key, $keystoskip)) {
                 continue;
@@ -980,7 +980,7 @@ class qtype_formulas extends question_type {
 
             try {
                 $responses = $qo->get_correct_responses_individually($ans);
-                $correctness = $qo->grade_responses_individually($ans, $responses, $unitcheck);
+                $correctness = $qo->grade_responses_individually($ans, $responses, $unitcheck, true);
             } catch (Exception $e) {
                 $errors["correctness[$idx]"] = get_string('error_validation_eval', 'qtype_formulas') . $e->getMessage();
                 continue;

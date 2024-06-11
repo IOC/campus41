@@ -17,7 +17,7 @@
 /**
  * Settings form.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopallocation_live
  */
@@ -32,12 +32,11 @@ require_once($CFG->dirroot . '/mod/workshop/allocation/random/lib.php');
 /**
  * Settings form.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopallocation_live
  */
 class settings_form extends \moodleform {
-
     /**
      * Form definition based on the random allocator form.
      */
@@ -73,12 +72,12 @@ class settings_form extends \moodleform {
         $mform->setDefault('numofreviews', $plugindefaults->numofreviews);
         $options = [
             \workshop_random_allocator_setting::NUMPER_SUBMISSION => get_string('numperauthor', 'workshopallocation_random'),
-            \workshop_random_allocator_setting::NUMPER_REVIEWER   => get_string('numperreviewer', 'workshopallocation_random')
+            \workshop_random_allocator_setting::NUMPER_REVIEWER => get_string('numperreviewer', 'workshopallocation_random'),
         ];
         $group[] = $mform->createElement('select', 'numper', '', $options);
         $mform->setDefault('numper', \workshop_random_allocator_setting::NUMPER_SUBMISSION);
         $label = get_string('numofreviews', 'workshopallocation_random');
-        $mform->addGroup($group, 'groupnumofreviews', $label,  [' '], false);
+        $mform->addGroup($group, 'groupnumofreviews', $label, [' '], false);
 
         // Group mode.
         $groupmode = groups_get_activity_groupmode($workshop->cm, $workshop->course);

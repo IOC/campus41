@@ -18,7 +18,7 @@
  * Unit tests for FilterCodes filter.
  *
  * @package    filter_filtercodes
- * @copyright  2017-2023 TNG Consulting Inc. - www.tngconsulting.ca
+ * @copyright  2017-2024 TNG Consulting Inc. - www.tngconsulting.ca
  * @author     Michael Milette
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @covers filter_filtercodes
@@ -34,10 +34,10 @@ use filter_filtercodes;
  * Test that the filter produces the right content. Note that this currently
  * only tests some of the filter logic. Future releases will test more of the tags.
  *
- * @copyright  2017-2023 TNG Consulting Inc. - www.tngconsulting.ca
+ * @copyright  2017-2024 TNG Consulting Inc. - www.tngconsulting.ca
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class filter_test extends \advanced_testcase {
+final class filter_test extends \advanced_testcase {
     /**
      * Setup the test framework
      *
@@ -59,9 +59,11 @@ class filter_test extends \advanced_testcase {
     /**
      * Filter test.
      *
+     * @covers \filter_filtercodes
+     *
      * @return void
      */
-    public function test_filtercodes() {
+    public function test_filtercodes(): void {
         global $CFG, $USER, $DB, $PAGE;
 
         // Create a test course.
@@ -119,7 +121,7 @@ class filter_test extends \advanced_testcase {
             ],
             [
                 'before' => 'Before {langx en_ca}Some content{/langx} After',
-                'after'  => 'Before <span lang="en_ca">Some content</span> After',
+                'after'  => 'Before {langx en_ca}Some content{/langx} After',
             ],
             [
                 'before' => 'Before {langx en-ca}Some content{/langx} After',

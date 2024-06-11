@@ -17,14 +17,14 @@
 /**
  * Version information.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'workshopeval_weightiest';
-$plugin->version = 2017112200;
-$plugin->requires = 2016052300;
-$plugin->release = '1.2';
+$plugin->version = 2023120300;
+$plugin->requires = 2022112800;
+$plugin->release = '1.3';
 $plugin->maturity = MATURITY_STABLE;

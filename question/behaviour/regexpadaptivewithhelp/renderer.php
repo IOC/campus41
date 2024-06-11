@@ -48,7 +48,7 @@ class qbehaviour_regexpadaptivewithhelp_renderer extends qbehaviour_adaptive_ren
      * Moved help strings to this function to get appropriate strings for the nopenalty behaviour.
      */
     public function help_msg() {
-        $helptexts = array();
+        $helptexts = [];
         $helptexts[1] = get_string('buyletter', 'qbehaviour_regexpadaptivewithhelp');
         $helptexts[2] = get_string('buyword', 'qbehaviour_regexpadaptivewithhelp');
         $helptexts[3] = get_string('buywordorpunctuation', 'qbehaviour_regexpadaptivewithhelp');
@@ -96,13 +96,13 @@ class qbehaviour_regexpadaptivewithhelp_renderer extends qbehaviour_adaptive_ren
         }
         $helptext = $this->help_msg()[$helpmode];
         // JR dec 2020 added btn-secondary class for button display similar to default question check button.
-        $attributes = array(
+        $attributes = [
             'type' => 'submit',
             'id' => $qa->get_behaviour_field_name('helpme'),
             'name' => $qa->get_behaviour_field_name('helpme'),
             'value' => $helptext,
             'class' => 'submit btn btn-secondary',
-        );
+        ];
 
         $attributes['round'] = true;
         $output .= html_writer::empty_tag('input', $attributes);
@@ -143,13 +143,14 @@ class qbehaviour_regexpadaptivewithhelp_renderer extends qbehaviour_adaptive_ren
                     $gradedstep->get_behaviour_var('_rawfraction'))->get_feedback_class();
         }
         $penalty = $qa->get_question()->penalty;
+        $gradingdetails = '';
         if ($penalty != 0) {
             $gradingdetails = $this->render_adaptive_marks(
                 $qa->get_behaviour()->get_adaptive_marks(), $options);
         }
         $output = '';
         $output .= html_writer::tag('div', $gradingdetails,
-                array('class' => 'gradingdetails'));
+                ['class' => 'gradingdetails']);
 
         return $output;
     }

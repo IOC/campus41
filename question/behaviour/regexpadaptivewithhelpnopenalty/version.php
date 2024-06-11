@@ -18,7 +18,7 @@
  * Version information for the calculated question type.
  *
  * @package    qbehaviour_regexpadaptivewithhelpnopenalty
- * @copyright  2011-2012 Joseph R�zeau
+ * @copyright  2011-2012 Joseph Rézeau
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,10 +26,10 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'qbehaviour_regexpadaptivewithhelpnopenalty';
 
-$plugin->version  = 2022041800;
+$plugin->version  = 2024050200;
 $plugin->requires = 2016052300; // Moodle version.
-$plugin->dependencies = array(
-    'qbehaviour_regexpadaptivewithhelp' => 2022041800
-);
-$plugin->release = '4.0 for Moodle 4.0';
-$plugin->maturity  = MATURITY_STABLE;
+$plugin->dependencies = [
+    'qbehaviour_regexpadaptivewithhelp' => 2024050200,
+];
+$plugin->release = '4.4';
+$plugin->maturity = MATURITY_STABLE;

@@ -17,7 +17,7 @@
 /**
  * Declaration of event observers.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopallocation_live
  */
@@ -29,5 +29,5 @@ $observers = [
         'eventname' => '\mod_workshop\event\assessable_uploaded',
         'callback' => '\workshopallocation_live\observer::assessable_uploaded',
         'internal' => true,
-    ]
+    ],
 ];

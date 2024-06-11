@@ -22,7 +22,15 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace qtype_regexp;
+
 defined('MOODLE_INTERNAL') || die();
+
+use qtype_regexp_question;
+use question_attempt_step;
+use question_classified_response;
+use question_state;
+use test_question_maker;
 
 global $CFG;
 require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
@@ -33,12 +41,14 @@ require_once($CFG->dirroot . '/question/type/regexp/question.php');
  *
  * @copyright  2021 Joseph REZEAU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @coversDefaultClass \question\type\regexp\question
  */
-class qtype_regexp_question_test extends advanced_testcase {
+final class question_test extends \advanced_testcase {
     /**
-     * Unit tests for the REGEXP question definition class.
+     * Test compare_string_with_wildcard() method.
+     * @covers ::compare_string_with_wildcard method
      */
-    public function test_compare_string_with_wildcard() {
+    public function test_compare_string_with_wildcard(): void {
         // Test case.
         $ignorecase = true;
         $this->assertTrue((bool)qtype_regexp_question::compare_string_with_wildcard(
@@ -70,100 +80,118 @@ class qtype_regexp_question_test extends advanced_testcase {
     }
 
     /**
-     * Unit tests for the REGEXP question definition class.
+     * Test is_complete_response() method.
+     * @covers ::is_complete_response
      */
-    public function test_is_complete_response() {
-        $question = test_question_maker::make_question('regexp');
+    public function test_is_complete_response(): void {
+        $question = \test_question_maker::make_question('regexp');
 
-        $this->assertFalse($question->is_complete_response(array()));
-        $this->assertFalse($question->is_complete_response(array('answer' => '')));
-        $this->assertTrue($question->is_complete_response(array('answer' => '0')));
-        $this->assertTrue($question->is_complete_response(array('answer' => '0.0')));
-        $this->assertTrue($question->is_complete_response(array('answer' => 'x')));
+        $this->assertFalse($question->is_complete_response([]));
+        $this->assertFalse($question->is_complete_response(['answer' => '']));
+        $this->assertTrue($question->is_complete_response(['answer' => '0']));
+        $this->assertTrue($question->is_complete_response(['answer' => '0.0']));
+        $this->assertTrue($question->is_complete_response(['answer' => 'x']));
     }
 
     /**
-     * Unit tests for the REGEXP question definition class.
+     * Test is_gradable_response method.
+     * @covers ::is_gradable_response
      */
-    public function test_is_gradable_response() {
-        $question = test_question_maker::make_question('regexp');
+    public function test_is_gradable_response(): void {
+        $question = \test_question_maker::make_question('regexp');
 
-        $this->assertFalse($question->is_gradable_response(array()));
-        $this->assertFalse($question->is_gradable_response(array('answer' => '')));
-        $this->assertTrue($question->is_gradable_response(array('answer' => '0')));
-        $this->assertTrue($question->is_gradable_response(array('answer' => '0.0')));
-        $this->assertTrue($question->is_gradable_response(array('answer' => 'x')));
+        $this->assertFalse($question->is_gradable_response([]));
+        $this->assertFalse($question->is_gradable_response(['answer' => '']));
+        $this->assertTrue($question->is_gradable_response(['answer' => '0']));
+        $this->assertTrue($question->is_gradable_response(['answer' => '0.0']));
+        $this->assertTrue($question->is_gradable_response(['answer' => 'x']));
     }
 
     /**
-     * Unit tests for the REGEXP question definition class.
+     * Test test_grading method.
+     * @covers ::grade_response
      */
-    public function test_grading() {
-        $question = test_question_maker::make_question('regexp');
+    public function test_grading(): void {
+        $question = \test_question_maker::make_question('regexp');
 
-        $this->assertEquals(array(0, question_state::$gradedwrong),
-                $question->grade_response(array('answer' => 'x')));
-        $this->assertEquals(array(1, question_state::$gradedright),
-                $question->grade_response(array('answer' => "it's blue, white and red")));
-        $this->assertEquals(array(0.8, question_state::$gradedpartial),
-                $question->grade_response(array('answer' => 'blue, white, red')));
+        $this->assertEquals([0, question_state::$gradedwrong], $question->grade_response(['answer' => 'x']));
+        $this->assertEquals([1, question_state::$gradedright], $question->grade_response(['answer' => "it's blue, white and red"]));
+        $this->assertEquals([0.8, question_state::$gradedpartial], $question->grade_response(['answer' => 'blue, white, red']));
     }
 
     /**
-     * Unit tests for the REGEXP question definition class.
+     * Test get_correct_response method.
+     * @covers ::get_correct_response
      */
-    public function test_get_correct_response() {
-        $question = test_question_maker::make_question('regexp');
+    public function test_get_correct_response(): void {
+        $question = \test_question_maker::make_question('regexp');
 
-        $this->assertEquals(array('answer' => "it's blue, white and red"),
+        $this->assertEquals(['answer' => "it's blue, white and red"],
                 $question->get_correct_response());
     }
 
     /**
-     * Unit tests for the REGEXP question definition class.
+     * Test get_question_summary method.
+     * @covers ::get_question_summary
      */
-    public function test_get_question_summary() {
-        $question = test_question_maker::make_question('regexp');
+    public function test_get_question_summary(): void {
+        $question = \test_question_maker::make_question('regexp');
         $qsummary = $question->get_question_summary();
-        $this->assertEquals('French flag colors : __________', $qsummary);
+        $this->assertEquals('What are the colours of the French flag?', $qsummary);
     }
 
     /**
-     * Unit tests for the REGEXP question definition class.
+     * Test summarise_response method.
+     * @covers ::summarise_response
      */
-    public function test_summarise_response() {
-        $question = test_question_maker::make_question('regexp');
-        $summary = $question->summarise_response(array('answer' => "it's blue, white and red"));
+    public function test_summarise_response(): void {
+        $question = \test_question_maker::make_question('regexp');
+        $summary = $question->summarise_response(['answer' => "it's blue, white and red"]);
         $this->assertEquals("it's blue, white and red", $summary);
     }
 
     /**
-     * Unit tests for the REGEXP question definition class.
+     * Test classify_response method.
+     * @covers ::classify_response
      */
-    public function test_classify_response() {
-        $question = test_question_maker::make_question('regexp');
+    public function test_classify_response(): void {
+        $question = \test_question_maker::make_question('regexp');
         $question->start_attempt(new question_attempt_step(), 1);
 
-        $this->assertEquals(array(
-                new question_classified_response(13, "it's blue, white and red", 1.0)),
-                $question->classify_response(array('answer' => "it's blue, white and red")));
-        $this->assertEquals(array(
-                new question_classified_response(14, 'they are blue, white, red', 0.8)),
-                $question->classify_response(array('answer' => 'they are blue, white, red')));
-        $this->assertEquals(array(
-                new question_classified_response(14, 'it is blue, white, red', 0.8)),
-                $question->classify_response(array('answer' => 'it is blue, white, red')));
-        $this->assertEquals(array(
-                new question_classified_response(14, 'blue, white, red', 0.8)),
-                $question->classify_response(array('answer' => 'blue, white, red')));
-        $this->assertEquals(array(
-                new question_classified_response(15, 'red and white', 0.0)),
-                $question->classify_response(array('answer' => 'red and white')));
-        $this->assertEquals(array(
-                new question_classified_response(15, 'black', 0.0)),
-                $question->classify_response(array('answer' => 'black')));
-        $this->assertEquals(array(
-                question_classified_response::no_response()),
-                $question->classify_response(array('answer' => '')));
+        $this->assertEquals(
+            [new question_classified_response(13, "it's blue, white and red", 1.0)],
+            $question->classify_response(['answer' => "it's blue, white and red"])
+        );
+
+        $this->assertEquals(
+            [new question_classified_response(14, 'they are blue, white, red', 0.8)],
+            $question->classify_response(['answer' => 'they are blue, white, red'])
+        );
+
+        $this->assertEquals(
+            [new question_classified_response(14, 'it is blue, white, red', 0.8)],
+            $question->classify_response(['answer' => 'it is blue, white, red'])
+        );
+
+        $this->assertEquals(
+            [new question_classified_response(14, 'blue, white, red', 0.8)],
+            $question->classify_response(['answer' => 'blue, white, red'])
+        );
+
+        $this->assertEquals(
+            [new question_classified_response(16, 'red and white', 0.0)],
+            $question->classify_response(['answer' => 'red and white'])
+        );
+
+        $this->assertEquals(
+            [new question_classified_response(15, 'black', 0.0)],
+            $question->classify_response(['answer' => 'black'])
+        );
+
+        $this->assertEquals(
+            [question_classified_response::no_response()],
+            $question->classify_response(['answer' => ''])
+        );
+
     }
 }

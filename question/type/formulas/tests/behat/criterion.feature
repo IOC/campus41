@@ -1,4 +1,4 @@
-@qtype @qtype_formulas
+@qtype @qtype_formulas @javascript
 Feature: Test setting the grading criterion in different modes
 
   Background:
@@ -22,7 +22,6 @@ Feature: Test setting the grading criterion in different modes
     And I navigate to "Question bank" in current page administration
     And I am on the "test" "core_question > edit" page logged in as teacher1
 
-  @javascript
   Scenario: Set a simple grading criterion
     When I follow "Part 1"
     Then the following fields match these values:
@@ -44,7 +43,21 @@ Feature: Test setting the grading criterion in different modes
       | correctness_simple_comp[0] | ==             |
       | correctness_simple_tol[0]  | 0.02           |
 
-  @javascript
+  Scenario: Check visibility of error message for invalid simple grading criterion
+    When I follow "Part 1"
+    And I set the following fields to these values:
+      | name                       | test2             |
+      | answertype[0]              | Algebraic formula |
+      | answer[0]                  | "5"               |
+      | correctness_simple_type[0] | Relative error    |
+      | correctness_simple_comp[0] | <                 |
+      | correctness_simple_tol[0]  | 1                 |
+    And I press "id_updatebutton"
+    And I wait until the page is ready
+    Then I should see "Variable '_relerr' has not been defined"
+    And the following fields match these values:
+      | correctness_simple_mode[0] | 0 |
+
   Scenario: Set an expert grading criterion
     When I follow "Part 1"
     And I click on "Simplified mode" "checkbox"
@@ -63,7 +76,7 @@ Feature: Test setting the grading criterion in different modes
     When I set the field "Grading criterion*" to "a"
     And I press "id_submitbutton"
     And I wait until the page is ready
-    Then I should see "Try evalution error! Variable 'a' has not been defined."
+    Then I should see "Try evaluation error! Variable 'a' has not been defined."
     And the following fields match these values:
       | correctness_simple_mode[0] |  |
     And the "Simplified mode" "checkbox" should be disabled
@@ -75,7 +88,6 @@ Feature: Test setting the grading criterion in different modes
       | correctness[0] | _err == 0 && 1 == 1 |
     And the "Simplified mode" "checkbox" should be disabled
 
-  @javascript
   Scenario: Switch from easy to expert
     When I follow "Part 1"
     And I click on "Simplified mode" "checkbox"
@@ -93,7 +105,6 @@ Feature: Test setting the grading criterion in different modes
     Then the following fields match these values:
       | correctness[0] | _err == 0 |
 
-  @javascript
   Scenario: Switch from expert to easy
     When I follow "Part 1"
     And I click on "Simplified mode" "checkbox"

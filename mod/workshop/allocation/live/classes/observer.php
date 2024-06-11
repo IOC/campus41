@@ -17,7 +17,7 @@
 /**
  * Definition of event observers.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopallocation_live
  */
@@ -33,12 +33,11 @@ require_once($CFG->dirroot . '/mod/workshop/allocation/random/lib.php');
 /**
  * Definition of event observers.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopallocation_live
  */
 class observer {
-
     /**
      * Allocates assessments randomly after each submission.
      *
@@ -55,7 +54,7 @@ class observer {
 
         $record = $DB->get_record('workshopallocation_live', ['workshopid' => $workshop->id]);
 
-        if ($workshop->phase == \workshop::PHASE_ASSESSMENT and $record and $record->enabled) {
+        if ($workshop->phase == \workshop::PHASE_ASSESSMENT && $record && $record->enabled) {
             $randomallocator = $workshop->allocator_instance('random');
             $settings = \workshop_random_allocator_setting::instance_from_text($record->settings);
             $result = new \workshop_allocation_result($randomallocator);

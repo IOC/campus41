@@ -17,7 +17,7 @@
 /**
  * Workshop evaluation class.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopeval_weightiest
  */
@@ -29,19 +29,18 @@ require_once($CFG->dirroot . '/mod/workshop/eval/best/lib.php');
 /**
  * Workshop evaluation class.
  *
- * @copyright 2014-2017 Albert Gasset <albertgasset@fsfe.org>
+ * @copyright 2014-2023 Albert Gasset <albertgasset@fsfe.org>
  * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @package   workshopeval_weightiest
  */
 class workshop_weightiest_evaluation extends workshop_best_evaluation {
-
     /**
      * Returns an instance of the form to provide evaluation settings.
      *
      * @param moodle_url|null $actionurl
      * @return \workshopeval_weightiest\settings_form
      */
-    public function get_settings_form(moodle_url $actionurl=null) {
+    public function get_settings_form(moodle_url $actionurl = null) {
 
         $customdata['workshop'] = $this->workshop;
         $customdata['current'] = $this->settings;
@@ -72,21 +71,17 @@ class workshop_weightiest_evaluation extends workshop_best_evaluation {
         $assessments = $this->normalize_grades($assessments, $diminfo);
 
         // Calculate the maximum weight of assessments.
-        $maxweight = array_reduce($assessments, function($weight, $assessment) {
-            return max($weight, $assessment->weight);
-        });
+        $maxweight = array_reduce($assessments, fn($weight, $assessment) => max($weight, $assessment->weight));
 
         // Get the assessments with maximum weight.
-        $weightiest = array_filter($assessments, function($assessment) use ($maxweight) {
-            return $assessment->weight == $maxweight;
-        });
+        $weightiest = array_filter($assessments, fn($assessment) => $assessment->weight == $maxweight);
 
         // For every assessment, calculate its distance from the nearest weightiest assessment.
         $distances = [];
         foreach ($weightiest as $referential) {
             foreach ($assessments as $asid => $assessment) {
                 $d = $this->assessments_distance($assessment, $referential, $diminfo, $settings);
-                if ($d !== null and (!isset($distances[$asid]) or $d < $distances[$asid])) {
+                if ($d !== null && (!isset($distances[$asid]) || $d < $distances[$asid])) {
                     $distances[$asid] = $d;
                 }
             }
@@ -121,8 +116,7 @@ class workshop_weightiest_evaluation extends workshop_best_evaluation {
      * @param stdClass   $settings
      * @return float|null Rounded to 4 valid decimals
      */
-    protected function assessments_distance(stdClass $assessment, stdClass $referential, array $diminfo,
-                                            stdClass $settings) {
+    protected function assessments_distance(stdClass $assessment, stdClass $referential, array $diminfo, stdClass $settings) {
         $distance = 0;
         $n = 0;
         foreach (array_keys($assessment->dimgrades) as $dimid) {
