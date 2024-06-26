@@ -491,7 +491,7 @@ body.admin {
 }
 
 /* Width Management */
-/*
+
 @media (min-width: 768px) {
   .pagelayout-standard #page.drawers .main-inner,
   body#page-mod-assign-view.limitedwidth #page.drawers .main-inner,
@@ -499,11 +499,12 @@ body.admin {
   body#page-mod-quiz-view.limitedwidth #page.drawers .main-inner,
   body#page-course-view-topics.limitedwidth #page.drawers .main-inner,
   body#page-mod-page-view.limitedwidth #page.drawers .main-inner,
-  body#page-mod-fdlm-view.limitedwidth #page.drawers .main-inner {
-    max-width: 980px;
+  body#page-mod-fdlm-view.limitedwidth #page.drawers .main-inner,
+  body.limitedwidth #page.drawers .main-inner {
+    max-width: 1200px;
   }
 }
-*/
+
 
 /*** Activity chooser ***/
 
@@ -1435,4 +1436,12 @@ div.atto_snippet_buttons {
       url([[font:theme|fontawesome.ttf]]) format("truetype"), url([[font:theme|fontawesome.svg]]) format("svg");
   font-weight: normal;
   font-style: normal;
+}
+
+/* Reduït padding activitats per defecte */
+
+@media (min-width: 768px) {
+    .activity-item:not(.activityinline) {
+        padding: 1rem !important;
+    }
 }
