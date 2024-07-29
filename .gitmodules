@@ -28,9 +28,6 @@
 [submodule "mod/journal"]
 	path = mod/journal
 	url = https://github.com/elearningsoftware/moodle-mod_journal
-[submodule "mod/oublog"]
-	path = mod/oublog
-	url = https://github.com/moodleou/moodle-mod_oublog
 [submodule "mod/questionnaire"]
 	path = mod/questionnaire
 	url = https://github.com/PoetOS/moodle-mod_questionnaire
