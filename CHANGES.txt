@@ -1,4 +1,7 @@
 # Modificacions en els desplegaments del campus de l'IOC
+### IOC_CAMPUS_V6.0.12
+  * Treiem restriccions de course restart per el plugin batch
+  
 ### IOC_CAMPUS_V6.0.11
   * Upgrade IOC theme
 

@@ -33,10 +33,6 @@ class batch_type_restart_course extends batch_type_base {
             throw new moodle_exception('error:coursenotexist', 'local_batch', '', $params->shortname);
         }
 
-        if (time() - $course->startdate < 30 * 86400) {
-            throw new moodle_exception('error:courserestartedrecently', 'local_batch');
-        }
-
         $oldshortname = $course->shortname . '~';
         $oldfullname = $course->fullname . strftime(' ~ %B %G');
 
