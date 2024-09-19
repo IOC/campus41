@@ -25,6 +25,9 @@
 
 require_once('../../config.php');
 
+// Unlock session during potentially long request.
+\core\session\manager::write_close();
+
 require_login();
 
 global $USER, $CFG, $PAGE, $OUTPUT;
@@ -356,16 +359,16 @@ function is_quiz_pending(quiz $quizobj, string $user): bool {
 /**
  * Get list of unique users enrolled as students in the course. The group mode is supported.
  *
- * @param quiz $quizobj
+ * @param stdClass $course
  * @param context_course $coursecontext
  * @return array
  * @throws dml_exception
  */
-function get_enrolled_students(quiz $quizobj, context_course $coursecontext): array {
+function get_enrolled_students($course, context_course $coursecontext): array {
 
     // If group mode is on, find out the list of the group ids the current user belongs to.
     $groupids = [];
-    if ($quizobj->get_course()->groupmode) {
+    if ($course->groupmode) {
         $groups = groups_get_my_groups();
         foreach ($groups as $group) {
             $groupids[] = $group->id;
@@ -419,45 +422,48 @@ function count_teacher_pending_quiz(stdClass $course, int $userid, array $quizze
     global $DB;
 
     $sum = 0;
+    $quizzes_to_check = [];
 
     foreach ($quizzes as $quiz) {
-
         if (!is_quiz_available($quiz, $userid)) {
             continue;
         }
+        $quizzes_to_check[] = $quiz;
+    }
 
-        // Check that quiz has any question of type essay.
+    // Check that quiz has any question of type essay.
+    if (!empty($quizzes_to_check)) {
+        $queryessay_ids = implode(',', array_map(fn($quiz) => $quiz->id, $quizzes_to_check));
+        $quizzes_to_delete_ids = [];
         $queryessay = "
-                SELECT COUNT({question}.id) AS total
-                FROM {quiz_slots}
-                LEFT JOIN {question_references} ON {question_references}.component = 'mod_quiz' 
-                    AND {question_references}.questionarea = 'slot' 
-                    AND {question_references}.itemid = {quiz_slots}.id
-                LEFT JOIN {question_bank_entries} ON {question_bank_entries}.id = {question_references}.questionbankentryid
-                LEFT JOIN {question_versions} ON {question_versions}.questionbankentryid = {question_bank_entries}.id
-                LEFT JOIN {question} ON {question}.id = {question_versions}.questionid
-                WHERE {quiz_slots}.quizid = " . $quiz->id . " and {question}.qtype = 'essay';
-            ";
-        
-        $resultessay = $DB->get_record_sql($queryessay);
-
-        if ((int)$resultessay->total <= 0) {
-            continue;
+        SELECT COUNT({question}.id) AS total, {quiz_slots}.quizid AS quizid
+        FROM {quiz_slots}
+        LEFT JOIN {question_references} ON {question_references}.component = 'mod_quiz' 
+            AND {question_references}.questionarea = 'slot' 
+            AND {question_references}.itemid = {quiz_slots}.id
+        LEFT JOIN {question_bank_entries} ON {question_bank_entries}.id = {question_references}.questionbankentryid
+        LEFT JOIN {question_versions} ON {question_versions}.questionbankentryid = {question_bank_entries}.id
+        LEFT JOIN {question} ON {question}.id = {question_versions}.questionid
+        WHERE {question}.qtype = 'essay' and {quiz_slots}.quizid IN (".$queryessay_ids.")";
+        $resultessay = $DB->get_records_sql($queryessay);
+        foreach ($resultessay as $aux) {
+            if ((int)$aux->total <= 0) {
+                $quizzes_to_delete_ids[] = $aux->quizid;
+                continue;
+            }
         }
+    }
+    $quizzes_to_check = array_filter($quizzes_to_check, fn($quiz) => !in_array($quiz->id, $quizzes_to_delete_ids));
 
+    $coursecontext = \context_course::instance($course->id);
+    $users = get_enrolled_students($course, $coursecontext); // Get enrolled students.
+    foreach ($quizzes_to_check as $quiz) {   
         $context = \context_module::instance($quiz->coursemodule);
-
         if (!has_capability('mod/quiz:viewreports', $context, $userid)) {
             continue;
         }
 
         $quizobj = \quiz::create($quiz->id, $userid);
-
-        // Get enrolled students.
-        $coursecontext = \context_course::instance($course->id);
-
-        $users = get_enrolled_students($quizobj, $coursecontext);
-
         foreach ($users as $user) {
             if (is_quiz_pending($quizobj, $user)) {
                 $sum++;
@@ -467,7 +473,6 @@ function count_teacher_pending_quiz(stdClass $course, int $userid, array $quizze
     }
 
     return $sum;
-
 }
 
 /**
