@@ -1,4 +1,7 @@
 # Modificacions en els desplegaments del campus de l'IOC
+### IOC_CAMPUS_V6.0.13
+  * Improve performance in local plugin
+
 ### IOC_CAMPUS_V6.0.12
   * Treiem restriccions de course restart per el plugin batch
   
