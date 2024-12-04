@@ -1,4 +1,7 @@
 # Modificacions en els desplegaments del campus de l'IOC
+### IOC_CAMPUS_V6.0.14
+  * Add course format tiles
+
 ### IOC_CAMPUS_V6.0.13
   * Improve performance in local plugin
 
