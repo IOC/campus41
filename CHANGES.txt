@@ -1,4 +1,7 @@
 # Modificacions en els desplegaments del campus de l'IOC
+### IOC_CAMPUS_V6.0.15
+  * Add plugin Offline Quiz
+
 ### IOC_CAMPUS_V6.0.14
   * Add course format tiles
 
